@@ -137,5 +137,5 @@ MonoBehaviour:
   bulletSpeed: 5
   enemyTag: Enemy
   firePoint: {fileID: 8491235974991388690}
-  detectionRange: 5
+  detectionRange: 10
   drawDebugLines: 1
