@@ -49,6 +49,8 @@ public class BulletTargetSeek : MonoBehaviour
             
             // 弾を破壊
             Destroy(gameObject);
+            //衝突した敵を破壊
+            Destroy(other.gameObject);
         }
     }
 }
