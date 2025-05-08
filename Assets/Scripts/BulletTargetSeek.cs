@@ -5,8 +5,9 @@ public class BulletTargetSeek : MonoBehaviour
     // 目標位置
     public Vector2 targetPosition;
     
-    // 弾の速度
-    public float speed = 5f;
+    // 弾のパラメータ
+    public float speed = 5f;      // 弾の速度
+    public float damage = 10f;    // 攻撃力
     
     // 弾の生存時間
     public float lifetime = 5f;
@@ -21,7 +22,6 @@ public class BulletTargetSeek : MonoBehaviour
     {
         // 現在位置から目標位置への方向ベクトルを計算
         Vector2 currentPosition = transform.position;
-        Vector2 direction = (targetPosition - currentPosition).normalized;
         
         // 弾を目標に向かって移動
         transform.position = Vector2.MoveTowards(currentPosition, targetPosition, speed * Time.deltaTime);
@@ -43,14 +43,14 @@ public class BulletTargetSeek : MonoBehaviour
         // Enemyタグを持つオブジェクトに当たった場合
         if (other.CompareTag("Enemy"))
         {
-            Debug.Log("敵に命中！");
+            Debug.Log("敵に命中！ ダメージ: " + damage);
             
-            // ここに敵へのダメージ処理などを追加
+            // 将来的にダメージを与える処理を追加
+            // 現在は敵を直接破壊
+            Destroy(other.gameObject);
             
             // 弾を破壊
             Destroy(gameObject);
-            //衝突した敵を破壊
-            Destroy(other.gameObject);
         }
     }
 }
