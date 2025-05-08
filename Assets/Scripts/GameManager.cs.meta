@@ -6,7 +6,7 @@ MonoImporter:
   defaultReferences:
   - timeText: {instanceID: 0}
   - gameOverPanel: {instanceID: 0}
-  - gameClearPanel: {fileID: 9177097013057455510, guid: 59f0f763d281344338dcfda5fc17c73c, type: 3}
+  - gameClearPanel: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

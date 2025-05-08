@@ -42,10 +42,9 @@ GameObject:
   - component: {fileID: 4217074975923285563}
   - component: {fileID: 5390765448812149005}
   - component: {fileID: 6413977575011707890}
-  - component: {fileID: -1893001993970629100}
   m_Layer: 0
   m_Name: Tower
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -142,22 +141,3 @@ MonoBehaviour:
   firePoint: {fileID: 8491235974991388690}
   detectionRange: 10
   drawDebugLines: 1
---- !u!114 &-1893001993970629100
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8329512833457120250}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a82464000abf456583f88329a1b2d97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameTime: 10
-  timeText: {fileID: 0}
-  gameOverPanel: {fileID: 0}
-  gameClearPanel: {fileID: 0}
-  gameOverSceneName: GameOverScene
-  gameClearSceneName: GameClearScene
-  sceneTransitionDelay: 1
