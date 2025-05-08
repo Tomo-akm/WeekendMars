@@ -5,7 +5,11 @@ public class TowerShoot : MonoBehaviour
     // 弾のプレハブ
     public GameObject bulletPrefab;
     
-    // 射撃間隔（秒）
+    // タワーのパラメータ
+    public float attackDamage = 10f;    // 攻撃力
+    public float attackSpeed = 1f;      // 攻撃速度（1秒間に何回攻撃するか）
+    
+    // 射撃間隔（秒）- attackSpeedから自動計算
     public float fireRate = 1f;
     
     // 弾の速度
@@ -20,7 +24,7 @@ public class TowerShoot : MonoBehaviour
     // 次に射撃可能になる時間
     private float nextFireTime = 0f;
     
-    // 検出範囲
+    // 検出範囲 - これを射程距離として使用
     public float detectionRange = 5f;
     
     // デバッグ用に線を描画するかどうか
@@ -28,6 +32,9 @@ public class TowerShoot : MonoBehaviour
     
     void Start()
     {
+        // attackSpeedからfireRateを計算
+        fireRate = 1f / attackSpeed;
+        
         // firePointが設定されていない場合は自分自身を使用
         if (firePoint == null)
         {
@@ -76,14 +83,14 @@ public class TowerShoot : MonoBehaviour
         }
         
         GameObject nearestEnemy = null;
-        float nearestDistance = detectionRange;
+        float nearestDistance = Mathf.Infinity; // 無限大から始める
         
         foreach (GameObject enemy in enemies)
         {
             // 敵との距離を計算
             float distance = Vector2.Distance(transform.position, enemy.transform.position);
             
-            // より近い敵を見つけた場合、その敵を記録
+            // まず最も近い敵を見つける
             if (distance < nearestDistance)
             {
                 nearestDistance = distance;
@@ -91,7 +98,15 @@ public class TowerShoot : MonoBehaviour
             }
         }
         
-        return nearestEnemy;
+        // 最も近い敵が見つかったら、それが攻撃範囲内かどうか確認
+        if (nearestEnemy != null && nearestDistance <= detectionRange)
+        {
+            return nearestEnemy;
+        }
+        else
+        {
+            return null; // 攻撃範囲内に敵がいない
+        }
     }
     
     // 弾を発射する関数（ターゲット指定版）
@@ -107,6 +122,9 @@ public class TowerShoot : MonoBehaviour
             targetSeek.targetPosition = targetPosition;
             targetSeek.speed = bulletSpeed;
             
+            // 攻撃力を設定
+            targetSeek.damage = attackDamage;
+            
             // デバッグ用にトレイルレンダラーを追加
             TrailRenderer trail = bullet.AddComponent<TrailRenderer>();
             trail.startWidth = 0.1f;
@@ -115,7 +133,20 @@ public class TowerShoot : MonoBehaviour
             trail.startColor = Color.yellow;
             trail.endColor = new Color(1, 0.5f, 0, 0.5f);
             
-            Debug.Log("弾を発射しました。目標位置: " + targetPosition);
+            Debug.Log("弾を発射しました。目標位置: " + targetPosition + ", 攻撃力: " + attackDamage);
         }
+    }
+    
+    // インスペクターでattackSpeedが変更された時の処理
+    void OnValidate()
+    {
+        // attackSpeedが0以下にならないように
+        if (attackSpeed <= 0)
+        {
+            attackSpeed = 0.1f;
+        }
+        
+        // attackSpeedからfireRateを再計算
+        fireRate = 1f / attackSpeed;
     }
 }
