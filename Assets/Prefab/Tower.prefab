@@ -134,9 +134,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 7422254667568263018, guid: 586d3975fdcb24da48b4478d43d29ff6, type: 3}
   attackDamage: 10
-  attackSpeed: 1
-  fireRate: 1
-  bulletSpeed: 5
+  attackSpeed: 0.5
+  fireRate: 2
+  bulletSpeed: 15
   enemyTag: Enemy
   firePoint: {fileID: 8491235974991388690}
   detectionRange: 10

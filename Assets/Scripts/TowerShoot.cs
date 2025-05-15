@@ -54,7 +54,7 @@ public class TowerShoot : MonoBehaviour
             // 次の射撃時間を設定
             nextFireTime = Time.time + fireRate;
             
-            // 敵の方向を正確に計算
+            // 敵の方向を正確に計算（デバッグ用）
             Vector2 targetPosition = nearestEnemy.transform.position;
             Vector2 firePosition = firePoint.position;
             Vector2 direction = (targetPosition - firePosition).normalized;
@@ -63,11 +63,11 @@ public class TowerShoot : MonoBehaviour
             if (drawDebugLines)
             {
                 Debug.DrawLine(firePosition, targetPosition, Color.red, 1.0f);
-                Debug.Log("弾の発射方向: " + direction);
+                Debug.Log("敵の方向: " + direction);
             }
             
-            // 弾を発射
-            FireBullet(direction, targetPosition);
+            // 新しい交点射撃法で弾を発射
+            FireInterceptBullet(nearestEnemy);
         }
     }
     
@@ -109,7 +109,7 @@ public class TowerShoot : MonoBehaviour
         }
     }
     
-    // 弾を発射する関数（ターゲット指定版）
+    // 弾を発射する関数（ターゲット指定版）- 元の実装
     void FireBullet(Vector2 direction, Vector2 targetPosition)
     {
         if (bulletPrefab != null && firePoint != null)
@@ -118,23 +118,206 @@ public class TowerShoot : MonoBehaviour
             GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
             
             // TargetSeekコンポーネントを追加（これにより弾が確実に敵を追跡）
-            BulletTargetSeek targetSeek = bullet.AddComponent<BulletTargetSeek>();
+            BulletTargetSeek targetSeek = bullet.GetComponent<BulletTargetSeek>();
+            if (targetSeek == null)
+            {
+                targetSeek = bullet.AddComponent<BulletTargetSeek>();
+            }
+            
+            // 目標位置を設定
             targetSeek.targetPosition = targetPosition;
             targetSeek.speed = bulletSpeed;
-            
-            // 攻撃力を設定
             targetSeek.damage = attackDamage;
             
             // デバッグ用にトレイルレンダラーを追加
-            TrailRenderer trail = bullet.AddComponent<TrailRenderer>();
-            trail.startWidth = 0.1f;
-            trail.endWidth = 0.05f;
-            trail.time = 0.5f;
-            trail.startColor = Color.yellow;
-            trail.endColor = new Color(1, 0.5f, 0, 0.5f);
+            TrailRenderer trail = bullet.GetComponent<TrailRenderer>();
+            if (trail == null)
+            {
+                trail = bullet.AddComponent<TrailRenderer>();
+                trail.startWidth = 0.1f;
+                trail.endWidth = 0.05f;
+                trail.time = 0.5f;
+                trail.startColor = Color.yellow;
+                trail.endColor = new Color(1, 0.5f, 0, 0.5f);
+            }
             
             Debug.Log("弾を発射しました。目標位置: " + targetPosition + ", 攻撃力: " + attackDamage);
         }
+    }
+    
+    // 交点を計算する関数
+    Vector2 CalculateInterceptPosition(Vector2 shooterPosition, float projectileSpeed, 
+                                     Vector2 targetPosition, Vector2 targetVelocity)
+    {
+        // 敵と発射位置の相対位置
+        Vector2 relativePosition = targetPosition - shooterPosition;
+        
+        // 二次方程式の係数を計算
+        float a = Vector2.Dot(targetVelocity, targetVelocity) - (projectileSpeed * projectileSpeed);
+        float b = 2 * Vector2.Dot(targetVelocity, relativePosition);
+        float c = Vector2.Dot(relativePosition, relativePosition);
+        
+        // 判別式
+        float discriminant = b * b - 4 * a * c;
+        
+        // 解が存在するかチェック
+        if (discriminant < 0 || Mathf.Approximately(a, 0f))
+        {
+            // 解なし（弾が敵に追いつけない）→ 敵の現在位置を返す
+            return targetPosition;
+        }
+        
+        // 二次方程式を解く
+        float t1 = (-b + Mathf.Sqrt(discriminant)) / (2 * a);
+        float t2 = (-b - Mathf.Sqrt(discriminant)) / (2 * a);
+        
+        // 正の最小時間を選択
+        float interceptTime;
+        if (t1 > 0 && t2 > 0)
+        {
+            interceptTime = Mathf.Min(t1, t2);
+        }
+        else if (t1 > 0)
+        {
+            interceptTime = t1;
+        }
+        else if (t2 > 0)
+        {
+            interceptTime = t2;
+        }
+        else
+        {
+            // 両方の解が負の場合、敵の現在位置を返す
+            return targetPosition;
+        }
+        
+        // 交点位置を計算
+        Vector2 interceptPosition = targetPosition + targetVelocity * interceptTime;
+        
+        return interceptPosition;
+    }
+    
+    // 交点射撃法による弾の発射
+    void FireInterceptBullet(GameObject targetEnemy)
+    {
+        if (bulletPrefab == null || firePoint == null || targetEnemy == null)
+            return;
+            
+        // 敵の情報を取得
+        Vector2 enemyPosition = targetEnemy.transform.position;
+        Player enemyMove = targetEnemy.GetComponent<Player>();
+        
+        if (enemyMove == null)
+            return;
+        
+        // 敵の速度ベクトル（左方向に移動）
+        Vector2 enemyVelocity = new Vector2(-enemyMove.speed, 0);
+        
+        // 発射位置
+        Vector2 firePosition = firePoint.position;
+        
+        // 交点を計算
+        Vector2 interceptPosition = CalculateInterceptPosition(
+            firePosition,       // 発射位置
+            bulletSpeed,        // 弾の速度
+            enemyPosition,      // 敵の現在位置
+            enemyVelocity       // 敵の速度ベクトル
+        );
+        
+        // デバッグ：交点を視覚化
+        Debug.DrawLine(firePosition, interceptPosition, Color.green, 1.0f);
+        Debug.Log("計算された交点: " + interceptPosition);
+        
+        // 弾の発射
+        GameObject bullet = Instantiate(bulletPrefab, firePosition, Quaternion.identity);
+        
+        // 方向ベクトルを計算
+        Vector2 directionToIntercept = (interceptPosition - firePosition).normalized;
+        
+        // DirectMoveBulletコンポーネントを追加
+        DirectMoveBullet moveScript = bullet.AddComponent<DirectMoveBullet>();
+        moveScript.direction = directionToIntercept;
+        moveScript.speed = bulletSpeed;
+        moveScript.damage = attackDamage;
+        
+        // デバッグ用の視覚効果
+        TrailRenderer trail = bullet.GetComponent<TrailRenderer>();
+        if (trail == null)
+        {
+            trail = bullet.AddComponent<TrailRenderer>();
+            trail.startWidth = 0.1f;
+            trail.endWidth = 0.05f;
+            trail.time = 0.5f;
+            trail.startColor = Color.cyan;  // 色を変えて交点射撃を区別
+            trail.endColor = new Color(0, 0.5f, 1f, 0.5f);
+        }
+        
+        Debug.Log("交点射撃弾を発射: 目標点 = " + interceptPosition);
+    }
+    
+    // シンプルな予測射撃
+    void FirePredictiveBullet(GameObject targetEnemy)
+    {
+        if (bulletPrefab == null || firePoint == null || targetEnemy == null)
+            return;
+            
+        // 敵の情報を取得
+        Vector2 enemyPosition = targetEnemy.transform.position;
+        Player enemyMove = targetEnemy.GetComponent<Player>();
+        
+        if (enemyMove == null)
+            return;
+            
+        // 敵の速度（左方向に移動）
+        float enemySpeed = enemyMove.speed;
+        
+        // 発射位置
+        Vector2 firePosition = firePoint.position;
+        
+        // 敵までの距離
+        float distanceToEnemy = Vector2.Distance(firePosition, enemyPosition);
+        
+        // 弾が敵に到達する時間
+        float timeToReachEnemy = distanceToEnemy / bulletSpeed;
+        
+        // 敵が移動する距離
+        float enemyTravelDistance = enemySpeed * timeToReachEnemy;
+        
+        // 敵の予想位置（左に移動するため、X座標から引く）
+        Vector2 predictedPosition = enemyPosition - new Vector2(enemyTravelDistance, 0);
+        
+        // 予測位置を視覚化
+        if (drawDebugLines)
+        {
+            Debug.DrawLine(firePosition, predictedPosition, Color.blue, 1.0f);
+            Debug.Log("予測位置: " + predictedPosition);
+        }
+        
+        // 弾の発射
+        GameObject bullet = Instantiate(bulletPrefab, firePosition, Quaternion.identity);
+        
+        // 方向ベクトル
+        Vector2 directionToPredicted = (predictedPosition - firePosition).normalized;
+        
+        // DirectMoveBulletコンポーネントを追加
+        DirectMoveBullet moveScript = bullet.AddComponent<DirectMoveBullet>();
+        moveScript.direction = directionToPredicted;
+        moveScript.speed = bulletSpeed;
+        moveScript.damage = attackDamage;
+        
+        // デバッグ用の視覚効果
+        TrailRenderer trail = bullet.AddComponent<TrailRenderer>();
+        if (trail == null)
+        {
+            trail = trail = bullet.AddComponent<TrailRenderer>();
+            trail.startWidth = 0.1f;
+            trail.endWidth = 0.05f;
+            trail.time = 0.5f;
+            trail.startColor = Color.blue;
+            trail.endColor = new Color(0, 0, 1f, 0.5f);
+        }
+        
+        Debug.Log("予測射撃弾を発射: 予測位置 = " + predictedPosition);
     }
     
     // インスペクターでattackSpeedが変更された時の処理

@@ -175,6 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2396cb7235fde457da786cb480b051c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPosition: {x: 0, y: 0}
+  targetEnemy: {fileID: 0}
   speed: 5
+  damage: 10
   lifetime: 5
