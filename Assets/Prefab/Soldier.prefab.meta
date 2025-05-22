@@ -1,5 +1,9 @@
 fileFormatVersion: 2
-guid: e2cc3f0a76de04e33b5a2d28207c8dd2
+<<<<<<<< HEAD:Assets/Prefab/Orc.prefab.meta
+guid: 0aed633ef36db43e9a9546626861f3dd
+========
+guid: 28fe698209f7b4704a662235ef170b5a
+>>>>>>>> origin/test-akamine:Assets/Prefab/Soldier.prefab.meta
 PrefabImporter:
   externalObjects: {}
   userData: 
