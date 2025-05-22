@@ -2,49 +2,90 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class WaveData
+{
+    public int Count;
+}
+
 public class EnemySpawner : MonoBehaviour
 {
-    //敵プレハブ
+    [Header("敵プレハブ")]
     public GameObject enemyPrefab;
-    //時間間隔の最小値
-    public float minTime = 3f;
-    //時間間隔の最大値
-    public float maxTime = 5f;
-    //敵生成時間間隔
-    private float interval;
-    //経過時間
-    private float time = 0f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        //時間間隔を決定する
-        interval = GetRandomTime();
-    }
+    [Header("スポーン位置")]
+    public float spawnX = 0f;
+    public float spawnY = 0f;
 
-    // Update is called once per frame
+    [Header("Waveデータ")]
+    public List<WaveData> waves = new List<WaveData>();
+
+    [Header("スポーン設定")]
+    public float spawnInterval = 1f;
+    private float spawnTimer = 0f;
+
+    private int currentWave = 0;
+    private int spawnedOrc = 0;
+    private int spawnedSoldier = 0;
+    private int spawnedLancer = 0;
+
+    private float waveTimer = 0f;
+    public float waveInterval = 20f; // 次のWaveに進むまでの時間
+
+    private bool waveActive = true;
+
     void Update()
     {
-        //時間計測
-        time += Time.deltaTime;
+        if (currentWave >= waves.Count) return; // 全Wave終了
 
-        //経過時間が生成時間になったとき(生成時間より大きくなったとき)
-        if(time > interval)
+        waveTimer += Time.deltaTime;
+        spawnTimer += Time.deltaTime;
+
+        if (waveActive && spawnTimer >= spawnInterval)
         {
-            //enemyをインスタンス化する(生成する)
-            GameObject enemy = Instantiate(enemyPrefab);
-            //生成した敵の座標を決定する
-            enemy.transform.position = new Vector3(9.56f,-6.13f,0f);
-            //経過時間を初期化して再度時間計測を始める
-            time = 0f;
-            //次に発生する時間間隔を決定する
-            interval = GetRandomTime();
+            SpawnEnemy();
+            spawnTimer = 0f;
+        }
+
+        // Wave切り替え
+        if (waveTimer >= waveInterval)
+        {
+            currentWave++;
+            if (currentWave < waves.Count)
+            {
+                waveTimer = 0f;
+                ResetSpawnCount();
+                waveActive = true;
+                Debug.Log("Wave " + (currentWave + 1) + " 開始！");
+            }
+            else
+            {
+                Debug.Log("全てのWaveが終了しました");
+            }
         }
     }
 
-    //ランダムな時間を生成する関数
-    private float GetRandomTime()
+    void SpawnEnemy()
     {
-        return Random.Range(minTime, maxTime);
+        if (currentWave >= waves.Count) return;
+
+        WaveData wave = waves[currentWave];
+
+        if (spawnedOrc < wave.Count)
+        {
+            Instantiate(enemyPrefab, new Vector3(spawnX, spawnY, 0f), Quaternion.identity);
+            spawnedOrc++;
+        }
+        else
+        {
+            waveActive = false; // 全部出し終えた
+        }
+    }
+
+    void ResetSpawnCount()
+    {
+        spawnedOrc = 0;
+        spawnedSoldier = 0;
+        spawnedLancer = 0;
     }
 }
