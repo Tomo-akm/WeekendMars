@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8616634494054f93ad76ac0feb06569, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 920595245524157746, guid: 2f61b85ae16834a7abe74c5c0a7b9935, type: 3}
+  enemyPrefab: {fileID: 0}
   minTime: 3
   maxTime: 5
 --- !u!4 &224180507
@@ -337,6 +337,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameTime: 20
+  playerMoney: 50
+  moneyText: {fileID: 0}
   timeText: {fileID: 568505516}
   gameOverPanel: {fileID: 0}
   gameClearPanel: {fileID: 0}
@@ -455,9 +457,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 501a8a2dd54a6467d94054a33adac49a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerPrefab: {fileID: 8329512833457120250, guid: 34d47ff436fd7421795eb69f1fb96a6d, type: 3}
+  towerPrefab: {fileID: 0}
   minDistance: 1
   maxTowers: 5
+  towerCost: 50
 --- !u!4 &1464795254
 Transform:
   m_ObjectHideFlags: 0
