@@ -17,6 +17,11 @@ public class GameManager : MonoBehaviour
     private bool isGameOver = false; // ゲーム終了フラグ
     private bool isGameClear = false; // ゲームクリアフラグ
 
+    // お金システム
+    [Header("Money System")]
+    [SerializeField] private int playerMoney = 50; // プレイヤーの所持金
+    [SerializeField] private TextMeshProUGUI moneyText; // お金表示用テキスト
+
     // UI要素
     [Header("UI Elements")]
     [SerializeField] private TextMeshProUGUI timeText; // 時間表示テキスト
@@ -63,6 +68,9 @@ public class GameManager : MonoBehaviour
 
         // 時間表示の更新
         UpdateTimeDisplay();
+
+        //　お金表示の更新
+        UpdateMoneyDisplay();
     }
 
     private void Update()
@@ -176,5 +184,47 @@ public class GameManager : MonoBehaviour
             currentTime += timeToAdd;
             UpdateTimeDisplay();
         }
+    }
+
+    // お金の表示を更新
+    private void UpdateMoneyDisplay()
+    {
+        if (moneyText != null)
+        {
+            moneyText.text = playerMoney.ToString() + " G";
+        }
+    }
+
+    // 敵を倒してお金を獲得する
+    public void AddMoney(int amount, Vector3 enemyPosition = default)
+    {
+        if (!isGameOver && !isGameClear)
+        {
+            // お金を追加
+            playerMoney += amount;
+            
+            // 表示を更新
+            UpdateMoneyDisplay();
+            
+            Debug.Log(amount + "Gを獲得しました！ 現在の所持金: " + playerMoney + "G");
+        }
+    }
+    // お金を消費する
+    public bool SpendMoney(int amount)
+    {
+        if (playerMoney >= amount)
+        {
+            playerMoney -= amount;
+            UpdateMoneyDisplay();
+            return true; // 支払い成功
+        }
+        
+        return false; // お金が足りない
+    }
+    
+    // 現在の所持金を取得
+    public int GetCurrentMoney()
+    {
+        return playerMoney;
     }
 }

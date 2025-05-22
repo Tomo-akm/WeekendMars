@@ -43,11 +43,19 @@ public class BulletTargetSeek : MonoBehaviour
         // Enemyタグを持つオブジェクトに当たった場合
         if (other.CompareTag("Enemy"))
         {
-            Debug.Log("敵に命中！ ダメージ: " + damage);
+            //Debug.Log("敵に命中！ ダメージ: " + damage);
             
             // 将来的にダメージを与える処理を追加
-            // 現在は敵を直接破壊
-            Destroy(other.gameObject);
+            // 敵のヘルスコンポーネントを取得
+            EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
+            
+            if (enemyHealth != null)
+            {
+                // 敵にダメージを与える
+                Debug.Log(other.name + "に" + damage + "ダメージ");
+                enemyHealth.TakeDamage(damage);
+            }
+    
             
             // 弾を破壊
             Destroy(gameObject);
