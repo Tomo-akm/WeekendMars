@@ -53,10 +53,14 @@ public class PredictiveShot : MonoBehaviour
         
         if (other.CompareTag("Enemy"))
         {
-            Debug.Log($"予測弾が敵 {other.name} にヒット！ダメージ: {damage}");
-            
-            // 敵を破壊
-            Destroy(other.gameObject);
+            // 敵のヘルスコンポーネントを取得
+            EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
+            if (enemyHealth != null)
+            {
+                // 敵にダメージを与える
+                Debug.Log(other.name + "に" + damage + "ダメージ");
+                enemyHealth.TakeDamage(damage);
+            }
             
             // 弾を破壊
             Destroy(gameObject);
