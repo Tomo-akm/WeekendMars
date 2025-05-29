@@ -114,7 +114,7 @@ public class TowerPlacement : MonoBehaviour
     }
     
     // タワーを配置
-    void PlaceTower(Vector2 position)
+    public void PlaceTower(Vector2 position)
     {
         // タワーを指定位置に生成
         GameObject tower = Instantiate(towerPrefab, position, Quaternion.identity);
