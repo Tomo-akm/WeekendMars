@@ -1,10 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
-<<<<<<< HEAD:Assets/Prefab/Soldier.prefab
---- !u!1 &6216802002245528140
-=======
 --- !u!1 &8651512867643755484
->>>>>>> origin/test_gima:Assets/Prefab/Enemy-Soldier.prefab
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12,22 +8,12 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-<<<<<<< HEAD:Assets/Prefab/Soldier.prefab
-  - component: {fileID: 5723469067039942701}
-  - component: {fileID: 3304807533992004940}
-  - component: {fileID: 7722238886787625298}
-  - component: {fileID: 3490331039483970681}
-  - component: {fileID: 4673166904602648674}
-  - component: {fileID: 9015679784487052969}
-  - component: {fileID: 6001631358720385303}
-=======
   - component: {fileID: 962690167627584297}
   - component: {fileID: 2636419167366013030}
   - component: {fileID: 4727957931026217713}
   - component: {fileID: 2901875214688563100}
   - component: {fileID: 2527648556836547865}
   - component: {fileID: 8054121460796217312}
->>>>>>> origin/test_gima:Assets/Prefab/Enemy-Soldier.prefab
   m_Layer: 0
   m_Name: Enemy-Soldier
   m_TagString: Untagged
@@ -35,48 +21,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
-<<<<<<< HEAD:Assets/Prefab/Soldier.prefab
---- !u!4 &5723469067039942701
-=======
 --- !u!4 &962690167627584297
->>>>>>> origin/test_gima:Assets/Prefab/Enemy-Soldier.prefab
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD:Assets/Prefab/Soldier.prefab
-  m_GameObject: {fileID: 6216802002245528140}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.9628472, y: -2.8732708, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 1}
-=======
   m_GameObject: {fileID: 8651512867643755484}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -67.27474, y: -0.6732918, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 10}
->>>>>>> origin/test_gima:Assets/Prefab/Enemy-Soldier.prefab
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-<<<<<<< HEAD:Assets/Prefab/Soldier.prefab
---- !u!212 &3304807533992004940
-=======
 --- !u!212 &2636419167366013030
->>>>>>> origin/test_gima:Assets/Prefab/Enemy-Soldier.prefab
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD:Assets/Prefab/Soldier.prefab
-  m_GameObject: {fileID: 6216802002245528140}
-=======
   m_GameObject: {fileID: 8651512867643755484}
->>>>>>> origin/test_gima:Assets/Prefab/Enemy-Soldier.prefab
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -125,22 +91,14 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
-<<<<<<< HEAD:Assets/Prefab/Soldier.prefab
---- !u!95 &7722238886787625298
-=======
 --- !u!95 &4727957931026217713
->>>>>>> origin/test_gima:Assets/Prefab/Enemy-Soldier.prefab
 Animator:
   serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD:Assets/Prefab/Soldier.prefab
-  m_GameObject: {fileID: 6216802002245528140}
-=======
   m_GameObject: {fileID: 8651512867643755484}
->>>>>>> origin/test_gima:Assets/Prefab/Enemy-Soldier.prefab
   m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: ca392460eb8184ea8b65a0e9c1eb0c20, type: 2}
@@ -155,48 +113,13 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
-<<<<<<< HEAD:Assets/Prefab/Soldier.prefab
---- !u!50 &3490331039483970681
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6216802002245528140}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!58 &4673166904602648674
-=======
 --- !u!58 &2901875214688563100
->>>>>>> origin/test_gima:Assets/Prefab/Enemy-Soldier.prefab
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD:Assets/Prefab/Soldier.prefab
-  m_GameObject: {fileID: 6216802002245528140}
-=======
   m_GameObject: {fileID: 8651512867643755484}
->>>>>>> origin/test_gima:Assets/Prefab/Enemy-Soldier.prefab
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
@@ -265,29 +188,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3083f16aff9474c7ebd7f9549211912b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< HEAD:Assets/Prefab/Soldier.prefab
-  speed: 1
---- !u!114 &6001631358720385303
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6216802002245528140}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0421f07dc68f4f3ea8a2eea6f41199d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 30
-  currentHealth: 0
-  moneyValue: 10
-  onEnemyDestroyed:
-    m_PersistentCalls:
-      m_Calls: []
-  onHealthChanged:
-    m_PersistentCalls:
-      m_Calls: []
-=======
   speed: 5
->>>>>>> origin/test_gima:Assets/Prefab/Enemy-Soldier.prefab
