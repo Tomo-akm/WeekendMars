@@ -2,49 +2,111 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class WaveData
+{
+    public int Count;
+}
+
 public class EnemySpawner : MonoBehaviour
 {
-    //敵プレハブ
+    [Header("敵プレハブ")]
     public GameObject enemyPrefab;
-    //時間間隔の最小値
-    public float minTime = 3f;
-    //時間間隔の最大値
-    public float maxTime = 5f;
-    //敵生成時間間隔
-    private float interval;
-    //経過時間
-    private float time = 0f;
 
-    // Start is called before the first frame update
+    [Header("スポーン位置")]
+    public float spawnX = 0f;
+    public float spawnY = 0f;
+    public float spawnZ = 0f;
+
+    [Header("Waveデータ")]
+    public List<WaveData> waves = new List<WaveData>();
+
+    [Header("スポーン設定")]
+    public float spawnInterval = 1f;
+    private float spawnTimer = 0f;
+
+    private int currentWave = 0;
+    private int spawnedOrc = 0;
+
+    private float waveTimer = 0f;
+    public float waveInterval = 20f;
+
+    private bool waveActive = true;
+
+    [Header("Waypoint 親オブジェクト")]
+    public Transform waypointParent; // ← Waypoints の親オブジェクトを指定
+
+    private Transform[] waypoints;
+
+
     void Start()
     {
-        //時間間隔を決定する
-        interval = GetRandomTime();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //時間計測
-        time += Time.deltaTime;
-
-        //経過時間が生成時間になったとき(生成時間より大きくなったとき)
-        if(time > interval)
+        // Waypoints を配列として取得
+        int count = waypointParent.childCount;
+        waypoints = new Transform[count];
+        for (int i = 0; i < count; i++)
         {
-            //enemyをインスタンス化する(生成する)
-            GameObject enemy = Instantiate(enemyPrefab);
-            //生成した敵の座標を決定する
-            enemy.transform.position = new Vector3(9.56f,-6.13f,0f);
-            //経過時間を初期化して再度時間計測を始める
-            time = 0f;
-            //次に発生する時間間隔を決定する
-            interval = GetRandomTime();
+            waypoints[i] = waypointParent.GetChild(i);
         }
     }
 
-    //ランダムな時間を生成する関数
-    private float GetRandomTime()
+    void Update()
     {
-        return Random.Range(minTime, maxTime);
+        if (currentWave >= waves.Count) return;
+
+        waveTimer += Time.deltaTime;
+        spawnTimer += Time.deltaTime;
+
+        if (waveActive && spawnTimer >= spawnInterval)
+        {
+            SpawnEnemy();
+            spawnTimer = 0f;
+        }
+
+        if (waveTimer >= waveInterval)
+        {
+            currentWave++;
+            if (currentWave < waves.Count)
+            {
+                waveTimer = 0f;
+                ResetSpawnCount();
+                waveActive = true;
+                Debug.Log("Wave " + (currentWave + 1) + " 開始！");
+            }
+            else
+            {
+                Debug.Log("全てのWaveが終了しました");
+            }
+        }
+    }
+
+    void SpawnEnemy()
+    {
+        if (currentWave >= waves.Count) return;
+
+        WaveData wave = waves[currentWave];
+
+        if (spawnedOrc < wave.Count)
+        {
+            GameObject enemy = Instantiate(enemyPrefab, new Vector3(spawnX, spawnY, spawnZ), Quaternion.identity);
+
+            // EnemyPath に waypoint を渡す
+            EnemyPath path = enemy.GetComponent<EnemyPath>();
+            if (path != null)
+            {
+                path.SetWaypoints(waypoints);
+            }
+
+            spawnedOrc++;
+        }
+        else
+        {
+            waveActive = false;
+        }
+    }
+
+    void ResetSpawnCount()
+    {
+        spawnedOrc = 0;
     }
 }
