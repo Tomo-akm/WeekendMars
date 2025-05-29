@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8622533981644990634}
   - component: {fileID: 7006894105441625787}
   - component: {fileID: 2959531615969008035}
-  - component: {fileID: 396862836120410896}
+  - component: {fileID: 6166036370525039491}
   m_Layer: 0
   m_Name: Enemy-Werebear
   m_TagString: Enemy
@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.48397064, y: -1.7396096, z: 0}
-  m_LocalScale: {x: 15, y: 15, z: 15}
+  m_LocalScale: {x: 7, y: 7, z: 7}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -99,7 +99,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 155301253590587464}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: c03ea78d0b98545dab8d11efbe5cd5d9, type: 2}
   m_CullingMode: 0
@@ -176,7 +176,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &396862836120410896
+--- !u!114 &6166036370525039491
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -185,7 +185,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 155301253590587464}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3083f16aff9474c7ebd7f9549211912b, type: 3}
+  m_Script: {fileID: 11500000, guid: b5cbe1ee8a0c946ebb93efb5be4fb715, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
