@@ -1,14 +1,20 @@
 using UnityEngine;
 using UnityEngine.Events;
+using System.Collections;
 
 // 敵の体力と攻撃システム
 // 敵のヘルスを管理し、ダメージ処理と死亡処理を行う
 public class EnemyHealth : MonoBehaviour, IHealth
 {
+    [Header("体力設定")]
     [SerializeField] private float maxHealth = 50f;
     [SerializeField] private float currentHealth;
     [SerializeField] private int moneyValue = 10; 
-    
+
+    [Header("攻撃設定")]
+    [SerializeField] private int baseDamage = 1; // 拠点に与えるダメージ
+    [SerializeField] private float attackInterval = 2.5f; // 攻撃間隔（秒）
+ 
     // 敵が倒されたときのイベント
     public UnityEvent onEnemyDestroyed;
     
@@ -17,6 +23,10 @@ public class EnemyHealth : MonoBehaviour, IHealth
     
     public float CurrentHealth => currentHealth;
     public float MaxHealth => maxHealth;
+
+   // 拠点攻撃中かどうかのフラグ
+    private bool isAttackingBase = false;
+    private Coroutine attackCoroutine = null;
 
     private void Awake()
     {
@@ -48,6 +58,13 @@ public class EnemyHealth : MonoBehaviour, IHealth
     // 死亡処理
     public void Die()
     {
+        // 攻撃中の場合は攻撃を停止
+        if (attackCoroutine != null)
+        {
+            StopCoroutine(attackCoroutine);
+            attackCoroutine = null;
+        }
+        
         // 敵破壊イベントを発火
         onEnemyDestroyed?.Invoke();
         
@@ -65,4 +82,38 @@ public class EnemyHealth : MonoBehaviour, IHealth
         return currentHealth > 0;
     }
     
+    // 拠点に到達したときの処理
+    public void ReachBase()
+    {   
+        if (isAttackingBase || !IsAlive())
+        return;
+
+        // 拠点攻撃開始
+        isAttackingBase = true;
+        attackCoroutine = StartCoroutine(AttackBaseCoroutine());
+        
+        Debug.Log($"{gameObject.name}が拠点に到達！攻撃開始");
+        }
+    
+
+     // 拠点を継続的に攻撃するコルーチン
+    private IEnumerator AttackBaseCoroutine()
+    {
+        while (IsAlive() && MainTower.instance != null && MainTower.instance.IsAlive())
+        {
+            // 拠点にダメージを与える
+            MainTower.instance.TakeDamage(baseDamage);
+            Debug.Log($"{gameObject.name}が拠点を攻撃！ダメージ: {baseDamage}");
+            
+            // 攻撃間隔を待つ
+            yield return new WaitForSeconds(attackInterval);
+        }
+    
+    }
+
+    // 拠点攻撃中かどうかを確認
+    public bool IsAttackingBase()
+    {
+        return isAttackingBase;
+    }
 }
