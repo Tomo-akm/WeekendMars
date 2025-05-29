@@ -1,189 +1,173 @@
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class TowerPlacement : MonoBehaviour
 {
-    // 配置するタワーのプレハブ
-    public GameObject towerPrefab;
+    [Header("タワー設置設定")]
+    public GameObject towerPrefab; // 設置するタワーのプレハブ
+    public int towerCost = 30; // タワーの設置費用
+    public LayerMask placementLayer; // 設置可能なレイヤー
     
-    // タワー同士の最小距離
-    public float minDistance = 1.0f;
+    [Header("UI要素")]
+    public Button placeTowerButton; // タワー設置ボタン
+    public TextMeshProUGUI towerCostText; // 費用表示
     
-    // タワーの最大数
-    public int maxTowers = 5;
-
-    // タワーの価格
-    public int towerCost = 50;
+    private bool isPlacingTower = false;
+    private GameObject previewTower; // プレビュー用のタワー
     
-    // 現在選択中のタワー
-    private GameObject selectedTower = null;
-    
-    // カメラ参照
-    private Camera mainCamera;
-    
-    void Start()
+    private void Start()
     {
-        // メインカメラを取得
-        mainCamera = Camera.main;
+        // ボタンのイベント設定
+        if (placeTowerButton != null)
+        {
+            placeTowerButton.onClick.AddListener(OnPlaceTowerButtonClick);
+            UpdateButtonState();
+        }
+        
+        // 費用表示を更新
+        if (towerCostText != null)
+        {
+            towerCostText.text = $"タワー設置: {towerCost}G";
+        }
     }
     
-    void Update()
+    private void Update()
     {
-        // マウスの位置をワールド座標に変換
-        Vector2 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-        
-        // 選択中のタワーがある場合、マウスに追従
-        if (selectedTower != null)
+        if (isPlacingTower)
         {
-            selectedTower.transform.position = new Vector3(mousePosition.x, mousePosition.y, 0);
+            UpdateTowerPlacement();
         }
         
-        // マウスの左ボタンがクリックされたとき
-        if (Input.GetMouseButtonDown(0))
-        {
-            // 選択中のタワーがある場合は配置
-            if (selectedTower != null)
-            {
-                if (CanPlaceTower(mousePosition))
-                {
-                    // タワーを配置
-                    selectedTower.transform.position = new Vector3(mousePosition.x, mousePosition.y, 0);
-                    selectedTower = null;
-                    Debug.Log("タワーを配置しました");
-                }
-                else
-                {
-                    Debug.Log("この位置にはタワーを配置できません");
-                }
-            }
-            else
-            {
-                // タワーを選択または新規配置
-                GameObject clickedTower = GetTowerAtPosition(mousePosition);
-                
-                if (clickedTower != null)
-                {
-                    // 既存のタワーを選択
-                    selectedTower = clickedTower;
-                    Debug.Log("タワーを選択しました");
-                }
-                else if (GetTowerCount() < maxTowers)
-                {
-                    // 新規タワーを配置可能な場合
-                    if (CanPlaceTower(mousePosition))
-                    {
-                        // お金をチェックしてタワーを配置
-                        if (TryPlaceTowerWithMoney(mousePosition))
-                        {
-                            Debug.Log("タワーを購入・配置しました（費用: " + towerCost + "G）");
-                        }
-                    }
-                    else
-                    {
-                        Debug.Log("この位置にはタワーを配置できません");
-                    }
-                }
-                else
-                {
-                    Debug.Log("タワーの最大数（" + maxTowers + "）に達しています");
-                }
-            }
-        }
-        
-        // 右クリックで選択キャンセル
-        if (Input.GetMouseButtonDown(1) && selectedTower != null)
-        {
-            selectedTower = null;
-            Debug.Log("タワーの選択を解除しました");
-        }
+        // UIの更新（お金が変わった時のため）
+        UpdateButtonState();
     }
-
-    // お金をチェックしてタワーを配置
-    bool TryPlaceTowerWithMoney(Vector2 position)
-    {        
-        // お金が足りるかチェック
+    
+    private void OnPlaceTowerButtonClick()
+    {
         if (GameManager.instance.GetCurrentMoney() >= towerCost)
         {
-            // お金を消費してタワーを配置
-            if (GameManager.instance.SpendMoney(towerCost))
-            {
-                PlaceTower(position);
-                return true;
-            }
-            else
-            {
-                Debug.Log("お金の消費に失敗しました");
-                return false;
-            }
-        }
-        else
-        {
-            // お金が足りない
-            int shortage = towerCost - GameManager.instance.GetCurrentMoney();
-            Debug.Log("お金が足りません。必要: " + towerCost + "G, 不足: " + shortage + "G");
-            return false;
+            StartTowerPlacement();
         }
     }
     
-    // タワーを配置できるかチェック
-    bool CanPlaceTower(Vector2 position)
+    private void StartTowerPlacement()
     {
-        // すべてのタワーを取得
-        GameObject[] towers = GameObject.FindGameObjectsWithTag("Tower");
+        isPlacingTower = true;
         
-        // 既存のタワーとの距離をチェック
-        foreach (GameObject tower in towers)
+        // プレビュー用タワーを作成
+        previewTower = Instantiate(towerPrefab);
+        previewTower.GetComponent<Tower>().enabled = false; // 射撃を無効化
+        previewTower.GetComponent<TowerUpgrade>().enabled = false; // アップグレードを無効化
+        
+        // 半透明にする
+        SpriteRenderer sr = previewTower.GetComponent<SpriteRenderer>();
+        if (sr != null)
         {
-            if (tower != selectedTower) // 選択中のタワー以外をチェック
+            Color color = sr.color;
+            color.a = 0.5f;
+            sr.color = color;
+        }
+    }
+    
+    private void UpdateTowerPlacement()
+    {
+        // マウス位置を取得
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePos.z = 0;
+        
+        // グリッドにスナップ（オプション）
+        mousePos.x = Mathf.Round(mousePos.x);
+        mousePos.y = Mathf.Round(mousePos.y);
+        
+        // プレビュータワーを移動
+        if (previewTower != null)
+        {
+            previewTower.transform.position = mousePos;
+            
+            // 設置可能かチェック
+            bool canPlace = CanPlaceAtPosition(mousePos);
+            
+            // 色を変更
+            SpriteRenderer sr = previewTower.GetComponent<SpriteRenderer>();
+            if (sr != null)
             {
-                float distance = Vector2.Distance(tower.transform.position, position);
-                if (distance < minDistance)
-                {
-                    return false; // 近すぎるので配置不可
-                }
+                Color color = canPlace ? Color.green : Color.red;
+                color.a = 0.5f;
+                sr.color = color;
             }
         }
         
-        // 配置可能
+        // 左クリックで設置
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (CanPlaceAtPosition(mousePos))
+            {
+                PlaceTower(mousePos);
+            }
+        }
+        
+        // 右クリックでキャンセル
+        if (Input.GetMouseButtonDown(1))
+        {
+            CancelPlacement();
+        }
+    }
+    
+    private bool CanPlaceAtPosition(Vector3 position)
+    {
+        // 設置位置に他のタワーがないかチェック
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(position, 0.4f);
+        foreach (Collider2D col in colliders)
+        {
+            if (col.CompareTag("Tower"))
+                return false;
+        }
+        
+        // 設置可能エリアかチェック（レイヤーマスクを使用）
+        if (placementLayer != 0)
+        {
+            Collider2D hit = Physics2D.OverlapPoint(position, placementLayer);
+            return hit != null;
+        }
+        
         return true;
     }
     
-    // タワーを配置
-    void PlaceTower(Vector2 position)
+    private void PlaceTower(Vector3 position)
     {
-        // タワーを指定位置に生成
-        GameObject tower = Instantiate(towerPrefab, position, Quaternion.identity);
-        
-        // タワーにTagを設定（検索用）
-        tower.tag = "Tower";
-        
-        Debug.Log("タワーを配置: " + position);
-    }
-    
-    // 指定位置にあるタワーを取得
-    GameObject GetTowerAtPosition(Vector2 position)
-    {
-        // すべてのタワーを取得
-        GameObject[] towers = GameObject.FindGameObjectsWithTag("Tower");
-        
-        // 一定の判定半径
-        float pickRadius = 0.5f;
-        
-        // 各タワーとの距離をチェック
-        foreach (GameObject tower in towers)
+        // お金を消費
+        if (GameManager.instance.SpendMoney(towerCost))
         {
-            float distance = Vector2.Distance(tower.transform.position, position);
-            if (distance < pickRadius)
-            {
-                return tower;
-            }
+            // タワーを設置
+            GameObject newTower = Instantiate(towerPrefab, position, Quaternion.identity);
+            newTower.tag = "Tower"; // タグを設定
+            
+            Debug.Log($"タワーを設置しました: {position}");
         }
         
-        return null;
+        // 設置モードを終了
+        CancelPlacement();
     }
-
-    // 現在のタワー数を取得
-    int GetTowerCount()
+    
+    private void CancelPlacement()
     {
-        return GameObject.FindGameObjectsWithTag("Tower").Length;
+        isPlacingTower = false;
+        
+        // プレビュータワーを削除
+        if (previewTower != null)
+        {
+            Destroy(previewTower);
+            previewTower = null;
+        }
+    }
+    
+    private void UpdateButtonState()
+    {
+        // お金が足りるかチェックしてボタンを有効/無効化
+        if (placeTowerButton != null)
+        {
+            placeTowerButton.interactable = GameManager.instance.GetCurrentMoney() >= towerCost;
+        }
     }
 }
