@@ -16,6 +16,7 @@ public class EnemySpawner : MonoBehaviour
     [Header("スポーン位置")]
     public float spawnX = 0f;
     public float spawnY = 0f;
+    public float spawnZ = 0f;
 
     [Header("Waveデータ")]
     public List<WaveData> waves = new List<WaveData>();
@@ -26,17 +27,32 @@ public class EnemySpawner : MonoBehaviour
 
     private int currentWave = 0;
     private int spawnedOrc = 0;
-    private int spawnedSoldier = 0;
-    private int spawnedLancer = 0;
 
     private float waveTimer = 0f;
-    public float waveInterval = 20f; // 次のWaveに進むまでの時間
+    public float waveInterval = 20f;
 
     private bool waveActive = true;
 
+    [Header("Waypoint 親オブジェクト")]
+    public Transform waypointParent; // ← Waypoints の親オブジェクトを指定
+
+    private Transform[] waypoints;
+
+
+    void Start()
+    {
+        // Waypoints を配列として取得
+        int count = waypointParent.childCount;
+        waypoints = new Transform[count];
+        for (int i = 0; i < count; i++)
+        {
+            waypoints[i] = waypointParent.GetChild(i);
+        }
+    }
+
     void Update()
     {
-        if (currentWave >= waves.Count) return; // 全Wave終了
+        if (currentWave >= waves.Count) return;
 
         waveTimer += Time.deltaTime;
         spawnTimer += Time.deltaTime;
@@ -47,7 +63,6 @@ public class EnemySpawner : MonoBehaviour
             spawnTimer = 0f;
         }
 
-        // Wave切り替え
         if (waveTimer >= waveInterval)
         {
             currentWave++;
@@ -73,19 +88,25 @@ public class EnemySpawner : MonoBehaviour
 
         if (spawnedOrc < wave.Count)
         {
-            Instantiate(enemyPrefab, new Vector3(spawnX, spawnY, 0f), Quaternion.identity);
+            GameObject enemy = Instantiate(enemyPrefab, new Vector3(spawnX, spawnY, spawnZ), Quaternion.identity);
+
+            // EnemyPath に waypoint を渡す
+            EnemyPath path = enemy.GetComponent<EnemyPath>();
+            if (path != null)
+            {
+                path.SetWaypoints(waypoints);
+            }
+
             spawnedOrc++;
         }
         else
         {
-            waveActive = false; // 全部出し終えた
+            waveActive = false;
         }
     }
 
     void ResetSpawnCount()
     {
         spawnedOrc = 0;
-        spawnedSoldier = 0;
-        spawnedLancer = 0;
     }
 }
