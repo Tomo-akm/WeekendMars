@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using TMPro;
 
 // メインタワーの防衛システム - 統合管理クラス
 public class MainTower : MonoBehaviour
@@ -9,6 +10,9 @@ public class MainTower : MonoBehaviour
     [Header("タワー設定")]
     [SerializeField] private int maxHealth = 10;
     [SerializeField] private int currentHealth;
+
+    [Header("UI要素")]
+    [SerializeField] private TextMeshProUGUI healthText;    // HP表示用テキスト
     
     // タワーのヘルスが変化したときのイベント
     public UnityEvent<int, int> onTowerHealthChanged; // (current, max)
@@ -40,6 +44,8 @@ public class MainTower : MonoBehaviour
     private void Start()
     {
         onTowerHealthChanged?.Invoke(currentHealth, maxHealth);
+        // 初期値を設定
+        UpdateHealthDisplay(currentHealth, maxHealth);
     }
     
     // タワーがダメージを受ける処理
@@ -50,6 +56,7 @@ public class MainTower : MonoBehaviour
             
         currentHealth -= damageAmount;
         currentHealth = Mathf.Max(0, currentHealth);
+        UpdateHealthDisplay(currentHealth,maxHealth);
         
         Debug.Log($"メインタワーがダメージを受けました！ダメージ: {damageAmount}, 残りHP: {currentHealth}/{maxHealth}");
         
@@ -58,9 +65,10 @@ public class MainTower : MonoBehaviour
         onTowerHealthChanged?.Invoke(currentHealth, maxHealth);
         
         
-        // タワーのHPが0以下になったら破壊処理
+        // タワーのHPが0以下になったら破壊処理とゲームオーバー
         if (currentHealth <= 0)
         {
+            FindFirstObjectByType<GameManager>().GameOver();
             DestroyTower();
         }
     }
@@ -104,6 +112,15 @@ public class MainTower : MonoBehaviour
 
         return currentHealth > 0; // currentHealthフィールドがある場合
 
+    }
+    
+    // HP表示を更新
+    private void UpdateHealthDisplay(int currentHealth, int maxHealth)
+    {
+        if (healthText != null)
+        {
+            healthText.text =  "HP" + currentHealth.ToString() + "/" + maxHealth.ToString();
+        }
     }
 
 }
