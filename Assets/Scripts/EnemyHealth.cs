@@ -39,15 +39,18 @@ public class EnemyHealth : MonoBehaviour, IHealth
     {
         if (!IsAlive())
             return;
-            
+
         currentHealth -= damageAmount;
-        
+
+        // 着弾音
+        SEPlayer.instance.PlaydamageSE();
+
         // 0未満にならないように調整
         currentHealth = Mathf.Max(0, currentHealth);
-        
+
         // ヘルス変化イベントを発火
         onHealthChanged?.Invoke(currentHealth / maxHealth);
-        
+
         // 体力がゼロになったら死亡処理
         if (currentHealth <= 0)
         {
@@ -55,15 +58,6 @@ public class EnemyHealth : MonoBehaviour, IHealth
         }
     }
     // 死亡処理
-    // private SEPlayer sePlayer;
-    // private void Start()
-    // {
-    //     sePlayer = FindObjectOfType<SEPlayer>();
-    //     if (sePlayer == null)
-    //     {
-    //         Debug.LogWarning("SEPlayer（SoundManager）が見つかりませんでした");
-    //     }
-    // }
     public void Die()
     {
         // 攻撃中の場合は攻撃を停止
@@ -82,6 +76,9 @@ public class EnemyHealth : MonoBehaviour, IHealth
 
         // お金を追加
         GameManager.instance.AddMoney(moneyValue, transform.position);
+
+        // 死亡時にSEを鳴らす。
+        SEPlayer.instance.PlayEnemyDieSE();
     }
     
     // 生存確認

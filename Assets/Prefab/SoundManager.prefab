@@ -142,6 +142,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d889028f132e4c0da6d76a927b0b86d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: {fileID: 1564300007760809937}
   buttonClickSE: {fileID: 8300000, guid: 710eb6b6e80a34f2ba364ba048b9d6b3, type: 3}
   bulletSE: {fileID: 8300000, guid: 8e409f6c3df464f15bdc9d2cdbcad9a4, type: 3}
-  audioSource: {fileID: 1564300007760809937}
+  enemyDieSE: {fileID: 8300000, guid: 837d7caff11944f50aedb453ea7b2faf, type: 3}
+  damageSE: {fileID: 8300000, guid: ce3a887b8510f474ea8b34b85ef40c4b, type: 3}

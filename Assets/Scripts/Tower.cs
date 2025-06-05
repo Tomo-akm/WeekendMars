@@ -9,9 +9,6 @@ public class Tower : MonoBehaviour
     public float detectionRange = 10f;  // 検出範囲
     public float shotSpeed = 12f;       // 弾の速度（敵より速く）
 
-    [Header("サウンド設定")]
-    public SEPlayer soundManager;
-    
     [Header("デバッグ")]
     public bool showDebugInfo = true;   // デバッグ情報表示
     
@@ -27,14 +24,6 @@ public class Tower : MonoBehaviour
         {
             firePoint = transform;
             Debug.Log("firePointが未設定のため、タワー自身を使用します");
-        }
-        if (soundManager == null)
-        {
-            soundManager = FindFirstObjectByType<SEPlayer>();
-            if (soundManager == null)
-            {
-                Debug.LogWarning("SoundManager（SEPlayer）がシーン上に見つかりませんでした");
-            }
         }
     }
     
@@ -54,9 +43,8 @@ public class Tower : MonoBehaviour
                     nextFireTime = Time.time + (1f / attackRate);
                     Debug.Log($"予測射撃成功: 目標={nearestEnemy.name}");
                 }
-                    // ★ 効果音を再生
-                    if (soundManager != null)
-                        soundManager.PlayBulletSE();
+                // ★ 効果音を再生
+                 SEPlayer.instance.PlayBulletSE();
             }
         }
     }
