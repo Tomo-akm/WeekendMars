@@ -8,22 +8,33 @@ public class Tower : MonoBehaviour
     public float attackRate = 1f;       // 攻撃頻度（秒間攻撃回数）
     public float detectionRange = 10f;  // 検出範囲
     public float shotSpeed = 12f;       // 弾の速度（敵より速く）
+
+    [Header("サウンド設定")]
+    public SEPlayer soundManager;
     
     [Header("デバッグ")]
     public bool showDebugInfo = true;   // デバッグ情報表示
     
     private float nextFireTime = 0f;    // 次回発射可能時間
-    
+
     private void Start()
     {
         Debug.Log("=== Tower初期化 ===");
         Debug.Log($"shotPrefab設定: {(shotPrefab != null ? shotPrefab.name : "未設定")}");
         Debug.Log($"検出範囲: {detectionRange}");
-        
+
         if (firePoint == null)
         {
             firePoint = transform;
             Debug.Log("firePointが未設定のため、タワー自身を使用します");
+        }
+        if (soundManager == null)
+        {
+            soundManager = FindFirstObjectByType<SEPlayer>();
+            if (soundManager == null)
+            {
+                Debug.LogWarning("SoundManager（SEPlayer）がシーン上に見つかりませんでした");
+            }
         }
     }
     
@@ -32,17 +43,20 @@ public class Tower : MonoBehaviour
         if (Time.time >= nextFireTime)
         {
             GameObject nearestEnemy = FindNearestEnemy();
-            
+
             if (nearestEnemy != null)
             {
                 // 予測射撃で弾を発射
                 bool fireSuccess = FirePredictiveShot(nearestEnemy);
-                
+
                 if (fireSuccess)
                 {
                     nextFireTime = Time.time + (1f / attackRate);
                     Debug.Log($"予測射撃成功: 目標={nearestEnemy.name}");
                 }
+                    // ★ 効果音を再生
+                    if (soundManager != null)
+                        soundManager.PlayBulletSE();
             }
         }
     }

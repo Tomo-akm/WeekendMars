@@ -54,8 +54,16 @@ public class EnemyHealth : MonoBehaviour, IHealth
             Die();
         }
     }
-    
     // 死亡処理
+    // private SEPlayer sePlayer;
+    // private void Start()
+    // {
+    //     sePlayer = FindObjectOfType<SEPlayer>();
+    //     if (sePlayer == null)
+    //     {
+    //         Debug.LogWarning("SEPlayer（SoundManager）が見つかりませんでした");
+    //     }
+    // }
     public void Die()
     {
         // 攻撃中の場合は攻撃を停止
@@ -64,13 +72,13 @@ public class EnemyHealth : MonoBehaviour, IHealth
             StopCoroutine(attackCoroutine);
             attackCoroutine = null;
         }
-        
+
         // 敵破壊イベントを発火
         onEnemyDestroyed?.Invoke();
-        
+
         // 敵を無効化または破壊
         Destroy(gameObject);
-        Debug.Log(gameObject +"が死亡しました");
+        Debug.Log(gameObject + "が死亡しました");
 
         // お金を追加
         GameManager.instance.AddMoney(moneyValue, transform.position);
