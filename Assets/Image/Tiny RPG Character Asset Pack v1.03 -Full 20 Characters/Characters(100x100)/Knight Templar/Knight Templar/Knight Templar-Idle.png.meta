@@ -111,6 +111,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -259,7 +272,13 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Knight Templar-Idle_0: 941554769194238170
+      Knight Templar-Idle_1: -247596938127160141
+      Knight Templar-Idle_2: 2066704445689668507
+      Knight Templar-Idle_3: -4408495441092696903
+      Knight Templar-Idle_4: 2450011350353437236
+      Knight Templar-Idle_5: -8802226675324666870
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
