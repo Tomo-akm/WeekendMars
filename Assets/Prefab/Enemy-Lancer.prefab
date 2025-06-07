@@ -202,9 +202,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0421f07dc68f4f3ea8a2eea6f41199d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
+  maxHealth: 30
   currentHealth: 0
-  moneyValue: 10
+  moneyValue: 50
   onEnemyDestroyed:
     m_PersistentCalls:
       m_Calls: []
