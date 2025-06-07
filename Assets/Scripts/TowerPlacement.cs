@@ -1,173 +1,154 @@
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 
 public class TowerPlacement : MonoBehaviour
 {
-    [Header("タワー設置設定")]
-    public GameObject towerPrefab; // 設置するタワーのプレハブ
-    public int towerCost = 30; // タワーの設置費用
-    public LayerMask placementLayer; // 設置可能なレイヤー
+    [Header("Tower Settings")]
+    public GameObject towerPrefab;
+    public float minDistance = 1.0f;
+    public int maxTowers = 10;
+    public int towerCost = 10; // タワー配置のコスト
     
-    [Header("UI要素")]
-    public Button placeTowerButton; // タワー設置ボタン
-    public TextMeshProUGUI towerCostText; // 費用表示
+    [Header("Placement Mode")]
+    public bool useGridCells = true; // グリッドセルを使用するかどうか
     
-    private bool isPlacingTower = false;
-    private GameObject previewTower; // プレビュー用のタワー
+    private Camera mainCamera;
+    private UIManager uiManager;
     
-    private void Start()
+    void Start()
     {
-        // ボタンのイベント設定
-        if (placeTowerButton != null)
-        {
-            placeTowerButton.onClick.AddListener(OnPlaceTowerButtonClick);
-            UpdateButtonState();
-        }
+        mainCamera = Camera.main;
+        uiManager = FindObjectOfType<UIManager>();
         
-        // 費用表示を更新
-        if (towerCostText != null)
+        if (uiManager == null)
         {
-            towerCostText.text = $"タワー設置: {towerCost}G";
+            Debug.LogError("UIManager not found in scene!");
         }
     }
     
-    private void Update()
+    // UIManagerから呼ばれる配置メソッド（グリッドセル使用時）
+    public void PlaceTowerAtGrid(Vector2 gridPosition)
     {
-        if (isPlacingTower)
+        // お金をチェック
+        if (GameManager.instance == null)
         {
-            UpdateTowerPlacement();
+            Debug.LogError("GameManager.instance is null!");
+            return;
         }
         
-        // UIの更新（お金が変わった時のため）
-        UpdateButtonState();
-    }
-    
-    private void OnPlaceTowerButtonClick()
-    {
-        if (GameManager.instance.GetCurrentMoney() >= towerCost)
+        if (GameManager.instance.GetCurrentMoney() < towerCost)
         {
-            StartTowerPlacement();
+            Debug.Log("Not enough money to place tower!");
+            return;
+        }
+        
+        // タワー数制限をチェック
+        if (GetTowerCount() >= maxTowers)
+        {
+            Debug.Log($"Maximum number of towers ({maxTowers}) reached!");
+            return;
+        }
+        
+        // 対応するGridCellを見つけて実際のtransform.positionを取得
+        GridCell targetCell = FindGridCellAtPosition(gridPosition);
+        if (targetCell == null)
+        {
+            Debug.LogError("GridCell not found at position: " + gridPosition);
+            return;
+        }
+        
+        Vector3 actualPosition = targetCell.transform.position;
+        
+        // 配置可能かチェック
+        if (!CanPlaceTower(actualPosition))
+        {
+            Debug.Log("Cannot place tower at this position!");
+            return;
+        }
+        
+        // お金を消費
+        if (GameManager.instance.SpendMoney(towerCost))
+        {
+            // タワーを実際の位置に配置
+            PlaceTower(actualPosition);
+            Debug.Log($"Tower placed! Cost: {towerCost}G");
         }
     }
-    
-    private void StartTowerPlacement()
+
+    // gridPositionに対応するGridCellを見つける
+    private GridCell FindGridCellAtPosition(Vector2 gridPosition)
     {
-        isPlacingTower = true;
+        GridCell[] allGridCells = FindObjectsOfType<GridCell>();
         
-        // プレビュー用タワーを作成
-        previewTower = Instantiate(towerPrefab);
-        previewTower.GetComponent<Tower>().enabled = false; // 射撃を無効化
-        previewTower.GetComponent<TowerUpgrade>().enabled = false; // アップグレードを無効化
-        
-        // 半透明にする
-        SpriteRenderer sr = previewTower.GetComponent<SpriteRenderer>();
-        if (sr != null)
+        foreach (GridCell cell in allGridCells)
         {
-            Color color = sr.color;
-            color.a = 0.5f;
-            sr.color = color;
-        }
-    }
-    
-    private void UpdateTowerPlacement()
-    {
-        // マウス位置を取得
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePos.z = 0;
-        
-        // グリッドにスナップ（オプション）
-        mousePos.x = Mathf.Round(mousePos.x);
-        mousePos.y = Mathf.Round(mousePos.y);
-        
-        // プレビュータワーを移動
-        if (previewTower != null)
-        {
-            previewTower.transform.position = mousePos;
-            
-            // 設置可能かチェック
-            bool canPlace = CanPlaceAtPosition(mousePos);
-            
-            // 色を変更
-            SpriteRenderer sr = previewTower.GetComponent<SpriteRenderer>();
-            if (sr != null)
+            if (cell.gridPosition == gridPosition)
             {
-                Color color = canPlace ? Color.green : Color.red;
-                color.a = 0.5f;
-                sr.color = color;
+                return cell;
             }
         }
         
-        // 左クリックで設置
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (CanPlaceAtPosition(mousePos))
-            {
-                PlaceTower(mousePos);
-            }
-        }
-        
-        // 右クリックでキャンセル
-        if (Input.GetMouseButtonDown(1))
-        {
-            CancelPlacement();
-        }
+        return null;
     }
     
-    private bool CanPlaceAtPosition(Vector3 position)
+    // タワーを配置できるかチェック
+    bool CanPlaceTower(Vector2 position)
     {
-        // 設置位置に他のタワーがないかチェック
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(position, 0.4f);
-        foreach (Collider2D col in colliders)
+        // すべてのタワーを取得
+        GameObject[] towers = GameObject.FindGameObjectsWithTag("Tower");
+        
+        // 既存のタワーとの距離をチェック
+        foreach (GameObject tower in towers)
         {
-            if (col.CompareTag("Tower"))
+            float distance = Vector2.Distance(tower.transform.position, position);
+            if (distance < minDistance)
+            {
                 return false;
+            }
         }
         
-        // 設置可能エリアかチェック（レイヤーマスクを使用）
-        if (placementLayer != 0)
+        // グリッドセルに既にタワーがあるかチェック
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(position, 0.1f);
+        foreach (Collider2D collider in colliders)
         {
-            Collider2D hit = Physics2D.OverlapPoint(position, placementLayer);
-            return hit != null;
+            if (collider.CompareTag("Tower"))
+            {
+                return false;
+            }
         }
         
         return true;
     }
     
-    private void PlaceTower(Vector3 position)
+    // タワーを配置
+    public void PlaceTower(Vector2 position)
     {
-        // お金を消費
-        if (GameManager.instance.SpendMoney(towerCost))
+        // タワーを指定位置に生成
+        GameObject tower = Instantiate(towerPrefab, position, Quaternion.identity);
+        
+        // タワーにTagを設定
+        if (tower.tag != "Tower")
         {
-            // タワーを設置
-            GameObject newTower = Instantiate(towerPrefab, position, Quaternion.identity);
-            newTower.tag = "Tower"; // タグを設定
-            
-            Debug.Log($"タワーを設置しました: {position}");
+            tower.tag = "Tower";
         }
         
-        // 設置モードを終了
-        CancelPlacement();
+        Debug.Log("Tower placed at: " + position);
     }
     
-    private void CancelPlacement()
+    // 現在のタワー数を取得
+    int GetTowerCount()
     {
-        isPlacingTower = false;
-        
-        // プレビュータワーを削除
-        if (previewTower != null)
-        {
-            Destroy(previewTower);
-            previewTower = null;
-        }
+        return GameObject.FindGameObjectsWithTag("Tower").Length;
     }
     
-    private void UpdateButtonState()
+    // タワー配置可能かチェック（UI表示用）
+    public bool CanAffordTower()
     {
-        // お金が足りるかチェックしてボタンを有効/無効化
-        if (placeTowerButton != null)
-        {
-            placeTowerButton.interactable = GameManager.instance.GetCurrentMoney() >= towerCost;
-        }
+        return GameManager.instance != null && GameManager.instance.GetCurrentMoney() >= towerCost;
+    }
+    
+    // タワーコストを取得（UI表示用）
+    public int GetTowerCost()
+    {
+        return towerCost;
     }
 }

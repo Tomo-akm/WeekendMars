@@ -29,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 9086104371312724166}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.6128206, y: -1.8623836, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -129,6 +129,7 @@ MonoBehaviour:
     damage: 10
     upgradeCost: 0
     towerSprite: {fileID: -855298285791758126, guid: 6ed8e6ca3e64e413ba7814cadd8e73da, type: 3}
+    towerColor: {r: 1, g: 1, b: 1, a: 1}
   - levelName: "\u5F37\u5316\u30BF\u30EF\u30FC"
     attackRate: 1.5
     detectionRange: 12
@@ -136,6 +137,7 @@ MonoBehaviour:
     damage: 15
     upgradeCost: 50
     towerSprite: {fileID: 6937817954938267909, guid: 7645a0a6941cd4b88a05767f53c43e1d, type: 3}
+    towerColor: {r: 1, g: 1, b: 1, a: 1}
   - levelName: "\u4E0A\u7D1A\u30BF\u30EF\u30FC"
     attackRate: 2
     detectionRange: 14
@@ -143,6 +145,7 @@ MonoBehaviour:
     damage: 15
     upgradeCost: 100
     towerSprite: {fileID: -6470460504253458178, guid: 9d0c796a5d4954649987c0bc3eb1b5bb, type: 3}
+    towerColor: {r: 1, g: 1, b: 1, a: 1}
   - levelName: "\u7CBE\u92ED\u30BF\u30EF\u30FC"
     attackRate: 2.5
     detectionRange: 16
@@ -150,6 +153,7 @@ MonoBehaviour:
     damage: 20
     upgradeCost: 150
     towerSprite: {fileID: -4178046375966092550, guid: a6de5e658008a4156aedd170b28512c2, type: 3}
+    towerColor: {r: 1, g: 1, b: 1, a: 1}
   - levelName: "\u738B\u5BA4\u30BF\u30EF\u30FC"
     attackRate: 3
     detectionRange: 18
@@ -157,6 +161,7 @@ MonoBehaviour:
     damage: 30
     upgradeCost: 250
     towerSprite: {fileID: 4130640169021434097, guid: 563201d0c8c694cd1b0084ba9aff9d8b, type: 3}
+    towerColor: {r: 1, g: 1, b: 1, a: 1}
   - levelName: "\u4F1D\u8AAC\u30BF\u30EF\u30FC"
     attackRate: 3.5
     detectionRange: 20
@@ -164,6 +169,7 @@ MonoBehaviour:
     damage: 50
     upgradeCost: 400
     towerSprite: {fileID: 3465286685962602723, guid: d67ad00386ff14d45868dbc0c43176d6, type: 3}
+    towerColor: {r: 1, g: 1, b: 1, a: 1}
   - levelName: "\u795E\u8A71\u30BF\u30EF\u30FC"
     attackRate: 4
     detectionRange: 22
@@ -171,11 +177,7 @@ MonoBehaviour:
     damage: 50
     upgradeCost: 400
     towerSprite: {fileID: 7028616704906629411, guid: cbfd99ed1dde14d119bd5deddc8eb3ac, type: 3}
-  upgradeUI: {fileID: 0}
-  levelText: {fileID: 0}
-  costText: {fileID: 0}
-  statsText: {fileID: 0}
-  upgradeButton: {fileID: 0}
+    towerColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!61 &-6179414904308538509
 BoxCollider2D:
   m_ObjectHideFlags: 0
