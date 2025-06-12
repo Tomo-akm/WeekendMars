@@ -43,8 +43,8 @@ public class Tower : MonoBehaviour
                     nextFireTime = Time.time + (1f / attackRate);
                     Debug.Log($"予測射撃成功: 目標={nearestEnemy.name}");
                 }
-                // ★ 効果音を再生
-                 SEPlayer.instance.PlayBulletSE();
+                // 効果音を再生
+                SEPlayer.instance.PlayBulletSE();
             }
         }
     }

@@ -147,3 +147,5 @@ MonoBehaviour:
   bulletSE: {fileID: 8300000, guid: 8e409f6c3df464f15bdc9d2cdbcad9a4, type: 3}
   enemyDieSE: {fileID: 8300000, guid: 837d7caff11944f50aedb453ea7b2faf, type: 3}
   damageSE: {fileID: 8300000, guid: ce3a887b8510f474ea8b34b85ef40c4b, type: 3}
+  placeTowerSE: {fileID: 8300000, guid: 64d21f56999ee41909cc227d805778b8, type: 3}
+  gameClearSE: {fileID: 8300000, guid: a351b853feda34acab30eddf434c9d04, type: 3}

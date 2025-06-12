@@ -71,6 +71,8 @@ public class GameManager : MonoBehaviour
 
         //　お金表示の更新
         UpdateMoneyDisplay();
+
+        // 
     }
 
     private void Update()
@@ -147,6 +149,9 @@ public class GameManager : MonoBehaviour
             // ゲームクリアパネルを表示
             if (gameClearPanel != null)
                 gameClearPanel.SetActive(true);
+
+            // ゲームクリア効果音を再生
+            SEPlayer.instance.PlaygameClearSE();
 
             // シーン遷移
             StartCoroutine(LoadSceneAfterDelay(gameClearSceneName, sceneTransitionDelay));

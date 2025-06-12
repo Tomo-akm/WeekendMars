@@ -10,6 +10,7 @@ public class SEPlayer : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject); // シーンを越えて保持
         }
         else
         {
@@ -17,6 +18,31 @@ public class SEPlayer : MonoBehaviour
         }
     }
     public AudioSource audioSource; //このスクリプトをアタッチするオブジェクト自身(SoundManager)
+
+    // ここからBGM
+    [SerializeField] private AudioSource bgmAudioSource;
+    [SerializeField] private AudioClip defaultBGM;
+    public void PlayBGM(AudioClip clip)
+    {
+        if (bgmAudioSource.clip == clip) return; // すでに同じ曲が流れていたら何もしない
+        bgmAudioSource.clip = clip; // 再生するBGMをセット
+        bgmAudioSource.loop = true;
+        bgmAudioSource.Play();
+    }
+
+    public void StopBGM()
+    {
+        bgmAudioSource.Stop();
+    }
+    
+    [SerializeField] private AudioClip gameClearBGM;
+
+    public void PlayGameClearBGM()
+    {
+        PlayBGM(gameClearBGM);
+    }
+
+    // ここから効果音
 
     // ボタンクリック音
     public AudioClip buttonClickSE;
@@ -44,5 +70,26 @@ public class SEPlayer : MonoBehaviour
     public void PlaydamageSE()
     {
         audioSource.PlayOneShot(damageSE);
+    }
+
+    // タワー設置音
+    public AudioClip placeTowerSE;
+    public void PlayplaceTowerSE()
+    {
+        audioSource.PlayOneShot(placeTowerSE);
+    }
+
+    // // タワーアップグレード音
+    // public AudioClip towerUpgradeSE;
+    // public void PlaytowerUpgradeSE()
+    // {
+    //     audioSource.PlayOneShot(towerUpgradeSE);
+    // }
+
+    // ゲームクリア効果音
+    public AudioClip gameClearSE;
+    public void PlaygameClearSE()
+    {
+        audioSource.PlayOneShot(gameClearSE);
     }
 }

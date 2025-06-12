@@ -146,17 +146,20 @@ public class TowerPlacement : MonoBehaviour
         // 配置可能
         return true;
     }
-    
+
     // タワーを配置
     public void PlaceTower(Vector2 position)
     {
         // タワーを指定位置に生成
         GameObject tower = Instantiate(towerPrefab, position, Quaternion.identity);
-        
+
         // タワーにTagを設定（検索用）
         tower.tag = "Tower";
-        
+
         Debug.Log("タワーを配置: " + position);
+        
+        // タワー配置時にSEを鳴らす。
+        SEPlayer.instance.PlayplaceTowerSE();
     }
     
     // 指定位置にあるタワーを取得
