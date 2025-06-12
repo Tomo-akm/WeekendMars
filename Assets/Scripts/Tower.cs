@@ -14,6 +14,7 @@ public class Tower : MonoBehaviour
     public bool showDebugInfo = true;   // デバッグ情報表示
     
     private float nextFireTime = 0f;    // 次回発射可能時間
+
     
     private void Start()
     {
