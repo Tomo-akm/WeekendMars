@@ -21,7 +21,6 @@ public class SEPlayer : MonoBehaviour
 
     // ここからBGM
     [SerializeField] private AudioSource bgmAudioSource;
-    [SerializeField] private AudioClip defaultBGM;
     public void PlayBGM(AudioClip clip)
     {
         if (bgmAudioSource.clip == clip) return; // すでに同じ曲が流れていたら何もしない
@@ -34,7 +33,18 @@ public class SEPlayer : MonoBehaviour
     {
         bgmAudioSource.Stop();
     }
-    
+    [SerializeField] private AudioClip titleBGM;
+    public void PlaytitleBGM()
+    {
+        PlayBGM(titleBGM);
+    }
+
+    [SerializeField] private AudioClip defaultBGM;
+    public void PlaydefaultBGM()
+    {
+        PlayBGM(defaultBGM);
+    }
+
     [SerializeField] private AudioClip gameClearBGM;
 
     public void PlayGameClearBGM()

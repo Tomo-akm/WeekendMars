@@ -72,7 +72,8 @@ public class GameManager : MonoBehaviour
         //　お金表示の更新
         UpdateMoneyDisplay();
 
-        // 
+        // 基本BGMの再生
+        SEPlayer.instance.PlaydefaultBGM();
     }
 
     private void Update()

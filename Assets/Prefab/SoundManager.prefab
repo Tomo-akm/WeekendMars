@@ -143,6 +143,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 1564300007760809937}
+  bgmAudioSource: {fileID: 1564300007760809937}
+  titleBGM: {fileID: 8300000, guid: bb80926880aa1412dbc662fbbb72aef0, type: 3}
+  defaultBGM: {fileID: 8300000, guid: ac631d378b2a0448b96d8d530fcd4290, type: 3}
+  gameClearBGM: {fileID: 8300000, guid: 0700f3126d9ad48c08c6c3dc14e29387, type: 3}
   buttonClickSE: {fileID: 8300000, guid: 710eb6b6e80a34f2ba364ba048b9d6b3, type: 3}
   bulletSE: {fileID: 8300000, guid: 8e409f6c3df464f15bdc9d2cdbcad9a4, type: 3}
   enemyDieSE: {fileID: 8300000, guid: 837d7caff11944f50aedb453ea7b2faf, type: 3}
