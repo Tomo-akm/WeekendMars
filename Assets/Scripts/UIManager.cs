@@ -7,7 +7,10 @@ public class UIManager : MonoBehaviour
     [Header("Tower Placement")]
     public TowerPlacement TowerPlacement;
     public GameObject towerUIPanel;  // タワー選択パネル（TowerSelectPanel）
-    public TextMeshProUGUI towerCostText; // タワーコスト表示用（オプション）
+    public TextMeshProUGUI towerNameText;     // タワー名表示用
+    public TextMeshProUGUI towerStatsText;    // タワーステータス表示用
+    public TextMeshProUGUI towerCostText;     // タワーコスト表示用
+    public Button placeButton;                 // タワー配置ボタン
     private Vector2 selectedGridPosition;
     
     [Header("Tower Upgrade")]
@@ -24,6 +27,12 @@ public class UIManager : MonoBehaviour
         if (upgradeButton != null)
         {
             upgradeButton.onClick.AddListener(OnClickUpgradeButton);
+        }
+        
+        // 配置ボタンのイベント設定
+        if (placeButton != null)
+        {
+            placeButton.onClick.AddListener(OnClickPlaceButton);
         }
         
         // 初期状態でパネルを非表示
@@ -47,22 +56,51 @@ public class UIManager : MonoBehaviour
         {
             towerUIPanel.SetActive(true);
             
-            // タワーコストを表示（オプション）
-            if (towerCostText != null && TowerPlacement != null)
+            // タワー情報を表示
+            if (TowerPlacement != null && TowerPlacement.towerPrefab != null)
             {
-                int cost = TowerPlacement.GetTowerCost();
-                int currentMoney = GameManager.instance != null ? GameManager.instance.GetCurrentMoney() : 0;
+                TowerUpgrade towerUpgrade = TowerPlacement.towerPrefab.GetComponent<TowerUpgrade>();
                 
-                towerCostText.text = $"Cost: {cost}G (You have: {currentMoney}G)";
-                
-                // お金が足りない場合は赤色に
-                if (currentMoney < cost)
+                if (towerUpgrade != null && towerUpgrade.upgradeLevels != null && towerUpgrade.upgradeLevels.Length > 0)
                 {
-                    towerCostText.color = Color.red;
+                    UpgradeLevel firstLevel = towerUpgrade.upgradeLevels[0];
+                    
+                    // タワー名表示
+                    if (towerNameText != null)
+                    {
+                        towerNameText.text = $"レベル1: {firstLevel.levelName}";
+                    }
+                    
+                    // タワーステータス表示（1行）
+                    if (towerStatsText != null)
+                    {
+                        towerStatsText.text = $"威力: {firstLevel.damage}　射程距離: {firstLevel.detectionRange}　攻撃速度: {firstLevel.attackRate:F1}";
+                    }
                 }
-                else
+                
+                // タワーコストを表示
+                if (towerCostText != null)
                 {
-                    towerCostText.color = Color.white;
+                    int cost = TowerPlacement.GetTowerCost();
+                    int currentMoney = GameManager.instance != null ? GameManager.instance.GetCurrentMoney() : 0;
+                    
+                    towerCostText.text = $"コスト: {cost}G";
+                    
+                    // お金が足りない場合は赤色に
+                    if (currentMoney < cost)
+                    {
+                        towerCostText.color = Color.red;
+                        // 配置ボタンを無効化
+                        if (placeButton != null)
+                            placeButton.interactable = false;
+                    }
+                    else
+                    {
+                        towerCostText.color = Color.white;
+                        // 配置ボタンを有効化
+                        if (placeButton != null)
+                            placeButton.interactable = true;
+                    }
                 }
             }
         }
@@ -127,7 +165,7 @@ public class UIManager : MonoBehaviour
             // 現在のレベル情報を表示
             if (levelText != null)
             {
-                levelText.text = $"Level {currentLevel + 1}: {current.levelName}";
+                levelText.text = $"レベル{currentLevel + 1}: {current.levelName}";
             }
             
             // 次のレベルがある場合
@@ -135,16 +173,24 @@ public class UIManager : MonoBehaviour
             {
                 UpgradeLevel next = selectedTower.upgradeLevels[currentLevel + 1];
                 
+                // 次のレベル名を含めたテキスト表示
+                if (levelText != null)
+                {
+                    levelText.text = $"レベル{currentLevel + 1}: {current.levelName} => レベル{currentLevel + 2}: {next.levelName}";
+                }
+                
                 if (costText != null)
                 {
-                    costText.text = $"Upgrade Cost: {next.upgradeCost}G";
+                    costText.text = $"コスト: {next.upgradeCost}G";
                 }
                 
                 if (statsText != null)
                 {
-                    statsText.text = $"Attack Rate: {current.attackRate} → {next.attackRate}\n" +
-                                   $"Range: {current.detectionRange} → {next.detectionRange}\n" +
-                                   $"Damage: {current.damage} → {next.damage}";
+                    // 射程距離と攻撃速度の倍率を計算
+                    float rangeMultiplier = next.detectionRange / current.detectionRange;
+                    float attackRateMultiplier = next.attackRate / current.attackRate;
+                    
+                    statsText.text = $"威力: {current.damage} => {next.damage}　射程距離: {rangeMultiplier:F1}倍　攻撃速度: {attackRateMultiplier:F1}倍";
                 }
                 
                 // ボタンを有効化
@@ -162,14 +208,17 @@ public class UIManager : MonoBehaviour
             else
             {
                 // 最大レベルの場合
+                if (levelText != null)
+                {
+                    levelText.text = $"レベル{currentLevel + 1}: {current.levelName} (最大レベル)";
+                }
+                
                 if (costText != null)
-                    costText.text = "MAX LEVEL";
+                    costText.text = "最大レベル";
                     
                 if (statsText != null)
                 {
-                    statsText.text = $"Attack Rate: {current.attackRate}\n" +
-                                   $"Range: {current.detectionRange}\n" +
-                                   $"Damage: {current.damage}";
+                    statsText.text = $"威力: {current.damage}　射程距離: {current.detectionRange}　攻撃速度: {current.attackRate:F1}";
                 }
                 
                 // ボタンを無効化
