@@ -10,6 +10,9 @@ public class TowerPlacement : MonoBehaviour
     
     // タワーの最大数
     public int maxTowers = 5;
+
+    // タワーの価格
+    public int towerCost = 50;
     
     // 現在選択中のタワー
     private GameObject selectedTower = null;
@@ -68,7 +71,11 @@ public class TowerPlacement : MonoBehaviour
                     // 新規タワーを配置可能な場合
                     if (CanPlaceTower(mousePosition))
                     {
-                        PlaceTower(mousePosition);
+                        // お金をチェックしてタワーを配置
+                        if (TryPlaceTowerWithMoney(mousePosition))
+                        {
+                            Debug.Log("タワーを購入・配置しました（費用: " + towerCost + "G）");
+                        }
                     }
                     else
                     {
@@ -87,6 +94,33 @@ public class TowerPlacement : MonoBehaviour
         {
             selectedTower = null;
             Debug.Log("タワーの選択を解除しました");
+        }
+    }
+
+    // お金をチェックしてタワーを配置
+    bool TryPlaceTowerWithMoney(Vector2 position)
+    {        
+        // お金が足りるかチェック
+        if (GameManager.instance.GetCurrentMoney() >= towerCost)
+        {
+            // お金を消費してタワーを配置
+            if (GameManager.instance.SpendMoney(towerCost))
+            {
+                PlaceTower(position);
+                return true;
+            }
+            else
+            {
+                Debug.Log("お金の消費に失敗しました");
+                return false;
+            }
+        }
+        else
+        {
+            // お金が足りない
+            int shortage = towerCost - GameManager.instance.GetCurrentMoney();
+            Debug.Log("お金が足りません。必要: " + towerCost + "G, 不足: " + shortage + "G");
+            return false;
         }
     }
     
