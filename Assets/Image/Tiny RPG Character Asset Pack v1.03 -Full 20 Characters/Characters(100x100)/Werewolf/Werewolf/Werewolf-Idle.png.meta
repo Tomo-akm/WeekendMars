@@ -111,6 +111,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -259,7 +272,13 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Werewolf-Idle_0: 4565372846758268570
+      Werewolf-Idle_1: -5431055816626353104
+      Werewolf-Idle_2: 4981596948431694777
+      Werewolf-Idle_3: 7992208743141392169
+      Werewolf-Idle_4: 9217762701747348682
+      Werewolf-Idle_5: -8424546917131734541
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
