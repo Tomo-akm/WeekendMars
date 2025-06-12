@@ -104,5 +104,3 @@ crashlytics-build.properties
 # ビルドレポート
 BuildReport/
 *.buildreport
-
-.DS_Store
