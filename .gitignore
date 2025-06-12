@@ -72,5 +72,35 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# 2Dタワーディフェンス特有の設定
+/[Aa]ssets/[Ss]prites/[Tt]emp/
+/[Aa]ssets/[Tt]iles/[Tt]emp/
+/[Aa]ssets/[Pp]refabs/[Tt]emp/
+
+# モバイル開発関連
 .DS_Store
-Assets/.DS_Store
+*.swp
+.idea/
+
+# バックアップファイル
+*.bak
+*.backup
+*~
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# IDE固有の設定
+.idea/
+*.iml
+
+# テクスチャ作業ファイル
+*.psd
+*.ai
+*.sketch
+
+# ビルドレポート
+BuildReport/
+*.buildreport
