@@ -39,24 +39,22 @@ public class EnemyHealth : MonoBehaviour, IHealth
     {
         if (!IsAlive())
             return;
-
+            
         currentHealth -= damageAmount;
-
-        // 着弾音
-        SEPlayer.instance.PlaydamageSE();
-
+        
         // 0未満にならないように調整
         currentHealth = Mathf.Max(0, currentHealth);
-
+        
         // ヘルス変化イベントを発火
         onHealthChanged?.Invoke(currentHealth / maxHealth);
-
+        
         // 体力がゼロになったら死亡処理
         if (currentHealth <= 0)
         {
             Die();
         }
     }
+    
     // 死亡処理
     public void Die()
     {
@@ -66,19 +64,16 @@ public class EnemyHealth : MonoBehaviour, IHealth
             StopCoroutine(attackCoroutine);
             attackCoroutine = null;
         }
-
+        
         // 敵破壊イベントを発火
         onEnemyDestroyed?.Invoke();
-
+        
         // 敵を無効化または破壊
         Destroy(gameObject);
-        Debug.Log(gameObject + "が死亡しました");
+        Debug.Log(gameObject +"が死亡しました");
 
         // お金を追加
         GameManager.instance.AddMoney(moneyValue, transform.position);
-
-        // 死亡時にSEを鳴らす。
-        SEPlayer.instance.PlayEnemyDieSE();
     }
     
     // 生存確認

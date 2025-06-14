@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7006894105441625787}
   - component: {fileID: 2959531615969008035}
   - component: {fileID: 6166036370525039491}
-  - component: {fileID: -4607922500469826814}
+  - component: {fileID: 2835132458855391845}
   m_Layer: 0
   m_Name: Enemy-Werebear
   m_TagString: Enemy
@@ -190,7 +190,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
---- !u!114 &-4607922500469826814
+--- !u!114 &2835132458855391845
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -202,11 +202,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0421f07dc68f4f3ea8a2eea6f41199d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
+  maxHealth: 100
   currentHealth: 0
-  moneyValue: 10
-  baseDamage: 1
-  attackInterval: 2.5
+  moneyValue: 100
   onEnemyDestroyed:
     m_PersistentCalls:
       m_Calls: []
