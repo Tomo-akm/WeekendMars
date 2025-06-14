@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8647128802953008307}
   - component: {fileID: 1957028271867030274}
   - component: {fileID: -594626170704170373}
-  - component: {fileID: -3185611081773165164}
+  - component: {fileID: 2745777376422812439}
   m_Layer: 0
   m_Name: Enemy-Lancer
   m_TagString: Enemy
@@ -190,7 +190,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
---- !u!114 &-3185611081773165164
+--- !u!114 &2745777376422812439
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -202,9 +202,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0421f07dc68f4f3ea8a2eea6f41199d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 30
+  maxHealth: 50
   currentHealth: 0
-  moneyValue: 50
+  moneyValue: 10
+  baseDamage: 1
+  attackInterval: 2.5
   onEnemyDestroyed:
     m_PersistentCalls:
       m_Calls: []

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 439608541065339140}
   - component: {fileID: 8897800745041575171}
   - component: {fileID: 5962958084914086933}
-  - component: {fileID: -2545054258566517778}
+  - component: {fileID: -5995211876950782152}
   m_Layer: 0
   m_Name: Enemy-ArmoredOrc
   m_TagString: Enemy
@@ -189,8 +189,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5cbe1ee8a0c946ebb93efb5be4fb715, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4
---- !u!114 &-2545054258566517778
+  speed: 5
+--- !u!114 &-5995211876950782152
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -204,7 +204,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 50
   currentHealth: 0
-  moneyValue: 30
+  moneyValue: 10
+  baseDamage: 1
+  attackInterval: 2.5
   onEnemyDestroyed:
     m_PersistentCalls:
       m_Calls: []
