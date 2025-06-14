@@ -13,6 +13,6 @@ public class StartButton : MonoBehaviour
     void StartGame()
     {
         // map1Sceanに遷移
-        SceneManager.LoadScene("map1");
+        SceneManager.LoadScene("map1-25-06-05");
     }
 }
