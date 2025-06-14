@@ -71,6 +71,8 @@ public class GameManager : MonoBehaviour
 
         //　お金表示の更新
         UpdateMoneyDisplay();
+
+        // 
     }
 
     private void Update()
