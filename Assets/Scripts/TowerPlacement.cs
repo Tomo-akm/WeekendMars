@@ -17,7 +17,7 @@ public class TowerPlacement : MonoBehaviour
     void Start()
     {
         mainCamera = Camera.main;
-        uiManager = FindObjectOfType<UIManager>();
+        uiManager = FindFirstObjectByType<UIManager>();
         
         if (uiManager == null)
         {
@@ -77,7 +77,7 @@ public class TowerPlacement : MonoBehaviour
     // gridPositionに対応するGridCellを見つける
     private GridCell FindGridCellAtPosition(Vector2 gridPosition)
     {
-        GridCell[] allGridCells = FindObjectsOfType<GridCell>();
+        GridCell[] allGridCells = Object.FindObjectsByType<GridCell>(FindObjectsSortMode.None);
         
         foreach (GridCell cell in allGridCells)
         {

@@ -21,6 +21,7 @@ public class Tower : MonoBehaviour
         // アップグレードコンポーネントを取得
         upgradeComponent = GetComponent<TowerUpgrade>();
         
+
         Debug.Log("=== Tower初期化 ===");
         Debug.Log($"shotPrefab設定: {(shotPrefab != null ? shotPrefab.name : "未設定")}");
         Debug.Log($"検出範囲: {detectionRange}");
