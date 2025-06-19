@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2959531615969008035}
   - component: {fileID: 6166036370525039491}
   - component: {fileID: -4607922500469826814}
+  - component: {fileID: 8274060389961405612}
   m_Layer: 0
   m_Name: Enemy-Werebear
   m_TagString: Enemy
@@ -81,7 +82,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -195695515886222138, guid: d9620573831e8433fb6eacac99f0f52d, type: 3}
+  m_Sprite: {fileID: 4407900946912368253, guid: 379005890e05444dcb7359842e8806fb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
@@ -100,9 +101,9 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 155301253590587464}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c03ea78d0b98545dab8d11efbe5cd5d9, type: 2}
+  m_Controller: {fileID: 9100000, guid: 19c3b96de39854b898f5bcb9c4c56266, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -189,7 +190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5cbe1ee8a0c946ebb93efb5be4fb715, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
+  speed: 0.5
 --- !u!114 &-4607922500469826814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,3 +214,17 @@ MonoBehaviour:
   onHealthChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8274060389961405612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 155301253590587464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8625ff0735c464a7fb1b8c326d51fcb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stopThresholdPerSecond: 0.01
+  timeToAttack: 0.5

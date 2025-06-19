@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 4727957931026217713}
   - component: {fileID: 2901875214688563100}
   - component: {fileID: 2527648556836547865}
-  - component: {fileID: 8054121460796217312}
   - component: {fileID: -6105954437861989579}
+  - component: {fileID: 3150828392056851150}
+  - component: {fileID: -6746057447904544243}
   m_Layer: 0
   m_Name: Enemy-Soldier
   m_TagString: Untagged
@@ -32,7 +33,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -67.27474, y: -0.6732918, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -81,7 +82,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 4811190364059900513, guid: 4df8d2c8efbca4c6ea35f9cf7ec8b2c0, type: 3}
+  m_Sprite: {fileID: -3868812660829053132, guid: 0b8833509da9441aeab95926c6496829, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
@@ -100,9 +101,9 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8651512867643755484}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ca392460eb8184ea8b65a0e9c1eb0c20, type: 2}
+  m_Controller: {fileID: 9100000, guid: cf79903fd70a14151a81f4b236d049e4, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -177,19 +178,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &8054121460796217312
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8651512867643755484}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3083f16aff9474c7ebd7f9549211912b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 5
 --- !u!114 &-6105954437861989579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,3 +201,30 @@ MonoBehaviour:
   onHealthChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3150828392056851150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8651512867643755484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8625ff0735c464a7fb1b8c326d51fcb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stopThresholdPerSecond: 0.01
+  timeToAttack: 0.5
+--- !u!114 &-6746057447904544243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8651512867643755484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5cbe1ee8a0c946ebb93efb5be4fb715, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 3

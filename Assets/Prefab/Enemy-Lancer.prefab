@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1957028271867030274}
   - component: {fileID: -594626170704170373}
   - component: {fileID: 2745777376422812439}
+  - component: {fileID: 5869888387885628682}
   m_Layer: 0
   m_Name: Enemy-Lancer
   m_TagString: Enemy
@@ -81,7 +82,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 5522681744848178494, guid: 6181d5563800a4c36aec82876c962faa, type: 3}
+  m_Sprite: {fileID: 3272805312411629707, guid: 5a9fd65c92a0841fd90aff05eba0bf78, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
@@ -100,9 +101,9 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8854450383829684815}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b70659687ca714ef9a37bb4f47ba7ead, type: 2}
+  m_Controller: {fileID: 9100000, guid: 20613c781eef0409c8572f71799ea4b8, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -189,7 +190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5cbe1ee8a0c946ebb93efb5be4fb715, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 4
 --- !u!114 &2745777376422812439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,3 +214,17 @@ MonoBehaviour:
   onHealthChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5869888387885628682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8854450383829684815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8625ff0735c464a7fb1b8c326d51fcb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stopThresholdPerSecond: 0.01
+  timeToAttack: 0.5

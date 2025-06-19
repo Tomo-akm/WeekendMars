@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8897800745041575171}
   - component: {fileID: 5962958084914086933}
   - component: {fileID: -5995211876950782152}
+  - component: {fileID: -4101240715909122265}
   m_Layer: 0
   m_Name: Enemy-ArmoredOrc
   m_TagString: Enemy
@@ -31,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 2531541801472343890}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.274452, y: -2.3859842, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -81,7 +82,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -4391229105808040339, guid: 179b89b59adf246539ff28ffd21a5caa, type: 3}
+  m_Sprite: {fileID: 2912446813672376553, guid: 69e3872eed907427cbb9e1366abe6f49, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
@@ -100,9 +101,9 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2531541801472343890}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 04ec00069676f43b4b356ac2d1b25405, type: 2}
+  m_Controller: {fileID: 9100000, guid: f6b9186ad0fc14a688333bfd6d6c8695, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -189,7 +190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5cbe1ee8a0c946ebb93efb5be4fb715, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 2
 --- !u!114 &-5995211876950782152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,3 +214,17 @@ MonoBehaviour:
   onHealthChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &-4101240715909122265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2531541801472343890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8625ff0735c464a7fb1b8c326d51fcb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stopThresholdPerSecond: 0.01
+  timeToAttack: 0.5
