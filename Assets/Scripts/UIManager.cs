@@ -237,7 +237,7 @@ public class UIManager : MonoBehaviour
             TowerPlacement.PlaceTowerAtGrid(selectedGridPosition);
             
             // 配置したグリッドセルを占有状態にする
-            GridCell[] gridCells = FindObjectsOfType<GridCell>();
+            GridCell[] gridCells = Object.FindObjectsByType<GridCell>(FindObjectsSortMode.None);
             foreach (GridCell cell in gridCells)
             {
                 if (cell.gridPosition == selectedGridPosition)
