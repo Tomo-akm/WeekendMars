@@ -15,12 +15,13 @@ public class Tower : MonoBehaviour
     
     private float nextFireTime = 0f;    // 次回発射可能時間
 
+    private TowerUpgrade upgradeComponent;
     
     private void Start()
     {
         // アップグレードコンポーネントを取得
         upgradeComponent = GetComponent<TowerUpgrade>();
-        
+
         Debug.Log("=== Tower初期化 ===");
         Debug.Log($"shotPrefab設定: {(shotPrefab != null ? shotPrefab.name : "未設定")}");
         Debug.Log($"検出範囲: {detectionRange}");
