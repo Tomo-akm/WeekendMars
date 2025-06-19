@@ -10,6 +10,9 @@ public class Pause : MonoBehaviour
     public Image grayOverlay;
     public Button resumeButton;
     public Button titleButton;
+
+    [Header("Scene Names")]
+    [SerializeField] private string TitleSceneName = "GameStartScene";
     
     private bool isPaused = false;
     
@@ -112,7 +115,7 @@ public class Pause : MonoBehaviour
     public void GoToTitle()
     {
         Time.timeScale = 1f; // タイトルに戻る前に時間を正常に戻す
-        SceneManager.LoadScene("GameStartScene"); // タイトルシーンの名前に変更してください
+        SceneManager.LoadScene(TitleSceneName); // タイトルシーンの名前に変更してください
     }
     
     public bool IsPaused()
