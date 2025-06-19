@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2901875214688563100}
   - component: {fileID: 2527648556836547865}
   - component: {fileID: 8054121460796217312}
-  - component: {fileID: -6105954437861989579}
+  - component: {fileID: 2103441962646050971}
   m_Layer: 0
   m_Name: Enemy-Soldier
   m_TagString: Untagged
@@ -190,7 +190,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
---- !u!114 &-6105954437861989579
+--- !u!114 &2103441962646050971
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -205,8 +205,6 @@ MonoBehaviour:
   maxHealth: 50
   currentHealth: 0
   moneyValue: 10
-  baseDamage: 1
-  attackInterval: 2.5
   onEnemyDestroyed:
     m_PersistentCalls:
       m_Calls: []

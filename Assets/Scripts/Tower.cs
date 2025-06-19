@@ -8,14 +8,19 @@ public class Tower : MonoBehaviour
     public float attackRate = 1f;       // 攻撃頻度（秒間攻撃回数）
     public float detectionRange = 10f;  // 検出範囲
     public float shotSpeed = 12f;       // 弾の速度（敵より速く）
+    public float damage = 10f;          // ダメージ値（追加）
     
     [Header("デバッグ")]
     public bool showDebugInfo = true;   // デバッグ情報表示
     
     private float nextFireTime = 0f;    // 次回発射可能時間
+    private TowerUpgrade upgradeComponent; // アップグレードコンポーネント（追加）
     
     private void Start()
     {
+        // アップグレードコンポーネントを取得
+        upgradeComponent = GetComponent<TowerUpgrade>();
+        
         Debug.Log("=== Tower初期化 ===");
         Debug.Log($"shotPrefab設定: {(shotPrefab != null ? shotPrefab.name : "未設定")}");
         Debug.Log($"検出範囲: {detectionRange}");
@@ -83,7 +88,7 @@ public class Tower : MonoBehaviour
         Vector2 firePosition = firePoint.position;
         
         // 敵の速度を推定（左に移動していると仮定）
-        float enemySpeed = 3f; // EnemyManagementの速度
+        float enemySpeed = 3f;
         Vector2 enemyVelocity = new Vector2(-enemySpeed, 0f);
         
         // 弾が敵に到達する時間を計算
@@ -97,13 +102,6 @@ public class Tower : MonoBehaviour
         // 予測位置への方向を計算
         Vector2 fireDirection = (predictedPosition - firePosition).normalized;
         
-        // デバッグ情報
-        Debug.Log($"=== 予測射撃計算 ===");
-        Debug.Log($"敵の現在位置: {enemyPosition}");
-        Debug.Log($"敵の予測位置: {predictedPosition}");
-        Debug.Log($"射撃方向: {fireDirection}");
-        Debug.Log($"到達予定時間: {timeToReachEnemy}秒");
-        
         // 弾を生成
         GameObject shotObject = Instantiate(shotPrefab, firePosition, Quaternion.identity);
         
@@ -111,14 +109,30 @@ public class Tower : MonoBehaviour
         float angle = Mathf.Atan2(fireDirection.y, fireDirection.x) * Mathf.Rad2Deg;
         shotObject.transform.rotation = Quaternion.Euler(0, 0, angle);
         
-        // シンプル弾スクリプトを追加
+        // ダメージ値を取得
+        float shotDamage = damage;
+        if (upgradeComponent != null)
+        {
+            shotDamage = upgradeComponent.GetCurrentDamage();
+        }
+        
+        // デバッグ：ダメージ値を表示
+        Debug.Log($"[Tower] 弾を発射 - 設定ダメージ: {shotDamage}");
+        
+        // シンプル弾スクリプトを取得または追加
         PredictiveShot shot = shotObject.GetComponent<PredictiveShot>();
         if (shot == null)
         {
+            Debug.Log("[Tower] PredictiveShotコンポーネントが見つからないため追加");
             shot = shotObject.AddComponent<PredictiveShot>();
         }
+        else
+        {
+            Debug.Log("[Tower] 既存のPredictiveShotコンポーネントを使用");
+        }
         
-        shot.Initialize(fireDirection, shotSpeed);
+        // ダメージ値を含めて初期化
+        shot.Initialize(fireDirection, shotSpeed, shotDamage);
         
         // デバッグライン
         if (showDebugInfo)
