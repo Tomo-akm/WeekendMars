@@ -11,7 +11,7 @@ public class EnemyAnimation : MonoBehaviour
     void Start()
 
     {
-        animator = GetComponentInChildren<Animator>();  // ここを変更
+        animator = GetComponentInChildren<Animator>();  
         animator.SetBool("IsAttacking", false);
     }
 
