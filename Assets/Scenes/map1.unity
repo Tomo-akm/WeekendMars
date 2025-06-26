@@ -6617,7 +6617,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8616634494054f93ad76ac0feb06569, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 8854450383829684815, guid: 08cac7a4c849d40378bfa5194bba0675, type: 3}
+  enemyPrefab: {fileID: 3036886438907331829, guid: e69d6fa5ac2ec43dd84d97a92d910d5f, type: 3}
   spawnX: 10
   spawnY: -3.3
   spawnZ: -1
@@ -6762,7 +6762,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8616634494054f93ad76ac0feb06569, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 2531541801472343890, guid: b26bef48310be4f0ebdc09fe9bd6cb71, type: 3}
+  enemyPrefab: {fileID: 93292650710481563, guid: 68269c5c1190748d9b0c23f3a01b1b7f, type: 3}
   spawnX: 10
   spawnY: -3.3
   spawnZ: -1
@@ -8148,7 +8148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8616634494054f93ad76ac0feb06569, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 155301253590587464, guid: cbee112b698154a0b8e6103eec100911, type: 3}
+  enemyPrefab: {fileID: 1782369945890583436, guid: cf30bff869072473ebba2fd2119954b5, type: 3}
   spawnX: 10
   spawnY: -3.3
   spawnZ: -1
@@ -8400,7 +8400,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -754, y: 85.000015}
+  m_AnchoredPosition: {x: -754, y: 85}
   m_SizeDelta: {x: -1552.28, y: -581.91}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1500802294
