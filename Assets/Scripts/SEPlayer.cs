@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections; // IEnumerator型を使うため
 
 public class SEPlayer : MonoBehaviour
 {
@@ -18,6 +19,17 @@ public class SEPlayer : MonoBehaviour
         }
     }
     public AudioSource audioSource; //このスクリプトをアタッチするオブジェクト自身(SoundManager)
+
+    IEnumerator WaitAndPlayBGM(AudioClip SE, AudioClip BGM)
+    {
+        audioSource.PlayOneShot(SE);  // 効果音再生
+
+        // 効果音が終わるまで待つ
+        yield return new WaitWhile(() => audioSource.isPlaying);
+
+        // BGM再生
+        PlayBGM(BGM);
+    }
 
     // ここからBGM
     [SerializeField] private AudioSource bgmAudioSource;
@@ -46,11 +58,6 @@ public class SEPlayer : MonoBehaviour
     }
 
     [SerializeField] private AudioClip gameClearBGM;
-
-    public void PlayGameClearBGM()
-    {
-        PlayBGM(gameClearBGM);
-    }
 
     // ここから効果音
 
@@ -98,8 +105,8 @@ public class SEPlayer : MonoBehaviour
 
     // ゲームクリア効果音
     public AudioClip gameClearSE;
-    public void PlaygameClearSE()
+    public void PlaygameClearSE_BGM()
     {
-        audioSource.PlayOneShot(gameClearSE);
+        StartCoroutine(WaitAndPlayBGM(gameClearSE,gameClearBGM));
     }
 }

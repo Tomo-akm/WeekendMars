@@ -152,7 +152,8 @@ public class GameManager : MonoBehaviour
                 gameClearPanel.SetActive(true);
 
             // ゲームクリア効果音を再生
-            SEPlayer.instance.PlaygameClearSE();
+            SEPlayer.instance.StopBGM();
+            SEPlayer.instance.PlaygameClearSE_BGM();
 
             // シーン遷移
             StartCoroutine(LoadSceneAfterDelay(gameClearSceneName, sceneTransitionDelay));

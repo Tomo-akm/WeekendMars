@@ -8315,7 +8315,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a82464000abf456583f88329a1b2d97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameTime: 100
+  gameTime: 10
   playerMoney: 50
   moneyText: {fileID: 2103459051}
   timeText: {fileID: 0}
@@ -8400,7 +8400,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -754, y: 85.000015}
+  m_AnchoredPosition: {x: -754, y: 85}
   m_SizeDelta: {x: -1552.28, y: -581.91}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1500802294
