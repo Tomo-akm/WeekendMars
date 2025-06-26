@@ -2,126 +2,92 @@ using UnityEngine;
 
 public class TowerPlacement : MonoBehaviour
 {
-    // 配置するタワーのプレハブ
+    [Header("Tower Settings")]
     public GameObject towerPrefab;
-    
-    // タワー同士の最小距離
     public float minDistance = 1.0f;
+    public int maxTowers = 10;
+    public int towerCost = 10; // タワー配置のコスト
     
-    // タワーの最大数
-    public int maxTowers = 5;
-
-    // タワーの価格
-    public int towerCost = 50;
+    [Header("Placement Mode")]
+    public bool useGridCells = true; // グリッドセルを使用するかどうか
     
-    // 現在選択中のタワー
-    private GameObject selectedTower = null;
-    
-    // カメラ参照
     private Camera mainCamera;
+    private UIManager uiManager;
     
     void Start()
     {
-        // メインカメラを取得
         mainCamera = Camera.main;
+        uiManager = FindFirstObjectByType<UIManager>();
+        
+        if (uiManager == null)
+        {
+            Debug.LogError("UIManager not found in scene!");
+        }
     }
     
-    void Update()
+    // UIManagerから呼ばれる配置メソッド（グリッドセル使用時）
+    public void PlaceTowerAtGrid(Vector2 gridPosition)
     {
-        // マウスの位置をワールド座標に変換
-        Vector2 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-        
-        // 選択中のタワーがある場合、マウスに追従
-        if (selectedTower != null)
+        // お金をチェック
+        if (GameManager.instance == null)
         {
-            selectedTower.transform.position = new Vector3(mousePosition.x, mousePosition.y, 0);
+            Debug.LogError("GameManager.instance is null!");
+            return;
         }
         
-        // マウスの左ボタンがクリックされたとき
-        if (Input.GetMouseButtonDown(0))
+        if (GameManager.instance.GetCurrentMoney() < towerCost)
         {
-            // 選択中のタワーがある場合は配置
-            if (selectedTower != null)
-            {
-                if (CanPlaceTower(mousePosition))
-                {
-                    // タワーを配置
-                    selectedTower.transform.position = new Vector3(mousePosition.x, mousePosition.y, 0);
-                    selectedTower = null;
-                    Debug.Log("タワーを配置しました");
-                }
-                else
-                {
-                    Debug.Log("この位置にはタワーを配置できません");
-                }
-            }
-            else
-            {
-                // タワーを選択または新規配置
-                GameObject clickedTower = GetTowerAtPosition(mousePosition);
-                
-                if (clickedTower != null)
-                {
-                    // 既存のタワーを選択
-                    selectedTower = clickedTower;
-                    Debug.Log("タワーを選択しました");
-                }
-                else if (GetTowerCount() < maxTowers)
-                {
-                    // 新規タワーを配置可能な場合
-                    if (CanPlaceTower(mousePosition))
-                    {
-                        // お金をチェックしてタワーを配置
-                        if (TryPlaceTowerWithMoney(mousePosition))
-                        {
-                            Debug.Log("タワーを購入・配置しました（費用: " + towerCost + "G）");
-                        }
-                    }
-                    else
-                    {
-                        Debug.Log("この位置にはタワーを配置できません");
-                    }
-                }
-                else
-                {
-                    Debug.Log("タワーの最大数（" + maxTowers + "）に達しています");
-                }
-            }
+            Debug.Log("Not enough money to place tower!");
+            return;
         }
         
-        // 右クリックで選択キャンセル
-        if (Input.GetMouseButtonDown(1) && selectedTower != null)
+        // タワー数制限をチェック
+        if (GetTowerCount() >= maxTowers)
         {
-            selectedTower = null;
-            Debug.Log("タワーの選択を解除しました");
+            Debug.Log($"Maximum number of towers ({maxTowers}) reached!");
+            return;
+        }
+        
+        // 対応するGridCellを見つけて実際のtransform.positionを取得
+        GridCell targetCell = FindGridCellAtPosition(gridPosition);
+        if (targetCell == null)
+        {
+            Debug.LogError("GridCell not found at position: " + gridPosition);
+            return;
+        }
+        
+        Vector3 actualPosition = targetCell.transform.position;
+        
+        // 配置可能かチェック
+        if (!CanPlaceTower(actualPosition))
+        {
+            Debug.Log("Cannot place tower at this position!");
+            return;
+        }
+        
+        // お金を消費
+        if (GameManager.instance.SpendMoney(towerCost))
+        {
+            // タワーを実際の位置に配置
+            PlaceTower(actualPosition);
+            Debug.Log($"Tower placed! Cost: {towerCost}G");
         }
     }
 
-    // お金をチェックしてタワーを配置
-    bool TryPlaceTowerWithMoney(Vector2 position)
-    {        
-        // お金が足りるかチェック
-        if (GameManager.instance.GetCurrentMoney() >= towerCost)
+    // gridPositionに対応するGridCellを見つける
+    private GridCell FindGridCellAtPosition(Vector2 gridPosition)
+    {
+        GridCell[] allGridCells = Object.FindObjectsByType<GridCell>(FindObjectsSortMode.None);
+        
+        foreach (GridCell cell in allGridCells)
         {
-            // お金を消費してタワーを配置
-            if (GameManager.instance.SpendMoney(towerCost))
+            if (cell.gridPosition == gridPosition)
             {
-                PlaceTower(position);
-                return true;
-            }
-            else
-            {
-                Debug.Log("お金の消費に失敗しました");
-                return false;
+                return cell;
             }
         }
-        else
-        {
-            // お金が足りない
-            int shortage = towerCost - GameManager.instance.GetCurrentMoney();
-            Debug.Log("お金が足りません。必要: " + towerCost + "G, 不足: " + shortage + "G");
-            return false;
-        }
+        
+        return null;
     }
     
     // タワーを配置できるかチェック
@@ -133,57 +99,56 @@ public class TowerPlacement : MonoBehaviour
         // 既存のタワーとの距離をチェック
         foreach (GameObject tower in towers)
         {
-            if (tower != selectedTower) // 選択中のタワー以外をチェック
+            float distance = Vector2.Distance(tower.transform.position, position);
+            if (distance < minDistance)
             {
-                float distance = Vector2.Distance(tower.transform.position, position);
-                if (distance < minDistance)
-                {
-                    return false; // 近すぎるので配置不可
-                }
+                return false;
             }
         }
         
-        // 配置可能
+        // グリッドセルに既にタワーがあるかチェック
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(position, 0.1f);
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider.CompareTag("Tower"))
+            {
+                return false;
+            }
+        }
+        
         return true;
     }
-    
+
     // タワーを配置
-    void PlaceTower(Vector2 position)
+    public void PlaceTower(Vector2 position)
     {
         // タワーを指定位置に生成
         GameObject tower = Instantiate(towerPrefab, position, Quaternion.identity);
         
-        // タワーにTagを設定（検索用）
-        tower.tag = "Tower";
-        
-        Debug.Log("タワーを配置: " + position);
-    }
-    
-    // 指定位置にあるタワーを取得
-    GameObject GetTowerAtPosition(Vector2 position)
-    {
-        // すべてのタワーを取得
-        GameObject[] towers = GameObject.FindGameObjectsWithTag("Tower");
-        
-        // 一定の判定半径
-        float pickRadius = 0.5f;
-        
-        // 各タワーとの距離をチェック
-        foreach (GameObject tower in towers)
+        // タワーにTagを設定
+        if (tower.tag != "Tower")
         {
-            float distance = Vector2.Distance(tower.transform.position, position);
-            if (distance < pickRadius)
-            {
-                return tower;
-            }
+            tower.tag = "Tower";
         }
         
-        return null;
+        Debug.Log("Tower placed at: " + position);
     }
-
+    
     // 現在のタワー数を取得
     int GetTowerCount()
     {
         return GameObject.FindGameObjectsWithTag("Tower").Length;
+    }
+    
+    // タワー配置可能かチェック（UI表示用）
+    public bool CanAffordTower()
+    {
+        return GameManager.instance != null && GameManager.instance.GetCurrentMoney() >= towerCost;
+    }
+    
+    // タワーコストを取得（UI表示用）
+    public int GetTowerCost()
+    {
+        return towerCost;
     }
 }

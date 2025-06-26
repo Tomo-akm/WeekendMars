@@ -13,9 +13,14 @@ GameObject:
   - component: {fileID: 4727957931026217713}
   - component: {fileID: 2901875214688563100}
   - component: {fileID: 2527648556836547865}
+<<<<<<< HEAD
   - component: {fileID: -6105954437861989579}
   - component: {fileID: 3150828392056851150}
   - component: {fileID: -6746057447904544243}
+=======
+  - component: {fileID: 8054121460796217312}
+  - component: {fileID: 2103441962646050971}
+>>>>>>> main
   m_Layer: 0
   m_Name: Enemy-Soldier
   m_TagString: Untagged
@@ -178,7 +183,24 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+<<<<<<< HEAD
 --- !u!114 &-6105954437861989579
+=======
+--- !u!114 &8054121460796217312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8651512867643755484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3083f16aff9474c7ebd7f9549211912b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+--- !u!114 &2103441962646050971
+>>>>>>> main
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -193,8 +215,6 @@ MonoBehaviour:
   maxHealth: 50
   currentHealth: 0
   moneyValue: 10
-  baseDamage: 1
-  attackInterval: 2.5
   onEnemyDestroyed:
     m_PersistentCalls:
       m_Calls: []

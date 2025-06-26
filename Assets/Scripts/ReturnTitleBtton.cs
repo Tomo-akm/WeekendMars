@@ -13,6 +13,6 @@ public class ReturntitleButton : MonoBehaviour
     void StartGame()
     {
         // GameStartSceanに遷移
-        SceneManager.LoadScene("GameStartScean");
+        SceneManager.LoadScene("GameStartScene");
     }
 }
