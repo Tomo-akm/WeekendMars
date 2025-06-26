@@ -33,7 +33,7 @@ public class TowerUpgrade : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         
         // UIManagerを探す
-        uiManager = FindObjectOfType<UIManager>();
+        uiManager = FindFirstObjectByType<UIManager>();
         if (uiManager == null)
         {
             Debug.LogError("UIManager not found in scene!");

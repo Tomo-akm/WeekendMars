@@ -42,7 +42,7 @@ public class GridCell : MonoBehaviour
     
     private void Start()
     {
-        uiManager = FindObjectOfType<UIManager>();
+        uiManager = FindFirstObjectByType<UIManager>();
         if (uiManager == null)
         {
             Debug.LogError("UIManager not found in scene!");
