@@ -68,6 +68,12 @@ public class Pause : MonoBehaviour
     void PauseGame()
     {
         Time.timeScale = 0f; // ゲーム時間を停止
+
+        //ポーズボタンを無効化する 
+        if (pauseButton != null)
+        {
+            pauseButton.interactable = false;
+        }
         
         // グレーオーバーレイを表示
         if (grayOverlay != null)
@@ -87,7 +93,14 @@ public class Pause : MonoBehaviour
     void ResumeGame()
     {
         Time.timeScale = 1f; // ゲーム時間を再開
-        
+
+
+        //ポーズボタンを再度有効化する
+        if (pauseButton != null)
+        {
+            pauseButton.interactable = true;
+        }
+
         // グレーオーバーレイを非表示
         if (grayOverlay != null)
         {
