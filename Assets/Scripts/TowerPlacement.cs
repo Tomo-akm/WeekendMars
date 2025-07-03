@@ -45,6 +45,10 @@ public class TowerPlacement : MonoBehaviour
         if (GetTowerCount() >= maxTowers)
         {
             Debug.Log($"Maximum number of towers ({maxTowers}) reached!");
+            if (uiManager != null)
+            {
+                uiManager.ShowTowerLimitPopup(); // タワー上限ポップアップを表示
+            }
             return;
         }
         
@@ -134,8 +138,8 @@ public class TowerPlacement : MonoBehaviour
         Debug.Log("Tower placed at: " + position);
     }
     
-    // 現在のタワー数を取得
-    int GetTowerCount()
+    // 現在のタワー数を取得（外部からアクセス可能に変更）
+    public int GetTowerCount()
     {
         return GameObject.FindGameObjectsWithTag("Tower").Length;
     }
