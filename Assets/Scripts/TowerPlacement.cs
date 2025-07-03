@@ -128,12 +128,14 @@ public class TowerPlacement : MonoBehaviour
     {
         // タワーを指定位置に生成
         GameObject tower = Instantiate(towerPrefab, position, Quaternion.identity);
-        
         // タワーにTagを設定
         if (tower.tag != "Tower")
         {
             tower.tag = "Tower";
         }
+        // 画像の色をリセット（赤みや色の異常を防ぐ）
+        var sr = tower.GetComponent<SpriteRenderer>();
+        sr.color = Color.white;
         
         Debug.Log("Tower placed at: " + position);
     }

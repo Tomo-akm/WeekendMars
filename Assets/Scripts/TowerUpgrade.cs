@@ -63,26 +63,13 @@ public class TowerUpgrade : MonoBehaviour
     // 選択時のエフェクト
     private void SelectEffect()
     {
-        if (spriteRenderer != null && currentLevel < upgradeLevels.Length)
-        {
-            Color baseColor = upgradeLevels[currentLevel].towerColor;
-            // 色を明るくする
-            spriteRenderer.color = new Color(
-                Mathf.Min(baseColor.r * 1.2f, 1f),
-                Mathf.Min(baseColor.g * 1.2f, 1f),
-                Mathf.Min(baseColor.b * 1.2f, 1f),
-                baseColor.a
-            );
-        }
+        spriteRenderer.color = Color.white;
     }
     
     // 選択解除時のエフェクト
     public void DeselectEffect()
     {
-        if (spriteRenderer != null && currentLevel < upgradeLevels.Length)
-        {
-            spriteRenderer.color = upgradeLevels[currentLevel].towerColor;
-        }
+        spriteRenderer.color = Color.white;
     }
     
     // アップグレード試行（UIManagerから呼ばれる）
@@ -137,11 +124,8 @@ public class TowerUpgrade : MonoBehaviour
             spriteRenderer.sprite = upgrade.towerSprite;
         }
         
-        // 色を変更
-        if (spriteRenderer != null)
-        {
-            spriteRenderer.color = upgrade.towerColor;
-        }
+        // 色を常に白にリセット（赤みや色の異常を防ぐ）
+        spriteRenderer.color = Color.white;
     }
     
     private void PlayUpgradeEffect()
