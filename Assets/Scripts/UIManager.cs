@@ -312,6 +312,11 @@ public class UIManager : MonoBehaviour
     // 外部クリック時にパネルを閉じる
     private void Update()
     {
+        // アップグレードパネルが開いていて選択中のタワーがある場合、ボタン状態を常に更新
+        if (towerUpgradePanel != null && towerUpgradePanel.activeSelf && selectedTower != null)
+        {
+            UpdateUpgradeUI();
+        }
         if (Input.GetMouseButtonDown(0))
         {
             // UIをクリックしていない場合
