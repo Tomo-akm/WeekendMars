@@ -12,6 +12,7 @@ public class SEPlayer : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject); // シーンを越えて保持
+            audioSource.pitch = 1.0f;
         }
         else
         {
@@ -58,6 +59,11 @@ public class SEPlayer : MonoBehaviour
     }
 
     [SerializeField] private AudioClip gameClearBGM;
+    [SerializeField] private AudioClip gameOverBGM;
+    public void PlaygameOverBGM()
+    {
+        PlayBGM(gameOverBGM);
+    }
 
     // ここから効果音
 
@@ -96,12 +102,12 @@ public class SEPlayer : MonoBehaviour
         audioSource.PlayOneShot(placeTowerSE);
     }
 
-    // // タワーアップグレード音
-    // public AudioClip towerUpgradeSE;
-    // public void PlaytowerUpgradeSE()
-    // {
-    //     audioSource.PlayOneShot(towerUpgradeSE);
-    // }
+    // タワーアップグレード音
+    public AudioClip towerUpgradeSE;
+    public void PlaytowerUpgradeSE()
+    {
+        audioSource.PlayOneShot(towerUpgradeSE);
+    }
 
     // ゲームクリア効果音
     public AudioClip gameClearSE;

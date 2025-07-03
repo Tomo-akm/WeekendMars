@@ -132,6 +132,8 @@ public class GameManager : MonoBehaviour
 
             // シーン遷移
             StartCoroutine(LoadSceneAfterDelay(gameOverSceneName, sceneTransitionDelay));
+            SEPlayer.instance.StopBGM();
+            SEPlayer.instance.PlaygameOverBGM();
         }
     }
 
