@@ -24,7 +24,7 @@ public class Tower : MonoBehaviour
         Debug.Log("=== Tower初期化 ===");
         Debug.Log($"shotPrefab設定: {(shotPrefab != null ? shotPrefab.name : "未設定")}");
         Debug.Log($"検出範囲: {detectionRange}");
-        
+
         if (firePoint == null)
         {
             firePoint = transform;
@@ -37,17 +37,19 @@ public class Tower : MonoBehaviour
         if (Time.time >= nextFireTime)
         {
             GameObject nearestEnemy = FindNearestEnemy();
-            
+
             if (nearestEnemy != null)
             {
                 // 予測射撃で弾を発射
                 bool fireSuccess = FirePredictiveShot(nearestEnemy);
-                
+
                 if (fireSuccess)
                 {
                     nextFireTime = Time.time + (1f / attackRate);
                     Debug.Log($"予測射撃成功: 目標={nearestEnemy.name}");
                 }
+                // 効果音を再生
+                SEPlayer.instance.PlayBulletSE();
             }
         }
     }
