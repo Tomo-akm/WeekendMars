@@ -22,6 +22,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int playerMoney = 50; // プレイヤーの所持金
     [SerializeField] private TextMeshProUGUI moneyText; // お金表示用テキスト
 
+    //スコアシステム
+    [Header("Score System")]
+    private int score = 0; // 現在のスコア
+    [SerializeField] private TextMeshProUGUI scoreText; // スコア表示用テキスト
+
     // UI要素
     [Header("UI Elements")]
     [SerializeField] private TextMeshProUGUI timeText; // 時間表示テキスト
@@ -71,6 +76,9 @@ public class GameManager : MonoBehaviour
 
         //　お金表示の更新
         UpdateMoneyDisplay();
+
+        //スコア表示の更新
+        UpdateScoreDisplay();
 
         // 基本BGMの再生
         SEPlayer.instance.PlaydefaultBGM();
@@ -236,4 +244,26 @@ public class GameManager : MonoBehaviour
     {
         return playerMoney;
     }
+
+    //スコア表示を更新するメソッド
+    private void UpdateScoreDisplay()
+    {
+        if (scoreText != null)
+        {
+            // "Score: 100" のように表示
+            scoreText.text = "Score: " + score.ToString();
+        }
+    }
+
+    //スコアを加算するメソッド
+    public void AddScore(int amount)
+    {
+        if (!isGameOver && !isGameClear)
+        {
+            score += amount;
+            UpdateScoreDisplay();
+            Debug.Log(amount + "点を獲得！ 現在のスコア: " + score);
+        }
+    }
+
 }
