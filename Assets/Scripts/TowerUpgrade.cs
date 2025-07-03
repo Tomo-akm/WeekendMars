@@ -95,17 +95,19 @@ public class TowerUpgrade : MonoBehaviour
         }
             
         UpgradeLevel nextLevel = upgradeLevels[currentLevel + 1];
-        
+
         // お金を消費してアップグレード
         if (GameManager.instance.SpendMoney(nextLevel.upgradeCost))
         {
             currentLevel++;
             ApplyUpgrade(currentLevel);
-            
+
             Debug.Log($"Tower upgraded to level {currentLevel + 1}!");
-            
+
             // アップグレードエフェクトを再生
             PlayUpgradeEffect();
+            // 基本BGMの再生
+            SEPlayer.instance.PlaytowerUpgradeSE();
         }
         else
         {
