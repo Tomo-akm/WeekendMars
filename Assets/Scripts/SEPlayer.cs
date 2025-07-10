@@ -13,6 +13,7 @@ public class SEPlayer : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject); // シーンを越えて保持
             audioSource.pitch = 1.0f;
+            LoadVolume();
         }
         else
         {
@@ -114,5 +115,25 @@ public class SEPlayer : MonoBehaviour
     public void PlaygameClearSE_BGM()
     {
         StartCoroutine(WaitAndPlayBGM(gameClearSE,gameClearBGM));
+    }
+
+    // 音量を設定・保存する
+    public void SetVolume(float volume)
+    {
+        bgmAudioSource.volume = volume;
+        PlayerPrefs.SetFloat("Volume", volume);
+        PlayerPrefs.Save();
+    }
+
+    //現在の音量を取得するメソッド
+    public float GetVolume()
+    {
+        return bgmAudioSource.volume;
+    }
+
+    // 保存された音量を読み込む
+    private void LoadVolume()
+    {
+        bgmAudioSource.volume = PlayerPrefs.GetFloat("Volume", 1.0f);
     }
 }
