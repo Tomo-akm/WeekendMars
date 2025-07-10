@@ -14,6 +14,7 @@ public class UpgradeLevel
     public int upgradeCost = 50;
     public Sprite towerSprite;
     public Color towerColor = Color.white;
+    public float yOffset = 0f; // 手動Y補正（上に上げたい場合は正の値）
 }
 
 public class TowerUpgrade : MonoBehaviour
@@ -26,19 +27,33 @@ public class TowerUpgrade : MonoBehaviour
     private Tower towerComponent;
     private SpriteRenderer spriteRenderer;
     private UIManager uiManager;
+
+    private float baseY; // 設置時の基準Y座標
+    private float baseBottomY; // 設置時のスプライト下端ワールドY座標
+    private float baseCenterToBottom; // 設置時のスプライト中心から下端までの距離
+    private bool baseYInitialized = false;
     
     private void Start()
     {
         towerComponent = GetComponent<Tower>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        
-        // UIManagerを探す
         uiManager = FindFirstObjectByType<UIManager>();
         if (uiManager == null)
         {
             Debug.LogError("UIManager not found in scene!");
         }
-        
+        // 設置時のスプライト中心から下端までの距離を記録
+        if (upgradeLevels.Length > 0 && upgradeLevels[0].towerSprite != null)
+        {
+            Sprite s = upgradeLevels[0].towerSprite;
+            float spriteHeight = s.rect.height / s.pixelsPerUnit;
+            float pivotY = s.pivot.y / s.rect.height;
+            baseCenterToBottom = spriteHeight * pivotY;
+        }
+        else
+        {
+            baseCenterToBottom = 0f;
+        }
         // 初期レベルの設定を適用
         ApplyUpgrade(0);
     }
@@ -106,7 +121,6 @@ public class TowerUpgrade : MonoBehaviour
     {
         if (level < 0 || level >= upgradeLevels.Length)
             return;
-            
         UpgradeLevel upgrade = upgradeLevels[level];
         
         // タワーのパラメータを更新
@@ -122,8 +136,11 @@ public class TowerUpgrade : MonoBehaviour
         if (upgrade.towerSprite != null && spriteRenderer != null)
         {
             spriteRenderer.sprite = upgrade.towerSprite;
+            // Inspectorで設定したyOffsetのみでY座標を補正
+            if (Mathf.Abs(upgrade.yOffset) > 0.0001f) {
+                transform.position = new Vector3(transform.position.x, transform.position.y + upgrade.yOffset, transform.position.z);
+            }
         }
-        
         // 色を常に白にリセット（赤みや色の異常を防ぐ）
         spriteRenderer.color = Color.white;
     }
