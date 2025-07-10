@@ -11,6 +11,11 @@ public class Pause : MonoBehaviour
     public Button resumeButton;
     public Button titleButton;
 
+    [Header("オプション設定")]
+    public Button optionsButton;
+    public GameObject optionsPanel;
+    public Button backButton;
+
     [Header("Scene Names")]
     [SerializeField] private string TitleSceneName = "GameStartScene";
     
@@ -35,7 +40,19 @@ public class Pause : MonoBehaviour
         {
             titleButton.onClick.AddListener(GoToTitle);
         }
-        
+
+        // オプションボタンのクリックイベントを設定
+        if (optionsButton != null)
+        {
+            optionsButton.onClick.AddListener(OpenOptions);
+        }
+
+        //戻るボタンのクリックイベントを設定
+        if (backButton != null)
+        { 
+            backButton.onClick.AddListener(CloseOptions);
+        }
+
         // 開始時はポーズメニューを非表示
         if (pauseMenu != null)
         {
@@ -46,6 +63,12 @@ public class Pause : MonoBehaviour
         if (grayOverlay != null)
         {
             grayOverlay.gameObject.SetActive(false);
+        }
+
+        //開始時はオプションパネルを非表示に
+        if (optionsPanel != null)
+        {
+            optionsPanel.SetActive(false);
         }
     }
     
@@ -134,5 +157,19 @@ public class Pause : MonoBehaviour
     public bool IsPaused()
     {
         return isPaused;
+    }
+    
+    //オプションパネルを開くメソッド
+    void OpenOptions()
+    {
+        pauseMenu.SetActive(false);
+        optionsPanel.SetActive(true);
+    }
+
+    //オプションパネルを閉じるメソッド
+    void CloseOptions()
+    {
+        optionsPanel.SetActive(false);
+        pauseMenu.SetActive(true);
     }
 }
