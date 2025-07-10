@@ -32,6 +32,8 @@ public class TowerUpgrade : MonoBehaviour
     private float baseBottomY; // 設置時のスプライト下端ワールドY座標
     private float baseCenterToBottom; // 設置時のスプライト中心から下端までの距離
     private bool baseYInitialized = false;
+    // プレハブの初期スケールを保持
+    private Vector3 initialScale;
     
     private void Start()
     {
@@ -54,6 +56,8 @@ public class TowerUpgrade : MonoBehaviour
         {
             baseCenterToBottom = 0f;
         }
+        // ここで初期スケールを記録
+        initialScale = transform.localScale;
         // 初期レベルの設定を適用
         ApplyUpgrade(0);
     }
@@ -119,6 +123,8 @@ public class TowerUpgrade : MonoBehaviour
     
     private void ApplyUpgrade(int level)
     {
+        // プレハブの初期スケールにリセット
+        transform.localScale = initialScale;
         if (level < 0 || level >= upgradeLevels.Length)
             return;
         UpgradeLevel upgrade = upgradeLevels[level];
