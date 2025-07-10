@@ -116,10 +116,10 @@ TextureImporter:
       name: white-square_0
       rect:
         serializedVersion: 2
-        x: 44
-        y: 37
-        width: 251
-        height: 261
+        x: 35
+        y: 34
+        width: 269
+        height: 268
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
