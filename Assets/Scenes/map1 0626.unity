@@ -156,7 +156,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -345.08, y: -53.890015}
+  m_AnchoredPosition: {x: -345.07996, y: -53.890015}
   m_SizeDelta: {x: 1085.63, y: 554}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &28233006
@@ -176,6 +176,10 @@ MonoBehaviour:
   grayOverlay: {fileID: 1213946254}
   resumeButton: {fileID: 1959648220}
   titleButton: {fileID: 1765038891}
+  optionsButton: {fileID: 0}
+  optionsPanel: {fileID: 0}
+  backButton: {fileID: 0}
+  TitleSceneName: GameStartScene
 --- !u!114 &28233007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1542,11 +1546,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3752750562590229128, guid: b793ffbc13a9f4aa5a720ebfbd84cfe6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.93
+      value: -3.26
       objectReference: {fileID: 0}
     - target: {fileID: 3752750562590229128, guid: b793ffbc13a9f4aa5a720ebfbd84cfe6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.5
+      value: -0.98
       objectReference: {fileID: 0}
     - target: {fileID: 3752750562590229128, guid: b793ffbc13a9f4aa5a720ebfbd84cfe6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8468,6 +8472,7 @@ MonoBehaviour:
   gameTime: 300
   playerMoney: 50
   moneyText: {fileID: 2103459051}
+  scoreText: {fileID: 0}
   timeText: {fileID: 0}
   gameOverPanel: {fileID: 0}
   gameClearPanel: {fileID: 0}
@@ -8581,7 +8586,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -753.9998, y: 85}
+  m_AnchoredPosition: {x: -753.99976, y: 85}
   m_SizeDelta: {x: -1552.28, y: -581.91}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1478147962
@@ -8621,7 +8626,7 @@ MonoBehaviour:
     - enemyPrefab: {fileID: 7414725698698233740, guid: b5ef2626112834071bad53a1d0a4a72b, type: 3}
       count: 1
       spawnInterval: 20
-    - enemyPrefab: {fileID: 4935147991203066257, guid: a03aeb4a615b24e579828c039db416bf, type: 3}
+    - enemyPrefab: {fileID: 7422311129471498061, guid: bf111d3b373644e7e9b9241a9b0c2fa3, type: 3}
       count: 4
       spawnInterval: 5
   - enemies:
@@ -8676,7 +8681,7 @@ MonoBehaviour:
     - enemyPrefab: {fileID: 93292650710481563, guid: 68269c5c1190748d9b0c23f3a01b1b7f, type: 3}
       count: 1
       spawnInterval: 8
-    - enemyPrefab: {fileID: 4935147991203066257, guid: a03aeb4a615b24e579828c039db416bf, type: 3}
+    - enemyPrefab: {fileID: 7422311129471498061, guid: bf111d3b373644e7e9b9241a9b0c2fa3, type: 3}
       count: 2
       spawnInterval: 8
     - enemyPrefab: {fileID: 3036886438907331829, guid: e69d6fa5ac2ec43dd84d97a92d910d5f, type: 3}
@@ -9290,11 +9295,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3752750562590229128, guid: b793ffbc13a9f4aa5a720ebfbd84cfe6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.41
+      value: -0.17
       objectReference: {fileID: 0}
     - target: {fileID: 3752750562590229128, guid: b793ffbc13a9f4aa5a720ebfbd84cfe6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.93
+      value: -0.98
       objectReference: {fileID: 0}
     - target: {fileID: 3752750562590229128, guid: b793ffbc13a9f4aa5a720ebfbd84cfe6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -10846,11 +10851,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3752750562590229128, guid: b793ffbc13a9f4aa5a720ebfbd84cfe6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.8
+      value: -4.83
       objectReference: {fileID: 0}
     - target: {fileID: 3752750562590229128, guid: b793ffbc13a9f4aa5a720ebfbd84cfe6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.86
+      value: -0.98
       objectReference: {fileID: 0}
     - target: {fileID: 3752750562590229128, guid: b793ffbc13a9f4aa5a720ebfbd84cfe6, type: 3}
       propertyPath: m_LocalPosition.z
