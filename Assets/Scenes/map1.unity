@@ -156,7 +156,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -345.08008, y: -53.89003}
+  m_AnchoredPosition: {x: -345.08008, y: -53.890015}
   m_SizeDelta: {x: 1085.63, y: 554}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &28233006
@@ -279,7 +279,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 29983873}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TowerCells
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -306,7 +306,7 @@ Transform:
   - {fileID: 963894886}
   - {fileID: 592666737}
   - {fileID: 2076369946}
-  - {fileID: 1093230324}
+  - {fileID: 1769555377}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &31028448
@@ -1802,6 +1802,10 @@ PrefabInstance:
     - target: {fileID: 8880612247501927844, guid: b793ffbc13a9f4aa5a720ebfbd84cfe6, type: 3}
       propertyPath: m_Name
       value: TowerCell (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8880612247501927844, guid: b793ffbc13a9f4aa5a720ebfbd84cfe6, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6590,6 +6594,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TowerCell (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 8880612247501927844, guid: b793ffbc13a9f4aa5a720ebfbd84cfe6, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6693,6 +6701,10 @@ PrefabInstance:
     - target: {fileID: 8880612247501927844, guid: b793ffbc13a9f4aa5a720ebfbd84cfe6, type: 3}
       propertyPath: m_Name
       value: TowerCell (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8880612247501927844, guid: b793ffbc13a9f4aa5a720ebfbd84cfe6, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6828,6 +6840,10 @@ PrefabInstance:
     - target: {fileID: 8880612247501927844, guid: b793ffbc13a9f4aa5a720ebfbd84cfe6, type: 3}
       propertyPath: m_Name
       value: TowerCell (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8880612247501927844, guid: b793ffbc13a9f4aa5a720ebfbd84cfe6, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7977,6 +7993,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TowerCell (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 8880612247501927844, guid: b793ffbc13a9f4aa5a720ebfbd84cfe6, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8848,6 +8868,8 @@ RectTransform:
   - {fileID: 2103459053}
   - {fileID: 53736602}
   - {fileID: 360972998}
+  - {fileID: 661406825}
+  - {fileID: 961102808}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -9209,6 +9231,10 @@ PrefabInstance:
     - target: {fileID: 8880612247501927844, guid: b793ffbc13a9f4aa5a720ebfbd84cfe6, type: 3}
       propertyPath: m_Name
       value: TowerCell (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8880612247501927844, guid: b793ffbc13a9f4aa5a720ebfbd84cfe6, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9660,6 +9686,11 @@ RectTransform:
   m_AnchoredPosition: {x: -22.160034, y: -27.752975}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!4 &1769555377 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3752750562590229128, guid: b793ffbc13a9f4aa5a720ebfbd84cfe6, type: 3}
+  m_PrefabInstance: {fileID: 483255845}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1773093950
 GameObject:
   m_ObjectHideFlags: 0
@@ -10018,6 +10049,10 @@ PrefabInstance:
     - target: {fileID: 8880612247501927844, guid: b793ffbc13a9f4aa5a720ebfbd84cfe6, type: 3}
       propertyPath: m_Name
       value: TowerCell (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8880612247501927844, guid: b793ffbc13a9f4aa5a720ebfbd84cfe6, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10918,6 +10953,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TowerCell
       objectReference: {fileID: 0}
+    - target: {fileID: 8880612247501927844, guid: b793ffbc13a9f4aa5a720ebfbd84cfe6, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10936,4 +10975,3 @@ SceneRoots:
   - {fileID: 1986386623}
   - {fileID: 36182286}
   - {fileID: 29983873}
-  - {fileID: 1067497918}
