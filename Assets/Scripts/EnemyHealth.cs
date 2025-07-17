@@ -14,6 +14,9 @@ public class EnemyHealth : MonoBehaviour, IHealth
     [Header("攻撃設定")]
     [SerializeField] private int baseDamage = 1; // 拠点に与えるダメージ
     [SerializeField] private float attackInterval = 2.5f; // 攻撃間隔（秒）
+
+    [Header("スコア")]
+    [SerializeField] private int scoreValue = 100;
  
     // 敵が倒されたときのイベント
     public UnityEvent onEnemyDestroyed;
@@ -76,6 +79,9 @@ public class EnemyHealth : MonoBehaviour, IHealth
 
         // お金を追加
         GameManager.instance.AddMoney(moneyValue, transform.position);
+
+        //スコアを加算
+        GameManager.instance.AddScore(scoreValue);
 
         // 死亡時にSEを鳴らす。
         SEPlayer.instance.PlayEnemyDieSE();

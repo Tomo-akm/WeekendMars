@@ -14,14 +14,12 @@ public class Tower : MonoBehaviour
     public bool showDebugInfo = true;   // デバッグ情報表示
     
     private float nextFireTime = 0f;    // 次回発射可能時間
-
-    private TowerUpgrade upgradeComponent;
+    private TowerUpgrade upgradeComponent; // アップグレードコンポーネント（追加）
     
     private void Start()
     {
         // アップグレードコンポーネントを取得
         upgradeComponent = GetComponent<TowerUpgrade>();
-
         
         Debug.Log("=== Tower初期化 ===");
         Debug.Log($"shotPrefab設定: {(shotPrefab != null ? shotPrefab.name : "未設定")}");
@@ -51,7 +49,10 @@ public class Tower : MonoBehaviour
                     Debug.Log($"予測射撃成功: 目標={nearestEnemy.name}");
                 }
                 // 効果音を再生
-                SEPlayer.instance.PlayBulletSE();
+                if (SEPlayer.instance != null)
+                {
+                    SEPlayer.instance.PlayBulletSE();
+                }
             }
         }
     }

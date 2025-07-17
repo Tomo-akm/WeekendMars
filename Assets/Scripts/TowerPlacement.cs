@@ -17,7 +17,7 @@ public class TowerPlacement : MonoBehaviour
     void Start()
     {
         mainCamera = Camera.main;
-        uiManager = FindFirstObjectByType<UIManager>();
+        uiManager = FindObjectOfType<UIManager>();
         
         if (uiManager == null)
         {
@@ -45,6 +45,10 @@ public class TowerPlacement : MonoBehaviour
         if (GetTowerCount() >= maxTowers)
         {
             Debug.Log($"Maximum number of towers ({maxTowers}) reached!");
+            if (uiManager != null)
+            {
+                uiManager.ShowTowerLimitPopup(); // タワー上限ポップアップを表示
+            }
             return;
         }
         
@@ -77,7 +81,7 @@ public class TowerPlacement : MonoBehaviour
     // gridPositionに対応するGridCellを見つける
     private GridCell FindGridCellAtPosition(Vector2 gridPosition)
     {
-        GridCell[] allGridCells = Object.FindObjectsByType<GridCell>(FindObjectsSortMode.None);
+        GridCell[] allGridCells = FindObjectsOfType<GridCell>();
         
         foreach (GridCell cell in allGridCells)
         {
@@ -124,18 +128,20 @@ public class TowerPlacement : MonoBehaviour
     {
         // タワーを指定位置に生成
         GameObject tower = Instantiate(towerPrefab, position, Quaternion.identity);
-        
         // タワーにTagを設定
         if (tower.tag != "Tower")
         {
             tower.tag = "Tower";
         }
+        // 画像の色をリセット（赤みや色の異常を防ぐ）
+        var sr = tower.GetComponent<SpriteRenderer>();
+        sr.color = Color.white;
         
         Debug.Log("Tower placed at: " + position);
     }
     
-    // 現在のタワー数を取得
-    int GetTowerCount()
+    // 現在のタワー数を取得（外部からアクセス可能に変更）
+    public int GetTowerCount()
     {
         return GameObject.FindGameObjectsWithTag("Tower").Length;
     }

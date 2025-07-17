@@ -10,6 +10,14 @@ public class Pause : MonoBehaviour
     public Image grayOverlay;
     public Button resumeButton;
     public Button titleButton;
+
+    [Header("オプション設定")]
+    public Button optionsButton;
+    public GameObject optionsPanel;
+    public Button backButton;
+
+    [Header("Scene Names")]
+    [SerializeField] private string TitleSceneName = "GameStartScene";
     
     private bool isPaused = false;
     
@@ -32,7 +40,19 @@ public class Pause : MonoBehaviour
         {
             titleButton.onClick.AddListener(GoToTitle);
         }
-        
+
+        // オプションボタンのクリックイベントを設定
+        if (optionsButton != null)
+        {
+            optionsButton.onClick.AddListener(OpenOptions);
+        }
+
+        //戻るボタンのクリックイベントを設定
+        if (backButton != null)
+        { 
+            backButton.onClick.AddListener(CloseOptions);
+        }
+
         // 開始時はポーズメニューを非表示
         if (pauseMenu != null)
         {
@@ -43,6 +63,12 @@ public class Pause : MonoBehaviour
         if (grayOverlay != null)
         {
             grayOverlay.gameObject.SetActive(false);
+        }
+
+        //開始時はオプションパネルを非表示に
+        if (optionsPanel != null)
+        {
+            optionsPanel.SetActive(false);
         }
     }
     
@@ -65,6 +91,12 @@ public class Pause : MonoBehaviour
     void PauseGame()
     {
         Time.timeScale = 0f; // ゲーム時間を停止
+
+        //ポーズボタンを無効化する 
+        if (pauseButton != null)
+        {
+            pauseButton.interactable = false;
+        }
         
         // グレーオーバーレイを表示
         if (grayOverlay != null)
@@ -84,7 +116,14 @@ public class Pause : MonoBehaviour
     void ResumeGame()
     {
         Time.timeScale = 1f; // ゲーム時間を再開
-        
+
+
+        //ポーズボタンを再度有効化する
+        if (pauseButton != null)
+        {
+            pauseButton.interactable = true;
+        }
+
         // グレーオーバーレイを非表示
         if (grayOverlay != null)
         {
@@ -112,11 +151,25 @@ public class Pause : MonoBehaviour
     public void GoToTitle()
     {
         Time.timeScale = 1f; // タイトルに戻る前に時間を正常に戻す
-        SceneManager.LoadScene("GameStartScene"); // タイトルシーンの名前に変更してください
+        SceneManager.LoadScene(TitleSceneName); // タイトルシーンの名前に変更してください
     }
     
     public bool IsPaused()
     {
         return isPaused;
+    }
+    
+    //オプションパネルを開くメソッド
+    void OpenOptions()
+    {
+        pauseMenu.SetActive(false);
+        optionsPanel.SetActive(true);
+    }
+
+    //オプションパネルを閉じるメソッド
+    void CloseOptions()
+    {
+        optionsPanel.SetActive(false);
+        pauseMenu.SetActive(true);
     }
 }

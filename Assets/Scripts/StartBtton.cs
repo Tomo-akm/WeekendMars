@@ -4,6 +4,9 @@ using UnityEngine.SceneManagement;
 
 public class StartButton : MonoBehaviour
 {
+     [Header("Scene Names")]
+     [SerializeField] private string gameSceneName = "map1";
+
     void Start()
     {
         // タイトルBGMを再生
@@ -14,7 +17,6 @@ public class StartButton : MonoBehaviour
 
     void StartGame()
     {
-        // 指定のSceanに遷移
-        SceneManager.LoadScene("map1");
+        SceneManager.LoadScene(gameSceneName);
     }
 }

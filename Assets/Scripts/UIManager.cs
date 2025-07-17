@@ -21,6 +21,12 @@ public class UIManager : MonoBehaviour
     public Button upgradeButton;
     private TowerUpgrade selectedTower;
     
+    [Header("Tower Limit Popup")]
+    public GameObject towerLimitPopupPanel; // タワー上限ポップアップ用パネル
+    public TextMeshProUGUI towerLimitPopupText; // ポップアップメッセージ用
+    public float popupDuration = 2f; // ポップアップ表示時間（秒）
+    private Coroutine popupCoroutine;
+    
     private void Start()
     {
         // アップグレードボタンのイベント設定
@@ -40,6 +46,8 @@ public class UIManager : MonoBehaviour
             towerUIPanel.SetActive(false);
         if (towerUpgradePanel != null)
             towerUpgradePanel.SetActive(false);
+        if (towerLimitPopupPanel != null)
+            towerLimitPopupPanel.SetActive(false);
     }
     
     // グリッドクリック時（タワー配置用）
@@ -54,6 +62,15 @@ public class UIManager : MonoBehaviour
         // タワー選択パネルを表示
         if (towerUIPanel != null)
         {
+            // タワー数上限チェック
+            if (TowerPlacement != null && TowerPlacement.GetTowerCount() >= TowerPlacement.maxTowers)
+            {
+                ShowTowerLimitPopup();
+                if (towerUIPanel != null)
+                    towerUIPanel.SetActive(false);
+                return;
+            }
+            
             towerUIPanel.SetActive(true);
             
             // タワー情報を表示
@@ -237,7 +254,7 @@ public class UIManager : MonoBehaviour
             TowerPlacement.PlaceTowerAtGrid(selectedGridPosition);
             
             // 配置したグリッドセルを占有状態にする
-            GridCell[] gridCells = Object.FindObjectsByType<GridCell>(FindObjectsSortMode.None);
+            GridCell[] gridCells = FindObjectsOfType<GridCell>();
             foreach (GridCell cell in gridCells)
             {
                 if (cell.gridPosition == selectedGridPosition)
@@ -277,6 +294,8 @@ public class UIManager : MonoBehaviour
             towerUIPanel.SetActive(false);
         if (towerUpgradePanel != null)
             towerUpgradePanel.SetActive(false);
+        if (towerLimitPopupPanel != null)
+            towerLimitPopupPanel.SetActive(false);
             
         // 選択されていたタワーの選択エフェクトを解除
         if (selectedTower != null)
@@ -293,6 +312,11 @@ public class UIManager : MonoBehaviour
     // 外部クリック時にパネルを閉じる
     private void Update()
     {
+        // アップグレードパネルが開いていて選択中のタワーがある場合、ボタン状態を常に更新
+        if (towerUpgradePanel != null && towerUpgradePanel.activeSelf && selectedTower != null)
+        {
+            UpdateUpgradeUI();
+        }
         if (Input.GetMouseButtonDown(0))
         {
             // UIをクリックしていない場合
@@ -314,5 +338,24 @@ public class UIManager : MonoBehaviour
     private bool IsPointerOverUIElement()
     {
         return UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
+    }
+
+    // タワー上限エラーポップアップ表示
+    public void ShowTowerLimitPopup()
+    {
+        if (towerLimitPopupPanel != null && towerLimitPopupText != null)
+        {
+            towerLimitPopupText.text = $"タワーは{TowerPlacement.maxTowers}個までしか置けません";
+            towerLimitPopupPanel.SetActive(true);
+            if (popupCoroutine != null) StopCoroutine(popupCoroutine);
+            popupCoroutine = StartCoroutine(HideTowerLimitPopupAfterDelay());
+        }
+    }
+
+    private System.Collections.IEnumerator HideTowerLimitPopupAfterDelay()
+    {
+        yield return new WaitForSeconds(popupDuration);
+        if (towerLimitPopupPanel != null)
+            towerLimitPopupPanel.SetActive(false);
     }
 }
