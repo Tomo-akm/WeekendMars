@@ -101,7 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 50
   currentHealth: 0
-  moneyValue: 10
+  moneyValue: 5
   baseDamage: 1
   attackInterval: 2.5
   onEnemyDestroyed:

@@ -156,7 +156,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -345.07996, y: -53.890015}
+  m_AnchoredPosition: {x: -345.08, y: -53.890015}
   m_SizeDelta: {x: 1085.63, y: 554}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &28233006
@@ -1542,11 +1542,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3752750562590229128, guid: b793ffbc13a9f4aa5a720ebfbd84cfe6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.29
+      value: -3.93
       objectReference: {fileID: 0}
     - target: {fileID: 3752750562590229128, guid: b793ffbc13a9f4aa5a720ebfbd84cfe6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.9805711
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 3752750562590229128, guid: b793ffbc13a9f4aa5a720ebfbd84cfe6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8465,7 +8465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a82464000abf456583f88329a1b2d97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameTime: 100
+  gameTime: 300
   playerMoney: 50
   moneyText: {fileID: 2103459051}
   timeText: {fileID: 0}
@@ -8581,7 +8581,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -753.99976, y: 85}
+  m_AnchoredPosition: {x: -753.9998, y: 85}
   m_SizeDelta: {x: -1552.28, y: -581.91}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1478147962
@@ -8617,71 +8617,84 @@ MonoBehaviour:
   - enemies:
     - enemyPrefab: {fileID: 6574550427933766891, guid: 325c521b2e3454748b4388c4d0a25944, type: 3}
       count: 15
-      spawnInterval: 1
+      spawnInterval: 2
+    - enemyPrefab: {fileID: 7414725698698233740, guid: b5ef2626112834071bad53a1d0a4a72b, type: 3}
+      count: 1
+      spawnInterval: 20
+    - enemyPrefab: {fileID: 4935147991203066257, guid: a03aeb4a615b24e579828c039db416bf, type: 3}
+      count: 4
+      spawnInterval: 5
   - enemies:
     - enemyPrefab: {fileID: 6574550427933766891, guid: 325c521b2e3454748b4388c4d0a25944, type: 3}
-      count: 20
-      spawnInterval: 1
+      count: 15
+      spawnInterval: 2
     - enemyPrefab: {fileID: 3614473934037183965, guid: 5527e1ac0cc9d429f94195e479cd84d4, type: 3}
-      count: 5
-      spawnInterval: 3
+      count: 4
+      spawnInterval: 5
     - enemyPrefab: {fileID: 3036886438907331829, guid: e69d6fa5ac2ec43dd84d97a92d910d5f, type: 3}
       count: 3
+      spawnInterval: 6
+    - enemyPrefab: {fileID: 7414725698698233740, guid: b5ef2626112834071bad53a1d0a4a72b, type: 3}
+      count: 2
+      spawnInterval: 10
+  - enemies:
+    - enemyPrefab: {fileID: 6574550427933766891, guid: 325c521b2e3454748b4388c4d0a25944, type: 3}
+      count: 15
+      spawnInterval: 2
+    - enemyPrefab: {fileID: 3614473934037183965, guid: 5527e1ac0cc9d429f94195e479cd84d4, type: 3}
+      count: 1
+      spawnInterval: 1
+    - enemyPrefab: {fileID: 3036886438907331829, guid: e69d6fa5ac2ec43dd84d97a92d910d5f, type: 3}
+      count: 5
       spawnInterval: 4
+    - enemyPrefab: {fileID: 93292650710481563, guid: 68269c5c1190748d9b0c23f3a01b1b7f, type: 3}
+      count: 2
+      spawnInterval: 10
+    - enemyPrefab: {fileID: 7414725698698233740, guid: b5ef2626112834071bad53a1d0a4a72b, type: 3}
+      count: 2
+      spawnInterval: 10
+    - enemyPrefab: {fileID: 4296652245567694320, guid: b39c67a5f9ee34cffb55e8bfee511bab, type: 3}
+      count: 3
+      spawnInterval: 8
+  - enemies:
     - enemyPrefab: {fileID: 1782369945890583436, guid: cf30bff869072473ebba2fd2119954b5, type: 3}
       count: 1
-      spawnInterval: 15
-  - enemies:
-    - enemyPrefab: {fileID: 6574550427933766891, guid: 325c521b2e3454748b4388c4d0a25944, type: 3}
-      count: 20
       spawnInterval: 1
-    - enemyPrefab: {fileID: 3614473934037183965, guid: 5527e1ac0cc9d429f94195e479cd84d4, type: 3}
-      count: 5
-      spawnInterval: 6
-    - enemyPrefab: {fileID: 3036886438907331829, guid: e69d6fa5ac2ec43dd84d97a92d910d5f, type: 3}
-      count: 5
-      spawnInterval: 8
-    - enemyPrefab: {fileID: 93292650710481563, guid: 68269c5c1190748d9b0c23f3a01b1b7f, type: 3}
-      count: 5
-      spawnInterval: 9
     - enemyPrefab: {fileID: 7414725698698233740, guid: b5ef2626112834071bad53a1d0a4a72b, type: 3}
+      count: 5
+      spawnInterval: 4
+    - enemyPrefab: {fileID: 5098713156560206207, guid: 40302b23f38c244dcb9acbfdc81ce2cf, type: 3}
+      count: 2
+      spawnInterval: 15
+    - enemyPrefab: {fileID: 5508149317081903338, guid: e0dbc1bd05871429a993316ef19118a2, type: 3}
       count: 3
-      spawnInterval: 1
+      spawnInterval: 10
   - enemies:
     - enemyPrefab: {fileID: 5098713156560206207, guid: 40302b23f38c244dcb9acbfdc81ce2cf, type: 3}
-      count: 1
-      spawnInterval: 0
+      count: 4
+      spawnInterval: 8
     - enemyPrefab: {fileID: 93292650710481563, guid: 68269c5c1190748d9b0c23f3a01b1b7f, type: 3}
       count: 1
-      spawnInterval: 2
-    - enemyPrefab: {fileID: 4296652245567694320, guid: b39c67a5f9ee34cffb55e8bfee511bab, type: 3}
-      count: 1
-      spawnInterval: 4
-    - enemyPrefab: {fileID: 4935147991203066257, guid: a03aeb4a615b24e579828c039db416bf, type: 3}
-      count: 1
       spawnInterval: 8
-    - enemyPrefab: {fileID: 5508149317081903338, guid: e0dbc1bd05871429a993316ef19118a2, type: 3}
-      count: 1
-      spawnInterval: 10
+    - enemyPrefab: {fileID: 4935147991203066257, guid: a03aeb4a615b24e579828c039db416bf, type: 3}
+      count: 2
+      spawnInterval: 8
     - enemyPrefab: {fileID: 3036886438907331829, guid: e69d6fa5ac2ec43dd84d97a92d910d5f, type: 3}
       count: 1
       spawnInterval: 12
     - enemyPrefab: {fileID: 7414725698698233740, guid: b5ef2626112834071bad53a1d0a4a72b, type: 3}
-      count: 1
-      spawnInterval: 14
+      count: 15
+      spawnInterval: 2
     - enemyPrefab: {fileID: 6574550427933766891, guid: 325c521b2e3454748b4388c4d0a25944, type: 3}
-      count: 1
-      spawnInterval: 16
+      count: 15
+      spawnInterval: 2
     - enemyPrefab: {fileID: 3614473934037183965, guid: 5527e1ac0cc9d429f94195e479cd84d4, type: 3}
-      count: 1
-      spawnInterval: 18
-    - enemyPrefab: {fileID: 1782369945890583436, guid: cf30bff869072473ebba2fd2119954b5, type: 3}
-      count: 1
-      spawnInterval: 20
+      count: 5
+      spawnInterval: 4
   spawnX: 10
   spawnY: -3.3
   spawnZ: 0
-  waveInterval: 40
+  waveInterval: 30
   waypointParent: {fileID: 741711894}
 --- !u!4 &1478147964
 Transform:
@@ -9277,11 +9290,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3752750562590229128, guid: b793ffbc13a9f4aa5a720ebfbd84cfe6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.2
+      value: 3.41
       objectReference: {fileID: 0}
     - target: {fileID: 3752750562590229128, guid: b793ffbc13a9f4aa5a720ebfbd84cfe6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.9805711
+      value: 1.93
       objectReference: {fileID: 0}
     - target: {fileID: 3752750562590229128, guid: b793ffbc13a9f4aa5a720ebfbd84cfe6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -10833,11 +10846,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3752750562590229128, guid: b793ffbc13a9f4aa5a720ebfbd84cfe6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.768861
+      value: -5.8
       objectReference: {fileID: 0}
     - target: {fileID: 3752750562590229128, guid: b793ffbc13a9f4aa5a720ebfbd84cfe6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.9805711
+      value: -4.86
       objectReference: {fileID: 0}
     - target: {fileID: 3752750562590229128, guid: b793ffbc13a9f4aa5a720ebfbd84cfe6, type: 3}
       propertyPath: m_LocalPosition.z

@@ -190,9 +190,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0421f07dc68f4f3ea8a2eea6f41199d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
+  maxHealth: 400
   currentHealth: 0
-  moneyValue: 10
+  moneyValue: 15
   baseDamage: 1
   attackInterval: 2.5
   onEnemyDestroyed:
