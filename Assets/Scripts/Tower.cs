@@ -60,24 +60,38 @@ public class Tower : MonoBehaviour
     private GameObject FindNearestEnemy()
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        
         if (enemies.Length == 0)
             return null;
-        
-        GameObject nearest = null;
+
+        GameObject bestTarget = null;
         float nearestDistance = detectionRange;
-        
+        int maxWaypointIndex = -1;
+        bool foundInRange = false;
+
         foreach (GameObject enemy in enemies)
         {
             float distance = Vector2.Distance(transform.position, enemy.transform.position);
-            if (distance < nearestDistance)
+            if (distance > detectionRange)
+                continue; // 射程外は無視
+
+            EnemyPath path = enemy.GetComponent<EnemyPath>();
+            if (path == null)
+                continue;
+
+            foundInRange = true;
+            // より進んでいる敵を優先。進行度が同じ場合は距離が近い方を優先
+            if (path.currentWaypointIndex > maxWaypointIndex ||
+                (path.currentWaypointIndex == maxWaypointIndex && distance < nearestDistance))
             {
-                nearest = enemy;
+                maxWaypointIndex = path.currentWaypointIndex;
                 nearestDistance = distance;
+                bestTarget = enemy;
             }
         }
-        
-        return nearest;
+        // 射程内の敵がいなければnullを返す
+        if (!foundInRange)
+            return null;
+        return bestTarget;
     }
     
     /// <summary>

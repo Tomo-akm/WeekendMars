@@ -6,7 +6,7 @@ public class EnemyPath : MonoBehaviour
 {
     private Transform[] waypoints;
     public float speed = 2f;
-    private int currentWaypointIndex = 0;
+    public int currentWaypointIndex = 0;
 
     Rigidbody2D rbody;
 
