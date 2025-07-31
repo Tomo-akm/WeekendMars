@@ -6902,7 +6902,7 @@ MonoBehaviour:
   spawnY: -3.3
   spawnZ: 0
   waveInterval: 30
-  waypointParent: {fileID: 0}
+  waypointParent: {fileID: 741711894}
 --- !u!4 &518448932
 Transform:
   m_ObjectHideFlags: 0
@@ -10253,6 +10253,7 @@ MonoBehaviour:
   playerMoney: 50
   moneyText: {fileID: 1079571173}
   scoreText: {fileID: 1153064271}
+  timeBonusMultiplier: 100
   timeText: {fileID: 1920177970}
   gameOverPanel: {fileID: 0}
   gameClearPanel: {fileID: 0}
