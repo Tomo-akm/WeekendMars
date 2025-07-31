@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
 
     // ゲーム設定
     [Header("Game Settings")]
-    [SerializeField] private float gameTime = 10f; // ゲーム時間（秒）
+    [SerializeField] private float gameTime ; // ゲーム時間（秒）
     private float currentTime; // 現在の残り時間
     private bool isGameOver = false; // ゲーム終了フラグ
     private bool isGameClear = false; // ゲームクリアフラグ
@@ -153,6 +153,10 @@ public class GameManager : MonoBehaviour
             isGameClear = true;
             Debug.Log("Game Clear");
 
+             // ランキング登録処理を呼び出す
+            RegisterScoreToRanking();
+
+
             // タイマーUIを非表示にする
             if (timeText != null)
                 timeText.gameObject.SetActive(false);
@@ -264,6 +268,26 @@ public class GameManager : MonoBehaviour
             UpdateScoreDisplay();
             Debug.Log(amount + "点を獲得！ 現在のスコア: " + score);
         }
+    }
+    //ランキング登録用のメソッド
+    private void RegisterScoreToRanking()
+    {
+        // シングルトンインスタンスが生きているか確認
+        if (Ranking.instance == null)
+        {
+            Debug.LogError("Rankingのインスタンスが見つかりません！");
+            return;
+        }
+
+        // StartButtonスクリプトから名前を取得
+        string playerName = StartButton.CurrentPlayerName;
+        if (string.IsNullOrEmpty(playerName))
+        {
+            playerName = "Guest";
+        }
+
+        // シングルトンインスタンスを直接呼び出してスコアを追加
+        Ranking.instance.AddScore(playerName, score);
     }
 
 }
