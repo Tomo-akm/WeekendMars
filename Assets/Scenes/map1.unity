@@ -156,7 +156,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -345.08008, y: -53.890015}
+  m_AnchoredPosition: {x: -345.08008, y: -53.890137}
   m_SizeDelta: {x: 1085.63, y: 554}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &28233006
@@ -6791,6 +6791,7 @@ Transform:
   - {fileID: 826881509}
   - {fileID: 1542742892}
   - {fileID: 822911168}
+  - {fileID: 848721174}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &767796463
@@ -6952,6 +6953,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3752750562590229128, guid: b793ffbc13a9f4aa5a720ebfbd84cfe6, type: 3}
   m_PrefabInstance: {fileID: 1582076860}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &848721173
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 848721174}
+  m_Layer: 0
+  m_Name: WayPoint12
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &848721174
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 848721173}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -11.0642, y: 2.37, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 741711894}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &870493144
 GameObject:
   m_ObjectHideFlags: 0
@@ -7231,8 +7263,11 @@ MonoBehaviour:
       count: 3
       spawnInterval: 6
     - enemyPrefab: {fileID: 7414725698698233740, guid: b5ef2626112834071bad53a1d0a4a72b, type: 3}
-      count: 2
-      spawnInterval: 10
+      count: 6
+      spawnInterval: 5
+    - enemyPrefab: {fileID: 93292650710481563, guid: 68269c5c1190748d9b0c23f3a01b1b7f, type: 3}
+      count: 5
+      spawnInterval: 4
   - enemies:
     - enemyPrefab: {fileID: 6574550427933766891, guid: 325c521b2e3454748b4388c4d0a25944, type: 3}
       count: 15
@@ -7252,6 +7287,9 @@ MonoBehaviour:
     - enemyPrefab: {fileID: 4296652245567694320, guid: b39c67a5f9ee34cffb55e8bfee511bab, type: 3}
       count: 3
       spawnInterval: 8
+    - enemyPrefab: {fileID: 5508149317081903338, guid: e0dbc1bd05871429a993316ef19118a2, type: 3}
+      count: 4
+      spawnInterval: 8
   - enemies:
     - enemyPrefab: {fileID: 1782369945890583436, guid: cf30bff869072473ebba2fd2119954b5, type: 3}
       count: 1
@@ -7267,17 +7305,17 @@ MonoBehaviour:
       spawnInterval: 10
   - enemies:
     - enemyPrefab: {fileID: 5098713156560206207, guid: 40302b23f38c244dcb9acbfdc81ce2cf, type: 3}
-      count: 4
-      spawnInterval: 8
+      count: 6
+      spawnInterval: 6
     - enemyPrefab: {fileID: 93292650710481563, guid: 68269c5c1190748d9b0c23f3a01b1b7f, type: 3}
-      count: 1
-      spawnInterval: 8
+      count: 5
+      spawnInterval: 2.8
     - enemyPrefab: {fileID: 7422311129471498061, guid: bf111d3b373644e7e9b9241a9b0c2fa3, type: 3}
       count: 2
       spawnInterval: 8
     - enemyPrefab: {fileID: 3036886438907331829, guid: e69d6fa5ac2ec43dd84d97a92d910d5f, type: 3}
-      count: 1
-      spawnInterval: 12
+      count: 10
+      spawnInterval: 3
     - enemyPrefab: {fileID: 7414725698698233740, guid: b5ef2626112834071bad53a1d0a4a72b, type: 3}
       count: 15
       spawnInterval: 2
@@ -7285,6 +7323,9 @@ MonoBehaviour:
       count: 15
       spawnInterval: 2
     - enemyPrefab: {fileID: 3614473934037183965, guid: 5527e1ac0cc9d429f94195e479cd84d4, type: 3}
+      count: 5
+      spawnInterval: 4
+    - enemyPrefab: {fileID: 5508149317081903338, guid: e0dbc1bd05871429a993316ef19118a2, type: 3}
       count: 5
       spawnInterval: 4
   spawnX: 10
@@ -7473,7 +7514,7 @@ Transform:
   m_GameObject: {fileID: 1023076432}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.4142356, y: -4.85, z: 0.014752448}
+  m_LocalPosition: {x: -3, y: -4.85, z: 0.014752448}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8802,7 +8843,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a82464000abf456583f88329a1b2d97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameTime: 200
+  gameTime: 180
   playerMoney: 50
   moneyText: {fileID: 2103459051}
   scoreText: {fileID: 0}
@@ -9052,7 +9093,7 @@ Transform:
   m_GameObject: {fileID: 1517621230}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.4142356, y: -8.039221, z: 0.014752448}
+  m_LocalPosition: {x: -3, y: -8.039221, z: 0.014752448}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

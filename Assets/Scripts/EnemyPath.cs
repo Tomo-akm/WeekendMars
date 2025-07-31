@@ -28,6 +28,18 @@ public class EnemyPath : MonoBehaviour
         Transform target = waypoints[currentWaypointIndex];
         Vector3 direction = (target.position - transform.position).normalized;
 
+        // ✅ Waypoint 3〜4〜5の間だけ左向きに、それ以外は右向きに
+        Vector3 scale = transform.localScale;
+        if (currentWaypointIndex >= 3 && currentWaypointIndex <= 4)
+        {
+            scale.x = -Mathf.Abs(scale.x); // 左向き（Xを負に）
+        }
+        else
+        {
+            scale.x = Mathf.Abs(scale.x); // 右向き（Xを正に）
+        }
+        transform.localScale = scale;
+
         transform.position += direction * speed * Time.deltaTime;
 
         if (Vector3.Distance(transform.position, target.position) < 0.1f)
