@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
 
     // ゲーム設定
     [Header("Game Settings")]
-    [SerializeField] private float gameTime = 10f; // ゲーム時間（秒）
+    [SerializeField] private float gameTime ; // ゲーム時間（秒）
     private float currentTime; // 現在の残り時間
     private bool isGameOver = false; // ゲーム終了フラグ
     private bool isGameClear = false; // ゲームクリアフラグ
@@ -26,6 +26,11 @@ public class GameManager : MonoBehaviour
     [Header("Score System")]
     private int score = 0; // 現在のスコア
     [SerializeField] private TextMeshProUGUI scoreText; // スコア表示用テキスト
+
+    //ランキングシステム    
+    [Header("Ranking System")]
+    [SerializeField] private Ranking ranking;
+
 
     // UI要素
     [Header("UI Elements")]
@@ -153,6 +158,10 @@ public class GameManager : MonoBehaviour
             isGameClear = true;
             Debug.Log("Game Clear");
 
+             // ランキング登録処理を呼び出す
+            RegisterScoreToRanking();
+
+
             // タイマーUIを非表示にする
             if (timeText != null)
                 timeText.gameObject.SetActive(false);
@@ -162,8 +171,8 @@ public class GameManager : MonoBehaviour
                 gameClearPanel.SetActive(true);
 
             // ゲームクリア効果音を再生
-            SEPlayer.instance.StopBGM();
-            SEPlayer.instance.PlaygameClearSE_BGM();
+            //SEPlayer.instance.StopBGM();
+            //SEPlayer.instance.PlaygameClearSE_BGM();
 
             // シーン遷移
             StartCoroutine(LoadSceneAfterDelay(gameClearSceneName, sceneTransitionDelay));
@@ -264,6 +273,19 @@ public class GameManager : MonoBehaviour
             UpdateScoreDisplay();
             Debug.Log(amount + "点を獲得！ 現在のスコア: " + score);
         }
+    }
+    //ランキング登録用のメソッド ▼▼▼
+    private void RegisterScoreToRanking()
+    {
+        if (ranking == null)
+        {
+            Debug.LogError("Rankingが設定されていません！");
+            return;
+        }
+
+        string playerName = "PlayerD"; // 実際にはプレイヤー名入力UIなどから取得
+        // 現在のスコアでランキング登録
+        ranking.AddScore(playerName, score);
     }
 
 }

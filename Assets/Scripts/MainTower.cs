@@ -8,7 +8,7 @@ public class MainTower : MonoBehaviour
     public static MainTower instance;
     
     [Header("タワー設定")]
-    [SerializeField] private int maxHealth = 10;
+    [SerializeField] private int maxHealth ;
     [SerializeField] private int currentHealth;
 
     [Header("UI要素")]

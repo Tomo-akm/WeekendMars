@@ -2170,6 +2170,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 411200639}
   m_CullTransparentMesh: 1
+--- !u!1 &421919295
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 421919297}
+  - component: {fileID: 421919296}
+  m_Layer: 0
+  m_Name: Ranking
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &421919296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 421919295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f172c4ea210dd40f78dc3b8ac6a4bebb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &421919297
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 421919295}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -1.9399996, z: 90}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &430880247
 GameObject:
   m_ObjectHideFlags: 0
@@ -2505,8 +2549,8 @@ Transform:
   m_GameObject: {fileID: 509401547}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.0435, y: -2.0438, z: 0}
-  m_LocalScale: {x: 1.541254, y: 1.254196, z: 1}
+  m_LocalPosition: {x: 0.6885, y: -3.0661, z: 0}
+  m_LocalScale: {x: 1.5906398, y: 1.5734324, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 626177315}
@@ -7414,7 +7458,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4b7d7346847f483b843b6db63828192, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 30
+  maxHealth: 1
   currentHealth: 0
   healthText: {fileID: 84610856}
   onTowerHealthChanged:
@@ -9307,8 +9351,8 @@ Transform:
   m_GameObject: {fileID: 1371497041}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.0728, y: -2.0393, z: 0}
-  m_LocalScale: {x: 1.5433517, y: 1.2548635, z: 1}
+  m_LocalPosition: {x: -0.0425, y: -1.8662, z: 0}
+  m_LocalScale: {x: 1.4101171, y: 1.247555, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 626177315}
@@ -10306,15 +10350,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a82464000abf456583f88329a1b2d97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameTime: 100
+  gameTime: 5
   playerMoney: 50
   moneyText: {fileID: 1079571173}
   scoreText: {fileID: 1153064271}
+  ranking: {fileID: 421919296}
   timeText: {fileID: 1920177970}
   gameOverPanel: {fileID: 0}
   gameClearPanel: {fileID: 0}
   gameOverSceneName: GameOverScene
-  gameClearSceneName: GameClearScene
+  gameClearSceneName: GameClearScene-naruki
   sceneTransitionDelay: 1
 --- !u!114 &1445833802
 MonoBehaviour:
@@ -12465,3 +12510,4 @@ SceneRoots:
   - {fileID: 36182286}
   - {fileID: 29983873}
   - {fileID: 759866190}
+  - {fileID: 421919297}
