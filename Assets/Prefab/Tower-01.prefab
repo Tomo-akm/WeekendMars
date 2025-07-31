@@ -136,7 +136,7 @@ MonoBehaviour:
     detectionRange: 12
     shotSpeed: 12
     damage: 15
-    upgradeCost: 50
+    upgradeCost: 30
     towerSprite: {fileID: 6937817954938267909, guid: 7645a0a6941cd4b88a05767f53c43e1d, type: 3}
     towerColor: {r: 1, g: 1, b: 1, a: 1}
     yOffset: 0
@@ -145,7 +145,7 @@ MonoBehaviour:
     detectionRange: 14
     shotSpeed: 18
     damage: 15
-    upgradeCost: 100
+    upgradeCost: 50
     towerSprite: {fileID: -6470460504253458178, guid: 9d0c796a5d4954649987c0bc3eb1b5bb, type: 3}
     towerColor: {r: 1, g: 1, b: 1, a: 1}
     yOffset: 0.18
@@ -154,7 +154,7 @@ MonoBehaviour:
     detectionRange: 16
     shotSpeed: 20
     damage: 20
-    upgradeCost: 150
+    upgradeCost: 100
     towerSprite: {fileID: -4178046375966092550, guid: a6de5e658008a4156aedd170b28512c2, type: 3}
     towerColor: {r: 1, g: 1, b: 1, a: 1}
     yOffset: 0.25
@@ -163,7 +163,7 @@ MonoBehaviour:
     detectionRange: 18
     shotSpeed: 25
     damage: 30
-    upgradeCost: 250
+    upgradeCost: 150
     towerSprite: {fileID: 4130640169021434097, guid: 563201d0c8c694cd1b0084ba9aff9d8b, type: 3}
     towerColor: {r: 1, g: 1, b: 1, a: 1}
     yOffset: 0
@@ -172,7 +172,7 @@ MonoBehaviour:
     detectionRange: 20
     shotSpeed: 30
     damage: 50
-    upgradeCost: 400
+    upgradeCost: 250
     towerSprite: {fileID: 3465286685962602723, guid: d67ad00386ff14d45868dbc0c43176d6, type: 3}
     towerColor: {r: 1, g: 1, b: 1, a: 1}
     yOffset: 0
@@ -181,7 +181,7 @@ MonoBehaviour:
     detectionRange: 22
     shotSpeed: 30
     damage: 50
-    upgradeCost: 500
+    upgradeCost: 400
     towerSprite: {fileID: 7028616704906629411, guid: cbfd99ed1dde14d119bd5deddc8eb3ac, type: 3}
     towerColor: {r: 1, g: 1, b: 1, a: 1}
     yOffset: 0.2

@@ -195,6 +195,7 @@ MonoBehaviour:
   moneyValue: 10
   baseDamage: 1
   attackInterval: 2.5
+  scoreValue: 100
   onEnemyDestroyed:
     m_PersistentCalls:
       m_Calls: []
