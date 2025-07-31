@@ -27,11 +27,6 @@ public class GameManager : MonoBehaviour
     private int score = 0; // 現在のスコア
     [SerializeField] private TextMeshProUGUI scoreText; // スコア表示用テキスト
 
-    //ランキングシステム    
-    [Header("Ranking System")]
-    [SerializeField] private Ranking ranking;
-
-
     // UI要素
     [Header("UI Elements")]
     [SerializeField] private TextMeshProUGUI timeText; // 時間表示テキスト
@@ -171,8 +166,8 @@ public class GameManager : MonoBehaviour
                 gameClearPanel.SetActive(true);
 
             // ゲームクリア効果音を再生
-            //SEPlayer.instance.StopBGM();
-            //SEPlayer.instance.PlaygameClearSE_BGM();
+            SEPlayer.instance.StopBGM();
+            SEPlayer.instance.PlaygameClearSE_BGM();
 
             // シーン遷移
             StartCoroutine(LoadSceneAfterDelay(gameClearSceneName, sceneTransitionDelay));
@@ -274,18 +269,25 @@ public class GameManager : MonoBehaviour
             Debug.Log(amount + "点を獲得！ 現在のスコア: " + score);
         }
     }
-    //ランキング登録用のメソッド ▼▼▼
+    //ランキング登録用のメソッド
     private void RegisterScoreToRanking()
     {
-        if (ranking == null)
+        // シングルトンインスタンスが生きているか確認
+        if (Ranking.instance == null)
         {
-            Debug.LogError("Rankingが設定されていません！");
+            Debug.LogError("Rankingのインスタンスが見つかりません！");
             return;
         }
 
-        string playerName = "PlayerD"; // 実際にはプレイヤー名入力UIなどから取得
-        // 現在のスコアでランキング登録
-        ranking.AddScore(playerName, score);
+        // StartButtonスクリプトから名前を取得
+        string playerName = StartButton.CurrentPlayerName;
+        if (string.IsNullOrEmpty(playerName))
+        {
+            playerName = "Guest";
+        }
+
+        // シングルトンインスタンスを直接呼び出してスコアを追加
+        Ranking.instance.AddScore(playerName, score);
     }
 
 }

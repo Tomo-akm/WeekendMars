@@ -26,5 +26,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameClearScene-naruki.unity
     guid: 1bdce373374ad48179a60d15cc30d21a
+  - enabled: 1
+    path: Assets/Scenes/GameStartScene-naruki.unity
+    guid: 7801bce7ec33d408293b75628f08f450
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

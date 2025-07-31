@@ -4,6 +4,9 @@ using UnityEngine.SceneManagement;
 
 public class ReturntitleButton : MonoBehaviour
 {
+     [Header("Scene Names")]
+     [SerializeField] private string SceneName = "GameStartScene";
+
     void Start()
     {
         // ボタンが押されたときに StartGame を呼び出す
@@ -13,6 +16,6 @@ public class ReturntitleButton : MonoBehaviour
     void StartGame()
     {
         // GameStartSceanに遷移
-        SceneManager.LoadScene("GameStartScene");
+        SceneManager.LoadScene(SceneName);
     }
 }

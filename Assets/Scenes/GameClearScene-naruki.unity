@@ -967,6 +967,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6abc4f4c1b5c64728b353107270e2a87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SceneName: GameStartScene-naruki
 --- !u!1 &2023377335
 GameObject:
   m_ObjectHideFlags: 0
