@@ -102,14 +102,14 @@ public class GameManager : MonoBehaviour
         // 時間表示の更新
         UpdateTimeDisplay();
 
-        /*
+        
         // 時間切れチェック
         if (currentTime <= 0)
         {
             currentTime = 0;
             GameClear(); // 時間経過でゲームクリア
         }
-        */
+        
     }
         
 
