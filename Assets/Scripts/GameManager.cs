@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     [Header("Score System")]
     private int score = 0; // 現在のスコア
     [SerializeField] private TextMeshProUGUI scoreText; // スコア表示用テキスト
+    [SerializeField] private int timeBonusMultiplier = 100; //タイムボーナスの係数
 
     // UI要素
     [Header("UI Elements")]
@@ -101,13 +102,17 @@ public class GameManager : MonoBehaviour
         // 時間表示の更新
         UpdateTimeDisplay();
 
+        /*
         // 時間切れチェック
         if (currentTime <= 0)
         {
             currentTime = 0;
             GameClear(); // 時間経過でゲームクリア
         }
+        */
     }
+        
+
 
     private void UpdateTimeDisplay()
     {
@@ -278,6 +283,18 @@ public class GameManager : MonoBehaviour
             Debug.LogError("Rankingのインスタンスが見つかりません！");
             return;
         }
+        
+        // 1. タイムボーナスを計算する
+        int timeBonus = Mathf.FloorToInt(currentTime * timeBonusMultiplier); 
+
+        // 2. 現在のスコアにボーナスを加算する
+        score += timeBonus;
+
+        // 3. UIの最終スコア表示を更新する（任意）
+        UpdateScoreDisplay();
+
+        Debug.Log($"タイムボーナス: {timeBonus}点を獲得！ 最終スコア: {score}");
+
 
         // StartButtonスクリプトから名前を取得
         string playerName = StartButton.CurrentPlayerName;

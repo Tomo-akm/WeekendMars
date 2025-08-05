@@ -10263,6 +10263,7 @@ MonoBehaviour:
   playerMoney: 50
   moneyText: {fileID: 1079571173}
   scoreText: {fileID: 1153064271}
+  timeBonusMultiplier: 100
   timeText: {fileID: 1920177970}
   gameOverPanel: {fileID: 0}
   gameClearPanel: {fileID: 0}
