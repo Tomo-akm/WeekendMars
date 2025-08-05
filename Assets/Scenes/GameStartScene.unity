@@ -904,7 +904,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb215b491d6be4b0db13d132b3fea4fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameSceneName: map1
+  gameSceneName: map1-naruki-2
+  nameInputField: {fileID: 0}
 --- !u!1 &1278157181
 GameObject:
   m_ObjectHideFlags: 0
