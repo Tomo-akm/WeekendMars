@@ -33,6 +33,9 @@ public class EnemyHealth : MonoBehaviour, IHealth
     //出現してからの経過時間を計測するタイマー 
     private float timeSinceSpawn = 0f;
 
+    // 死亡フラグ
+    private bool isDead = false;
+
     private void Awake()
     {
         currentHealth = maxHealth;
@@ -45,15 +48,27 @@ public class EnemyHealth : MonoBehaviour, IHealth
 
     public void TakeDamage(float damageAmount)
     {
-        if (!IsAlive()) return;
+        if (!IsAlive() || isDead) return;
         currentHealth -= damageAmount;
         SEPlayer.instance.PlaydamageSE();
         currentHealth = Mathf.Max(0, currentHealth);
         onHealthChanged?.Invoke(currentHealth / maxHealth);
-        if (currentHealth <= 0)
+        if (currentHealth <= 0.01f && !isDead)
         {
-            Die();
+            isDead = true;
+            // コライダーを無効化
+            Collider2D col = GetComponent<Collider2D>();
+            if (col != null) col.enabled = false;
+            // 1フレーム遅延してDestroy
+            StartCoroutine(DestroyAfterDelay());
+            Die(); // Die()はスコアや通知用
         }
+    }
+
+    private IEnumerator DestroyAfterDelay()
+    {
+        yield return null;
+        Destroy(gameObject);
     }
 
     private void Update()
@@ -67,6 +82,7 @@ public class EnemyHealth : MonoBehaviour, IHealth
 
     public void Die()
     {
+        if (isDead == false) return; // 多重呼び出し防止
         // ▼▼▼ この部分を変更 ▼▼▼
         // ★ Spawnerに自分の所属ウェーブ番号を渡すように変更
         if (spawner != null)
@@ -93,7 +109,6 @@ public class EnemyHealth : MonoBehaviour, IHealth
         GameManager.instance.AddScore(scoreValue);
         SEPlayer.instance.PlayEnemyDieSE();
         
-        Destroy(gameObject);
         Debug.Log(gameObject.name + "が死亡しました");
     }
 
