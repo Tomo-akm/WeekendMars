@@ -204,9 +204,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0421f07dc68f4f3ea8a2eea6f41199d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 3000
+  maxHealth: 3500
   currentHealth: 0
-  moneyValue: 100
+  moneyValue: 80
   baseDamage: 1
   attackInterval: 2.5
   scoreValue: 100
@@ -216,6 +216,7 @@ MonoBehaviour:
   onHealthChanged:
     m_PersistentCalls:
       m_Calls: []
+  waveOrigin: -1
 --- !u!114 &5498004302923294059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,3 +230,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.6
+  currentWaypointIndex: 0

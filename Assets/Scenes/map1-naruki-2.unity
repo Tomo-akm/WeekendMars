@@ -6873,10 +6873,13 @@ MonoBehaviour:
     - enemyPrefab: {fileID: 4296652245567694320, guid: b39c67a5f9ee34cffb55e8bfee511bab, type: 3}
       count: 3
       spawnInterval: 8
+    - enemyPrefab: {fileID: 1782369945890583436, guid: cf30bff869072473ebba2fd2119954b5, type: 3}
+      count: 1
+      spawnInterval: 25
   - enemies:
     - enemyPrefab: {fileID: 1782369945890583436, guid: cf30bff869072473ebba2fd2119954b5, type: 3}
       count: 1
-      spawnInterval: 1
+      spawnInterval: 25
     - enemyPrefab: {fileID: 7414725698698233740, guid: b5ef2626112834071bad53a1d0a4a72b, type: 3}
       count: 5
       spawnInterval: 4
