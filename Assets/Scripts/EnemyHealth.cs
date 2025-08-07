@@ -15,6 +15,8 @@ public class EnemyHealth : MonoBehaviour, IHealth
 
     [Header("スコア")]
     [SerializeField] private int scoreValue = 100;
+    [SerializeField] private int enemyBonusMultiplier = 100; //敵撃破ボーナスの係数
+    [SerializeField] private float enemyBonustime = 10f; //敵撃破ボーナスの時間
 
     public UnityEvent onEnemyDestroyed;
     public UnityEvent<float> onHealthChanged;
@@ -27,6 +29,9 @@ public class EnemyHealth : MonoBehaviour, IHealth
 
     // ★ どのウェーブで出現したかを記録する変数を追加
     public int waveOrigin = -1;
+
+    //出現してからの経過時間を計測するタイマー 
+    private float timeSinceSpawn = 0f;
 
     private void Awake()
     {
@@ -51,6 +56,15 @@ public class EnemyHealth : MonoBehaviour, IHealth
         }
     }
 
+    private void Update()
+    {
+        // 敵が生きている間だけタイマーを進める
+        if (IsAlive())
+        {
+            timeSinceSpawn += Time.deltaTime;
+        }
+    }
+
     public void Die()
     {
         // ▼▼▼ この部分を変更 ▼▼▼
@@ -70,6 +84,9 @@ public class EnemyHealth : MonoBehaviour, IHealth
             StopCoroutine(attackCoroutine);
             attackCoroutine = null;
         }
+
+        // タイムアタックボーナスを計算してスコアに加算 
+        CalculateTimeAttackBonus();
 
         onEnemyDestroyed?.Invoke();
         GameManager.instance.AddMoney(moneyValue, transform.position);
@@ -107,4 +124,22 @@ public class EnemyHealth : MonoBehaviour, IHealth
     {
         return isAttackingBase;
     }
+
+    //ボーナス計算用のメソッド 
+    private void CalculateTimeAttackBonus()
+    {
+        // 10秒以内に倒せたらボーナス
+        if (timeSinceSpawn <= enemyBonustime)
+        {
+            // 残り時間が多いほどボーナスが高くなるように計算
+            // (10秒 - 経過時間) * 係数
+            int bonus = Mathf.FloorToInt((enemyBonustime - timeSinceSpawn) * enemyBonusMultiplier);
+
+            // GameManagerにボーナススコアを加算してもらう
+            GameManager.instance.AddScore(bonus);
+            
+            Debug.Log($"敵撃破ボーナス！ +{bonus}点 (経過時間: {timeSinceSpawn:F2}秒)");
+        }
+    }
+    
 }
