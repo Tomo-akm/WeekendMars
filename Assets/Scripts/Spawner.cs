@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// データ構造のクラスは変更なし
 [System.Serializable]
 public class WaveEnemyData
 {
@@ -36,18 +37,26 @@ public class Spawner : MonoBehaviour
     private Transform[] waypoints;
 
     private int currentWave = 0;
-    private int currentEnemyType = 0;
-    private int spawnedCount = 0;
-    private float spawnTimer = 0f;
     private bool waveActive = true;
+
+    private GameManager gameManager;
+    private int enemiesRemainingInFinalWave = 0;
+    private bool isFinalWaveActive = false;
+    private const int FINAL_WAVE_NUMBER = 5; // Wave5でクリア
 
     void Start()
     {
+        gameManager = GameManager.instance;
         int count = waypointParent.childCount;
         waypoints = new Transform[count];
         for (int i = 0; i < count; i++)
         {
             waypoints[i] = waypointParent.GetChild(i);
+        }
+
+        if (waves.Count > 0 && FINAL_WAVE_NUMBER == 1)
+        {
+            ActivateFinalWaveCheck();
         }
     }
 
@@ -71,8 +80,15 @@ public class Spawner : MonoBehaviour
 
                 if (enemyData.timer >= enemyData.spawnInterval)
                 {
-                    GameObject enemy = Instantiate(enemyData.enemyPrefab, new Vector3(spawnX, spawnY, spawnZ), Quaternion.identity);
-                    EnemyPath path = enemy.GetComponent<EnemyPath>();
+                    GameObject enemyGO = Instantiate(enemyData.enemyPrefab, new Vector3(spawnX, spawnY, spawnZ), Quaternion.identity);
+                    
+                    EnemyHealth health = enemyGO.GetComponent<EnemyHealth>();
+                    if (health != null)
+                    {
+                        health.waveOrigin = currentWave;
+                    }
+
+                    EnemyPath path = enemyGO.GetComponent<EnemyPath>();
                     if (path != null)
                         path.SetWaypoints(waypoints);
 
@@ -87,13 +103,20 @@ public class Spawner : MonoBehaviour
             }
         }
 
-        if (waveTimer >= waveInterval)
+        // ▼▼▼ この行を修正 ▼▼▼
+        // ★ 最終ウェーブの監視が始まっていない場合のみ、時間経過で次のウェーブに進む
+        if (waveTimer >= waveInterval && !isFinalWaveActive)
         {
             currentWave++;
             if (currentWave < waves.Count)
             {
                 Debug.Log($"Wave {currentWave + 1} 開始！");
                 ResetWave();
+
+                if (currentWave + 1 == FINAL_WAVE_NUMBER)
+                {
+                    ActivateFinalWaveCheck();
+                }
             }
             else
             {
@@ -102,17 +125,45 @@ public class Spawner : MonoBehaviour
         }
     }
 
-
     void ResetWave()
     {
         waveTimer = 0f;
         waveActive = true;
-
         var wave = waves[currentWave];
         foreach (var enemy in wave.enemies)
         {
             enemy.spawned = 0;
             enemy.timer = 0f;
+        }
+    }
+
+    void ActivateFinalWaveCheck()
+    {
+        isFinalWaveActive = true;
+        enemiesRemainingInFinalWave = 0;
+        foreach (var enemyData in waves[currentWave].enemies)
+        {
+            enemiesRemainingInFinalWave += enemyData.count;
+        }
+        Debug.Log($"最終ウェーブ開始！クリア監視を始めます。倒すべき敵の数: {enemiesRemainingInFinalWave}");
+    }
+    
+    public void OnEnemyDefeated(int defeatedWaveOrigin)
+    {
+        if (isFinalWaveActive && defeatedWaveOrigin == currentWave)
+        {
+            enemiesRemainingInFinalWave--;
+            Debug.Log($"最終ウェーブの敵を撃破。残り: {enemiesRemainingInFinalWave}");
+
+            if (enemiesRemainingInFinalWave <= 0)
+            {
+                isFinalWaveActive = false;
+                Debug.Log("最終ウェーブの敵を全滅！ゲームクリア！");
+                if (gameManager != null)
+                {
+                    gameManager.GameClear();
+                }
+            }
         }
     }
 }

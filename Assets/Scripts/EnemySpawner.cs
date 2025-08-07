@@ -1,3 +1,5 @@
+// EnemySpawner.cs (完全版)
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,19 +36,32 @@ public class EnemySpawner : MonoBehaviour
     private bool waveActive = true;
 
     [Header("Waypoint 親オブジェクト")]
-    public Transform waypointParent; // ← Waypoints の親オブジェクトを指定
+    public Transform waypointParent;
 
     private Transform[] waypoints;
 
+    // ▼▼▼ おそらく、この部分の変数が抜けています ▼▼▼
+    private GameManager gameManager;
+    private int enemiesRemainingInFinalWave = 0;
+    private bool isFinalWaveActive = false;
+    private const int FINAL_WAVE_NUMBER = 4;
+    // ▲▲▲ ここまで ▲▲▲
 
     void Start()
     {
-        // Waypoints を配列として取得
+        gameManager = GameManager.instance;
+
         int count = waypointParent.childCount;
         waypoints = new Transform[count];
         for (int i = 0; i < count; i++)
         {
             waypoints[i] = waypointParent.GetChild(i);
+        }
+
+        if (waves.Count > 0 && FINAL_WAVE_NUMBER == 1)
+        {
+            isFinalWaveActive = true;
+            enemiesRemainingInFinalWave = waves[0].Count;
         }
     }
 
@@ -72,6 +87,13 @@ public class EnemySpawner : MonoBehaviour
                 ResetSpawnCount();
                 waveActive = true;
                 Debug.Log("Wave " + (currentWave + 1) + " 開始！");
+
+                if (currentWave + 1 == FINAL_WAVE_NUMBER)
+                {
+                    isFinalWaveActive = true;
+                    enemiesRemainingInFinalWave = waves[currentWave].Count; 
+                    Debug.Log("最終ウェーブ開始！クリア監視を始めます。");
+                }
             }
             else
             {
@@ -90,7 +112,6 @@ public class EnemySpawner : MonoBehaviour
         {
             GameObject enemy = Instantiate(enemyPrefab, new Vector3(spawnX, spawnY, spawnZ), Quaternion.identity);
 
-            // EnemyPath に waypoint を渡す
             EnemyPath path = enemy.GetComponent<EnemyPath>();
             if (path != null)
             {
@@ -108,5 +129,21 @@ public class EnemySpawner : MonoBehaviour
     void ResetSpawnCount()
     {
         spawnedOrc = 0;
+    }
+
+    public void OnEnemyDefeated()
+    {
+        if (isFinalWaveActive)
+        {
+            enemiesRemainingInFinalWave--;
+            Debug.Log("最終ウェーブの敵を撃破。残り: " + enemiesRemainingInFinalWave);
+
+            if (enemiesRemainingInFinalWave <= 0)
+            {
+                isFinalWaveActive = false; 
+                Debug.Log("最終ウェーブの敵を全滅！ゲームクリア！");
+                gameManager.GameClear();
+            }
+        }
     }
 }

@@ -8569,10 +8569,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a82464000abf456583f88329a1b2d97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameTime: 100
+  gameTime: 500
   playerMoney: 50
   moneyText: {fileID: 2103459051}
   scoreText: {fileID: 0}
+  timeBonusMultiplier: 100
   timeText: {fileID: 0}
   gameOverPanel: {fileID: 0}
   gameClearPanel: {fileID: 0}
