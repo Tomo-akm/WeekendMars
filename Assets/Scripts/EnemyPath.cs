@@ -10,6 +10,8 @@ public class EnemyPath : MonoBehaviour
 
     Rigidbody2D rbody;
 
+    public Vector2 LastMoveDirection { get; private set; } = Vector2.zero;
+
     public void SetWaypoints(Transform[] points)
     {
         waypoints = points;
@@ -27,6 +29,7 @@ public class EnemyPath : MonoBehaviour
 
         Transform target = waypoints[currentWaypointIndex];
         Vector3 direction = (target.position - transform.position).normalized;
+        LastMoveDirection = direction;
 
         // ✅ Waypoint 3〜4〜5の間だけ左向きに、それ以外は右向きに
         Vector3 scale = transform.localScale;
