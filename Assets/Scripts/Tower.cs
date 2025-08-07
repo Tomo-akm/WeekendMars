@@ -60,24 +60,38 @@ public class Tower : MonoBehaviour
     private GameObject FindNearestEnemy()
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        
         if (enemies.Length == 0)
             return null;
-        
-        GameObject nearest = null;
+
+        GameObject bestTarget = null;
         float nearestDistance = detectionRange;
-        
+        int maxWaypointIndex = -1;
+        bool foundInRange = false;
+
         foreach (GameObject enemy in enemies)
         {
             float distance = Vector2.Distance(transform.position, enemy.transform.position);
-            if (distance < nearestDistance)
+            if (distance > detectionRange)
+                continue; // 射程外は無視
+
+            EnemyPath path = enemy.GetComponent<EnemyPath>();
+            if (path == null)
+                continue;
+
+            foundInRange = true;
+            // より進んでいる敵を優先。進行度が同じ場合は距離が近い方を優先
+            if (path.currentWaypointIndex > maxWaypointIndex ||
+                (path.currentWaypointIndex == maxWaypointIndex && distance < nearestDistance))
             {
-                nearest = enemy;
+                maxWaypointIndex = path.currentWaypointIndex;
                 nearestDistance = distance;
+                bestTarget = enemy;
             }
         }
-        
-        return nearest;
+        // 射程内の敵がいなければnullを返す
+        if (!foundInRange)
+            return null;
+        return bestTarget;
     }
     
     /// <summary>
@@ -91,61 +105,55 @@ public class Tower : MonoBehaviour
         // 敵の情報を取得
         Vector2 enemyPosition = targetEnemy.transform.position;
         Vector2 firePosition = firePoint.position;
-        
-        // 敵の速度を推定（左に移動していると仮定）
-        float enemySpeed = 3f;
-        Vector2 enemyVelocity = new Vector2(-enemySpeed, 0f);
-        
-        // 弾が敵に到達する時間を計算
+
+        // 敵の進行方向と速度を取得
+        EnemyPath path = targetEnemy.GetComponent<EnemyPath>();
+        Vector2 enemyDirection = path != null ? path.LastMoveDirection : Vector2.left;
+        float enemySpeed = path != null ? path.speed : 3f;
+        Vector2 enemyVelocity = enemyDirection.normalized * enemySpeed;
+
+        // 迎撃点計算
         Vector2 toEnemy = enemyPosition - firePosition;
-        float distanceToEnemy = toEnemy.magnitude;
-        float timeToReachEnemy = distanceToEnemy / shotSpeed;
-        
-        // 敵の予測位置を計算
-        Vector2 predictedPosition = enemyPosition + enemyVelocity * timeToReachEnemy;
-        
-        // 予測位置への方向を計算
+        float a = Vector2.Dot(enemyVelocity, enemyVelocity) - shotSpeed * shotSpeed;
+        float b = 2 * Vector2.Dot(toEnemy, enemyVelocity);
+        float c = Vector2.Dot(toEnemy, toEnemy);
+        float discriminant = b * b - 4 * a * c;
+        float t = 0f;
+        if (Mathf.Abs(a) < 0.0001f) {
+            // aが0に近い場合は直線的に計算
+            t = c / Mathf.Max(-b, 0.0001f);
+        } else if (discriminant >= 0) {
+            float t1 = (-b + Mathf.Sqrt(discriminant)) / (2 * a);
+            float t2 = (-b - Mathf.Sqrt(discriminant)) / (2 * a);
+            t = Mathf.Max(t1, t2, 0f);
+        }
+        t = Mathf.Max(t, 0.05f); // 負や極小値を防ぐ
+
+        Vector2 predictedPosition = enemyPosition + enemyVelocity * t;
         Vector2 fireDirection = (predictedPosition - firePosition).normalized;
-        
+
         // 弾を生成
         GameObject shotObject = Instantiate(shotPrefab, firePosition, Quaternion.identity);
-        
-        // 弾の方向を設定（回転も設定）
         float angle = Mathf.Atan2(fireDirection.y, fireDirection.x) * Mathf.Rad2Deg;
         shotObject.transform.rotation = Quaternion.Euler(0, 0, angle);
-        
-        // ダメージ値を取得
+
         float shotDamage = damage;
         if (upgradeComponent != null)
         {
             shotDamage = upgradeComponent.GetCurrentDamage();
         }
-        
-        // デバッグ：ダメージ値を表示
-        Debug.Log($"[Tower] 弾を発射 - 設定ダメージ: {shotDamage}");
-        
-        // シンプル弾スクリプトを取得または追加
         PredictiveShot shot = shotObject.GetComponent<PredictiveShot>();
         if (shot == null)
         {
-            Debug.Log("[Tower] PredictiveShotコンポーネントが見つからないため追加");
             shot = shotObject.AddComponent<PredictiveShot>();
         }
-        else
-        {
-            Debug.Log("[Tower] 既存のPredictiveShotコンポーネントを使用");
-        }
-        
-        // ダメージ値を含めて初期化
         shot.Initialize(fireDirection, shotSpeed, shotDamage);
-        
-        // デバッグライン
+
         if (showDebugInfo)
         {
             Debug.DrawLine(firePosition, predictedPosition, Color.green, 1f);
             Debug.DrawRay(firePosition, fireDirection * 5f, Color.red, 1f);
         }
-        
         return true;
     }
     
